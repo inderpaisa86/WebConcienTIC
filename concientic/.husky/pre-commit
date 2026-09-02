@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# Pre-commit hook para el proyecto CONCIENTIC (Next.js en subcarpeta concientic/).
+# Barrera local de conveniencia: la validación autoritativa vive en CI (Fase 7).
+# Para saltarla en una emergencia: git commit --no-verify
+
+cd concientic || exit 1
+npx lint-staged
