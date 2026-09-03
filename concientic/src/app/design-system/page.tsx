@@ -72,8 +72,8 @@ export default function DesignSystemPage() {
             Design System — CONCIENTIC
           </h1>
           <p className="max-w-2xl text-muted-foreground">
-            Validación visual de tokens y componentes base. Los valores de color y
-            tipografía son provisionales hasta completar la Fase 0.
+            Validación visual de tokens y componentes base. Los valores de color y tipografía son
+            provisionales hasta completar la Fase 0.
           </p>
         </div>
       </SectionContainer>
@@ -97,9 +97,7 @@ export default function DesignSystemPage() {
                 Párrafo de cuerpo. El texto usa la fuente base del sistema. Sustituir por la
                 tipografía real de la marca cuando esté definida.
               </p>
-              <p className="text-sm text-muted-foreground">
-                Texto pequeño / notas / labels.
-              </p>
+              <p className="text-sm text-muted-foreground">Texto pequeño / notas / labels.</p>
             </div>
           </Block>
 

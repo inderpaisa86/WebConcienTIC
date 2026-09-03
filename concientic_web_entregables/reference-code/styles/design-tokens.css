@@ -1,0 +1,51 @@
+:root {
+  --ct-primary: #00C49A;
+  --ct-secondary: #6C63FF;
+  --ct-blue: #0077FF;
+  --ct-cyan: #00B4D8;
+  --ct-dark: #0D1B2A;
+  --ct-orange: #FF7A00;
+  --ct-yellow: #FFC857;
+  --ct-pink: #FF6EB6;
+  --ct-white: #FFFFFF;
+  --ct-soft: #F5F7F9;
+  --ct-muted: #64748B;
+  --ct-text: #1E293B;
+
+  --ct-font-brand: 'Poppins', sans-serif;
+  --ct-font-ui: 'Inter', sans-serif;
+
+  --ct-container: 1240px;
+  --ct-radius-sm: 12px;
+  --ct-radius-md: 18px;
+  --ct-radius-lg: 24px;
+  --ct-radius-xl: 34px;
+
+  --ct-space-1: 4px;
+  --ct-space-2: 8px;
+  --ct-space-3: 12px;
+  --ct-space-4: 16px;
+  --ct-space-5: 20px;
+  --ct-space-6: 24px;
+  --ct-space-8: 32px;
+  --ct-space-10: 40px;
+  --ct-space-12: 48px;
+  --ct-space-16: 64px;
+  --ct-space-20: 80px;
+  --ct-space-24: 96px;
+
+  --ct-shadow-sm: 0 8px 24px rgba(13, 27, 42, .07);
+  --ct-shadow-md: 0 16px 50px rgba(13, 27, 42, .08);
+
+  --ct-motion-fast: 160ms;
+  --ct-motion-base: 240ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

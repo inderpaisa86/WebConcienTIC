@@ -1,53 +1,37 @@
+import Image from "next/image";
+
 import { footer, navLinks, site } from "@/content/site";
 
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border bg-background">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-12 md:px-8">
-        <div className="flex flex-col justify-between gap-8 md:flex-row">
-          <div className="flex flex-col gap-2">
-            <span className="font-heading text-lg font-bold">{site.name}</span>
-            <p className="max-w-xs text-sm text-muted-foreground">{site.tagline}</p>
+    <footer className="site-footer">
+      <div className="ct-container">
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <Image src="/brand/logo-concientic.png" alt="ConcienTIC" width={280} height={107} />
+            <p>{site.tagline}</p>
           </div>
-
-          <nav aria-label="Pie de página" className="flex flex-col gap-2">
+          <nav className="footer-links" aria-label="Pie de página">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
+              <a key={link.href} href={link.href}>
                 {link.label}
               </a>
             ))}
-          </nav>
-
-          <div className="flex flex-col gap-2">
             {footer.links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
+              <a key={link.href} href={link.href}>
                 {link.label}
               </a>
             ))}
             {site.social.linkedin ? (
-              <a
-                href={site.social.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
+              <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer">
                 LinkedIn
               </a>
             ) : null}
-          </div>
+          </nav>
         </div>
-
-        <p className="text-xs text-muted-foreground">
+        <p className="footer-bottom">
           © {year} {footer.legalName}. {footer.rights}
         </p>
       </div>

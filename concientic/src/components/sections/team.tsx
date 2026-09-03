@@ -1,31 +1,23 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { SectionContainer } from "@/components/ui/section-container";
+import { guardians } from "@/content/guardians";
 import { team } from "@/content/site";
+import { GuardianCard } from "@/components/ui/guardian-card";
+import { SectionHeader } from "@/components/ui/section-header";
 
 export function Team() {
   return (
-    <SectionContainer id={team.id} background="muted">
-      <div className="flex flex-col gap-10">
-        <div className="flex flex-col gap-3">
-          <h2 className="font-heading text-3xl font-semibold tracking-tight">
-            {team.title}
-          </h2>
-          <p className="max-w-2xl text-muted-foreground">{team.subtitle}</p>
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2">
-          {team.members.map((member) => (
-            <Card key={member.name}>
-              <CardHeader>
-                <CardTitle>{member.name}</CardTitle>
-                <CardDescription>{member.role}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{member.bio}</p>
-              </CardContent>
-            </Card>
+    <section id={team.id} className="ct-section guardians-section">
+      <div className="ct-container">
+        <SectionHeader eyebrow={team.eyebrow} title={team.title} description={team.subtitle} dark />
+        <div className="guardian-grid">
+          {guardians.map((guardian) => (
+            <GuardianCard key={guardian.name} guardian={guardian} />
           ))}
         </div>
+        <p className="team-principle">
+          <strong>Principio de equipo: </strong>
+          {team.principle}
+        </p>
       </div>
-    </SectionContainer>
+    </section>
   );
 }

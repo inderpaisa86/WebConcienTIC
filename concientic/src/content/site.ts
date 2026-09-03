@@ -1,155 +1,324 @@
-/**
- * Contenido centralizado del sitio CONCIENTIC.
- *
- * TODO (Fase 0): sustituir todos los textos "[PLACEHOLDER]" por el copy real extraído
- * del sitio actual (Canva). Editar aquí no requiere tocar los componentes.
- */
-
 export const site = {
   name: "CONCIENTIC",
   domain: "https://concientic.com",
-  // Correo al que llegan los mensajes del formulario de contacto.
   contactEmail: "hola@concientic.com",
-  tagline: "Sistema de inteligencia digital",
+  tagline: "Inteligencia Digital con conciencia",
   description:
-    "CONCIENTIC integra estrategia, producto e inteligencia artificial para ayudar a las organizaciones a tomar mejores decisiones.",
+    "ConcienTIC desarrolla Inteligencia Digital para aprender, proteger, discernir, conectar e innovar sin perder humanidad.",
   social: {
     linkedin: "https://www.linkedin.com/company/concientic",
-    // instagram: "",
-    // x: "",
   },
 } as const;
 
-/** Enlaces de navegación (anclas del one-page). */
 export const navLinks = [
+  { label: "DQUILIBRIO", href: "#dquilibrio" },
+  { label: "El desafío", href: "#desafio" },
   { label: "Servicios", href: "#servicios" },
   { label: "Metodología", href: "#metodologia" },
-  { label: "Casos", href: "#casos" },
+  { label: "Evidencia", href: "#evidencia" },
   { label: "Equipo", href: "#equipo" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Referentes", href: "#referentes" },
 ] as const;
 
 export const hero = {
-  eyebrow: "[PLACEHOLDER] Eyebrow corto",
-  title: "[PLACEHOLDER] Titular principal de CONCIENTIC",
+  eyebrow: "Inteligencia Digital con conciencia",
+  title: "Aprender tecnología. Sin perder humanidad.",
   subtitle:
-    "[PLACEHOLDER] Subtítulo que explica la propuesta de valor en una o dos frases claras.",
-  primaryCta: { label: "Hablemos", href: "#contacto" },
+    "Acompañamos a personas y organizaciones a construir una relación más consciente, crítica y autónoma con la tecnología.",
+  primaryCta: { label: "Conocer DQUILIBRIO", href: "#dquilibrio" },
   secondaryCta: { label: "Ver servicios", href: "#servicios" },
 } as const;
 
-export const valueProps = {
-  title: "[PLACEHOLDER] Por qué CONCIENTIC",
+export const principleBand = {
+  statement: "No queremos más tiempo de tu vida.",
+  emphasis: "Queremos ayudarte a recuperar el control sobre el tiempo que ya tienes.",
+} as const;
+
+export const dquilibrio = {
+  id: "dquilibrio",
+  eyebrow: "DQUILIBRIO",
+  title: "La tecnología no es el enemigo. La falta de elección sí puede serlo.",
+  description:
+    "DQUILIBRIO es la filosofía transversal de ConcienTIC: aumentar nuestra capacidad de elegir cómo, cuándo, por qué y para qué usamos la tecnología.",
   items: [
     {
-      title: "[PLACEHOLDER] Diferenciador 1",
-      description: "[PLACEHOLDER] Descripción breve del diferenciador 1.",
+      number: "01",
+      title: "Atención",
+      description: "Reconocer qué reclama nuestra atención y qué queremos cuidar.",
     },
     {
-      title: "[PLACEHOLDER] Diferenciador 2",
-      description: "[PLACEHOLDER] Descripción breve del diferenciador 2.",
+      number: "02",
+      title: "Criterio",
+      description: "Comprender antes de reaccionar, compartir o automatizar.",
     },
     {
-      title: "[PLACEHOLDER] Diferenciador 3",
-      description: "[PLACEHOLDER] Descripción breve del diferenciador 3.",
+      number: "03",
+      title: "Autonomía",
+      description: "Diseñar condiciones para decidir, no solo para responder.",
+    },
+    {
+      number: "04",
+      title: "Humanidad",
+      description: "Usar la tecnología para ampliar posibilidades, no para reducirlas.",
+    },
+  ],
+} as const;
+
+export const challenge = {
+  id: "desafio",
+  eyebrow: "El desafío",
+  title: "Vivimos entre abundancia tecnológica y escasez humana.",
+  description:
+    "La investigación contemporánea conecta problemas que se refuerzan entre sí: atención limitada, sobrecarga informativa, diseño persuasivo, desinformación y nuevas formas de dependencia de sistemas digitales.",
+  items: [
+    {
+      number: "01",
+      title: "Atención fragmentada",
+      description:
+        "Interrupciones constantes que hacen más difícil estar presentes y terminar lo importante.",
+    },
+    {
+      number: "02",
+      title: "Infoxicación",
+      description: "Más señales, noticias y datos de los que podemos procesar con calma.",
+    },
+    {
+      number: "03",
+      title: "Desinformación",
+      description: "Contenido convincente que exige verificar antes de confiar o difundir.",
+    },
+    {
+      number: "04",
+      title: "IA y automatización",
+      description: "Nuevas capacidades que necesitan criterio, transparencia y responsabilidad.",
+    },
+  ],
+} as const;
+
+export const desinfoxication = {
+  id: "desinfoxicacion",
+  eyebrow: "Desinfoxicación",
+  title: "Menos ruido. Más capacidad para comprender.",
+  description:
+    "Un hábito sencillo para recuperar margen de decisión frente a la velocidad de la información.",
+  steps: [
+    { title: "Filtrar", description: "Decidir qué merece entrar en nuestro espacio de atención." },
+    {
+      title: "Verificar",
+      description: "Buscar contexto, origen y evidencia antes de dar algo por cierto.",
+    },
+    {
+      title: "Cerrar",
+      description: "Poner límites a la exposición y volver a lo que elegimos hacer.",
     },
   ],
 } as const;
 
 export const services = {
   id: "servicios",
-  title: "[PLACEHOLDER] Servicios",
-  subtitle: "[PLACEHOLDER] Frase introductoria de la sección de servicios.",
+  eyebrow: "Servicios",
+  title: "Convertimos la conciencia digital en práctica.",
+  subtitle:
+    "Diseñamos experiencias, conversaciones y herramientas para que la tecnología se entienda mejor y se use con más libertad.",
   items: [
     {
-      title: "[PLACEHOLDER] Servicio 1",
-      description: "[PLACEHOLDER] Qué incluye el servicio 1 y para quién.",
+      title: "Estrategia digital consciente",
+      description:
+        "Mapeamos retos, hábitos y oportunidades para tomar decisiones tecnológicas con propósito.",
+      tag: "Estrategia",
     },
     {
-      title: "[PLACEHOLDER] Servicio 2",
-      description: "[PLACEHOLDER] Qué incluye el servicio 2 y para quién.",
+      title: "Formación y alfabetización en IA",
+      description:
+        "Traducimos conceptos complejos en aprendizajes útiles para equipos, docentes y comunidades.",
+      tag: "Aprendizaje",
     },
     {
-      title: "[PLACEHOLDER] Servicio 3",
-      description: "[PLACEHOLDER] Qué incluye el servicio 3 y para quién.",
+      title: "Diseño de experiencias",
+      description:
+        "Creamos productos y servicios digitales claros, accesibles y respetuosos con la atención.",
+      tag: "Diseño",
+    },
+    {
+      title: "Investigación y evidencia",
+      description:
+        "Ordenamos preguntas, fuentes y hallazgos para distinguir datos, interpretaciones y propuestas.",
+      tag: "Criterio",
+    },
+    {
+      title: "Cultura y bienestar digital",
+      description:
+        "Acompañamos cambios sostenibles en las formas de trabajar, aprender y relacionarse con la tecnología.",
+      tag: "Cultura",
     },
   ],
 } as const;
 
 export const methodology = {
   id: "metodologia",
-  title: "[PLACEHOLDER] Metodología",
-  subtitle: "[PLACEHOLDER] Cómo trabajamos, en pasos.",
+  eyebrow: "Metodología",
+  title: "Antes de hacer, aprendemos a elegir.",
+  subtitle: "Un ciclo práctico para pasar de la reacción automática a una decisión más consciente.",
   steps: [
     {
       step: "01",
-      title: "[PLACEHOLDER] Paso 1",
-      description: "[PLACEHOLDER] Descripción del paso 1.",
+      title: "DETENER",
+      description: "Interrumpir el piloto automático y crear un poco de espacio.",
     },
     {
       step: "02",
-      title: "[PLACEHOLDER] Paso 2",
-      description: "[PLACEHOLDER] Descripción del paso 2.",
+      title: "OBSERVAR",
+      description: "Mirar qué ocurre, qué sentimos y qué información tenemos.",
     },
     {
       step: "03",
-      title: "[PLACEHOLDER] Paso 3",
-      description: "[PLACEHOLDER] Descripción del paso 3.",
+      title: "DISCERNIR",
+      description: "Separar hechos, interpretaciones, riesgos y posibilidades.",
     },
     {
       step: "04",
-      title: "[PLACEHOLDER] Paso 4",
-      description: "[PLACEHOLDER] Descripción del paso 4.",
+      title: "ELEGIR",
+      description: "Tomar una decisión alineada con el propósito y el contexto.",
+    },
+    {
+      step: "05",
+      title: "EQUILIBRAR",
+      description: "Revisar el resultado y ajustar para sostener el cambio.",
     },
   ],
 } as const;
 
-export const cases = {
-  id: "casos",
-  title: "[PLACEHOLDER] Casos de éxito",
-  subtitle: "[PLACEHOLDER] Resultados que hemos logrado con clientes.",
+export const evidence = {
+  id: "evidencia",
+  eyebrow: "Centro de Evidencia",
+  title: "No queremos que nos creas. Queremos que puedas comprobarlo.",
+  subtitle:
+    "Un espacio para distinguir hallazgos científicos, interpretaciones y propuestas propias de ConcienTIC.",
   items: [
     {
-      client: "[PLACEHOLDER] Cliente 1",
-      result: "[PLACEHOLDER] Resultado medible (ej. +30% en X).",
-      description: "[PLACEHOLDER] Breve descripción del caso 1.",
+      type: "Hallazgo",
+      title: "La atención también es un recurso de diseño",
+      description:
+        "Entender cómo se organiza la atención ayuda a crear entornos digitales más habitables.",
     },
     {
-      client: "[PLACEHOLDER] Cliente 2",
-      result: "[PLACEHOLDER] Resultado medible.",
-      description: "[PLACEHOLDER] Breve descripción del caso 2.",
+      type: "Interpretación",
+      title: "La autonomía necesita condiciones",
+      description:
+        "Elegir no depende solo de la voluntad individual: también importa el contexto que diseñamos.",
     },
     {
-      client: "[PLACEHOLDER] Cliente 3",
-      result: "[PLACEHOLDER] Resultado medible.",
-      description: "[PLACEHOLDER] Breve descripción del caso 3.",
+      type: "Propuesta",
+      title: "Diseñar pausas es diseñar libertad",
+      description:
+        "Introducir momentos de revisión puede abrir alternativas frente a la respuesta inmediata.",
     },
   ],
+  caveat:
+    "DQUILIBRIO es un marco de trabajo de ConcienTIC; no es una escala clínica ni sustituye asesoramiento profesional.",
 } as const;
 
 export const team = {
   id: "equipo",
-  title: "[PLACEHOLDER] Equipo",
-  subtitle: "[PLACEHOLDER] Quiénes están detrás de CONCIENTIC.",
-  members: [
+  eyebrow: "Equipo",
+  title: "Los Guardianes de la Inteligencia Digital.",
+  subtitle:
+    "Agentes virtuales especializados que representan las competencias que necesitamos para habitar el mundo tecnológico sin perder humanidad.",
+  principle:
+    "Ninguna competencia vive aislada: la inteligencia digital crece cuando podemos combinarlas.",
+} as const;
+
+export const cases = {
+  id: "casos",
+  eyebrow: "Casos",
+  title: "Trabajo real, evidencia antes que promesas.",
+  subtitle:
+    "Estamos documentando experiencias y resultados con el cuidado necesario para no convertir una hipótesis en una métrica.",
+  items: [
     {
-      name: "[PLACEHOLDER] Nombre 1",
-      role: "[PLACEHOLDER] Rol 1",
-      bio: "[PLACEHOLDER] Bio breve.",
+      title: "Programas de aprendizaje",
+      description:
+        "Próximamente compartiremos experiencias de formación y alfabetización digital con contexto suficiente para entender qué funcionó.",
+      status: "Documentación en preparación",
     },
     {
-      name: "[PLACEHOLDER] Nombre 2",
-      role: "[PLACEHOLDER] Rol 2",
-      bio: "[PLACEHOLDER] Bio breve.",
+      title: "Diseño de experiencias",
+      description:
+        "Próximamente compartiremos procesos de diseño consciente y las decisiones que los hicieron posibles.",
+      status: "Documentación en preparación",
+    },
+    {
+      title: "Cultura digital",
+      description:
+        "Próximamente compartiremos aprendizajes sobre cambios sostenibles en equipos y comunidades.",
+      status: "Documentación en preparación",
+    },
+  ],
+} as const;
+
+export const references = {
+  id: "referentes",
+  eyebrow: "Referentes",
+  title: "Pensar con fuentes. Diseñar con responsabilidad.",
+  subtitle:
+    "Algunas instituciones y marcos que ayudan a ampliar la conversación sobre educación, tecnología y ciudadanía digital.",
+  items: [
+    {
+      type: "Educación e IA",
+      title: "UNESCO",
+      description:
+        "Orientaciones para abordar la inteligencia artificial generativa en educación e investigación.",
+      href: "https://www.unesco.org/en/digital-education/artificial-intelligence",
+    },
+    {
+      type: "Política digital",
+      title: "OECD Digital",
+      description:
+        "Investigación y marcos para comprender el impacto social y económico de la transformación digital.",
+      href: "https://www.oecd.org/digital/",
+    },
+    {
+      type: "Ciudadanía",
+      title: "Council of Europe",
+      description:
+        "Recursos para desarrollar ciudadanía digital, derechos y participación responsable.",
+      href: "https://www.coe.int/en/web/digital-citizenship-education",
+    },
+  ],
+} as const;
+
+export const manifesto = {
+  id: "manifiesto",
+  eyebrow: "Manifiesto",
+  title: "La tecnología que queremos también se diseña.",
+  description:
+    "Elegimos una inteligencia digital que amplíe la capacidad humana de comprender, decidir y cuidar. No se trata de volver atrás: se trata de avanzar con más conciencia.",
+  principles: [
+    {
+      title: "La persona antes que la métrica",
+      description: "Medimos lo que importa sin reducir la experiencia humana a un número.",
+    },
+    {
+      title: "La evidencia antes que el ruido",
+      description: "Explicamos qué sabemos, qué inferimos y qué todavía estamos aprendiendo.",
+    },
+    {
+      title: "La autonomía antes que la dependencia",
+      description: "Diseñamos herramientas que devuelven capacidad de decisión.",
+    },
+    {
+      title: "La curiosidad antes que el miedo",
+      description: "Aprendemos tecnología para poder participar en su futuro.",
     },
   ],
 } as const;
 
 export const contact = {
   id: "contacto",
-  title: "[PLACEHOLDER] Hablemos",
+  eyebrow: "Contacto",
+  title: "¿Qué relación con la tecnología quieres construir?",
   subtitle:
-    "[PLACEHOLDER] Cuéntanos tu reto y te respondemos. Frase de cierre orientada a conversión.",
+    "Cuéntanos el reto de tu equipo, organización o comunidad. Abrimos una conversación sin recetas prefabricadas.",
 } as const;
 
 export const footer = {
@@ -161,12 +330,6 @@ export const footer = {
   ],
 } as const;
 
-/**
- * Contenido de las páginas legales.
- *
- * TODO (legal): revisar/reemplazar estos textos base con la política real de CONCIENTIC,
- * validada por su equipo legal antes de publicar. Ajustar `lastUpdated`.
- */
 export const legal = {
   privacy: {
     title: "Aviso de privacidad",

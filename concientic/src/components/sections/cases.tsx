@@ -1,34 +1,21 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { SectionContainer } from "@/components/ui/section-container";
 import { cases } from "@/content/site";
+import { SectionHeader } from "@/components/ui/section-header";
 
 export function Cases() {
   return (
-    <SectionContainer id={cases.id}>
-      <div className="flex flex-col gap-10">
-        <div className="flex flex-col gap-3">
-          <h2 className="font-heading text-3xl font-semibold tracking-tight">
-            {cases.title}
-          </h2>
-          <p className="max-w-2xl text-muted-foreground">{cases.subtitle}</p>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
+    <section id={cases.id} className="ct-section cases-section">
+      <div className="ct-container">
+        <SectionHeader eyebrow={cases.eyebrow} title={cases.title} description={cases.subtitle} />
+        <div className="card-grid card-grid--three">
           {cases.items.map((item) => (
-            <Card key={item.client}>
-              <CardHeader>
-                <Badge variant="accent" className="w-fit">
-                  {item.result}
-                </Badge>
-                <CardTitle>{item.client}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>{item.description}</CardDescription>
-              </CardContent>
-            </Card>
+            <article className="case-card" key={item.title}>
+              <span className="case-card__status">{item.status}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
           ))}
         </div>
       </div>
-    </SectionContainer>
+    </section>
   );
 }

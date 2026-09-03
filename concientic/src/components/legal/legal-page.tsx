@@ -26,9 +26,7 @@ export function LegalPage({ content }: { content: LegalContent }) {
           <h1 className="font-heading text-3xl font-bold tracking-tight md:text-4xl">
             {content.title}
           </h1>
-          <p className="text-sm text-muted-foreground">
-            Última actualización: {formatted}
-          </p>
+          <p className="text-sm text-muted-foreground">Última actualización: {formatted}</p>
           <p className="text-muted-foreground">{content.intro}</p>
         </header>
 

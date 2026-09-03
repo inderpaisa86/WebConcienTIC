@@ -1,77 +1,69 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
+import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { navLinks, site } from "@/content/site";
 
 export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6 md:px-8">
-        <a href="#inicio" className="font-heading text-lg font-bold tracking-tight">
-          {site.name}
+    <header className="site-header">
+      <div className="ct-container header-inner">
+        <a className="brand-link" href="#inicio" aria-label={`${site.name}, inicio`}>
+          <Image
+            src="/brand/logo-concientic.png"
+            alt="ConcienTIC"
+            width={316}
+            height={121}
+            priority
+          />
         </a>
 
-        {/* Navegación desktop */}
-        <nav className="hidden items-center gap-6 md:flex" aria-label="Principal">
+        <nav className="site-nav" aria-label="Principal">
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
+            <a key={link.href} href={link.href}>
               {link.label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden md:block">
-          <Button size="sm" nativeButton={false} render={<a href="#contacto" />}>
+        <div className="header-actions">
+          <a className="ct-button ct-button--dark" href="#contacto">
             Hablemos
-          </Button>
+          </a>
+          <button
+            className="mobile-menu-button"
+            type="button"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
+          </button>
         </div>
-
-        {/* Botón menú móvil */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden"
-          aria-label={open ? "Cerrar menú" : "Abrir menú"}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X /> : <Menu />}
-        </Button>
       </div>
 
-      {/* Navegación móvil */}
-      <nav
-        id="mobile-nav"
-        aria-label="Principal"
-        className={cn(
-          "border-t border-border md:hidden",
-          open ? "block" : "hidden",
-        )}
-      >
-        <ul className="mx-auto flex w-full max-w-6xl flex-col gap-1 px-6 py-4">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="block rounded-md px-2 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              >
-                {link.label}
+      <nav id="mobile-nav" className="mobile-nav" data-open={open} aria-label="Principal móvil">
+        <div className="ct-container">
+          <ul>
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a href={link.href} onClick={() => setOpen(false)}>
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href="#contacto" onClick={() => setOpen(false)}>
+                Hablemos
               </a>
             </li>
-          ))}
-        </ul>
+          </ul>
+        </div>
       </nav>
     </header>
   );
