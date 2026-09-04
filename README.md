@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="concientic/public/brand/logo-concientic.png" alt="Logo de ConcienTIC" width="320" />
+</p>
+
 # ConcienTIC
 
 Sitio web institucional de **ConcienTIC**, un ecosistema de Inteligencia Digital que ayuda a personas y organizaciones a desarrollar competencias digitales, alfabetización en IA, discernimiento y autonomía para habitar la tecnología sin perder humanidad.
