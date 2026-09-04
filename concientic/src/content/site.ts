@@ -220,7 +220,7 @@ export const evidence = {
 
 export const team = {
   id: "equipo",
-  eyebrow: "Nuestro equipo",
+  eyebrow: "Equipo",
   title: "Guardianes de la Inteligencia Digital",
   subtitle:
     "Los Guardianes son los integrantes virtuales del equipo ConcienTIC: agentes especializados que educan, acompañan, protegen, investigan, conectan e impulsan la innovación.",
@@ -231,10 +231,10 @@ export const team = {
       text: "Todos forman parte de ConcienTIC y trabajan al servicio de las personas.",
     },
   ],
-  guardiansEyebrow: "Equipo virtual",
-  guardiansTitle: "Conoce a los Guardianes",
+  guardiansEyebrow: "Nuestros",
+  guardiansTitle: "Agentes Virtuales",
   guardiansDescription:
-    "No son mascotas decorativas. Cada Guardián tiene un territorio de competencia y una función real dentro de las experiencias de ConcienTIC.",
+    "Cada Guardián tiene un territorio de competencia y una función real dentro de las experiencias de ConcienTIC.",
   principle:
     "Juntos construyen una inteligencia digital consciente, crítica, creativa, colaborativa y transformadora.",
 } as const;
