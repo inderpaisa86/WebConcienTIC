@@ -697,6 +697,39 @@ h4 {
   background: #f7fafc;
 }
 
+.evidence-section .ct-section-header > .ct-eyebrow {
+  max-width: none;
+  margin: 0 0 14px;
+  color: var(--ct-primary);
+  font-size: 0.72rem;
+}
+
+.evidence-section .ct-section-header > h2 {
+  margin: 12px 0 18px;
+}
+
+.evidence-section .ct-section-header > p:not(.ct-eyebrow) {
+  max-width: 720px;
+  margin: 0;
+}
+
+.evidence-section .evidence-card {
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.evidence-section .evidence-card__type {
+  font-size: 0.67rem;
+}
+
+.evidence-section .evidence-card h3 {
+  font-size: 1.25rem;
+}
+
+.evidence-section .evidence-card p {
+  font-size: 0.88rem;
+}
+
 .evidence-card,
 .reference-card,
 .case-card {
@@ -1057,6 +1090,12 @@ h4 {
 
   .guardian-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1051px) and (max-width: 1100px) {
+  .evidence-section .card-grid--four {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
