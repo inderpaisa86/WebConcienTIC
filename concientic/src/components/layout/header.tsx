@@ -13,13 +13,15 @@ export function Header() {
     <header className="site-header">
       <div className="ct-container header-inner">
         <a className="brand-link" href="#inicio" aria-label={`${site.name}, inicio`}>
-          <Image
-            src="/brand/logo-concientic.png"
-            alt="ConcienTIC"
-            width={316}
-            height={121}
-            priority
-          />
+          <span className="brand-mark">
+            <Image
+              src="/brand/concientic-nexus-wordmark-transparente-fondo-claro.png"
+              alt="ConcienTIC Nexus — Conciencia Digital para un mundo mejor"
+              fill
+              priority
+              sizes="320px"
+            />
+          </span>
         </a>
 
         <nav className="site-nav" aria-label="Principal">

@@ -51,6 +51,7 @@ export function ContactForm() {
     return (
       <div
         role="status"
+        aria-live="polite"
         className="rounded-xl border border-border bg-card p-6 text-card-foreground"
       >
         <p className="font-heading text-lg font-semibold">¡Gracias por escribirnos!</p>
@@ -132,7 +133,7 @@ export function ContactForm() {
       ) : null}
 
       {serverError ? (
-        <p role="alert" className="text-sm text-destructive">
+        <p role="alert" aria-live="assertive" className="text-sm text-destructive">
           {serverError}
         </p>
       ) : null}

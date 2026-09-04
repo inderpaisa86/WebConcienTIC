@@ -3,7 +3,7 @@ import { SectionHeader } from "@/components/ui/section-header";
 
 export function Manifesto() {
   return (
-    <section id={manifesto.id} className="ct-section ct-section--dark">
+    <section className="ct-section ct-section--dark">
       <div className="ct-container manifesto-grid">
         <div className="manifesto-copy">
           <SectionHeader eyebrow={manifesto.eyebrow} title={manifesto.title} dark />

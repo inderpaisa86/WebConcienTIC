@@ -18,9 +18,9 @@ export default function Home() {
       <Hero />
       <PrincipleBand />
       <Dquilibrio />
+      <Services />
       <Challenge />
       <Desinfoxication />
-      <Services />
       <Methodology />
       <Evidence />
       <Team />

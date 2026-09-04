@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { methodology } from "@/content/site";
 import { SectionHeader } from "@/components/ui/section-header";
 
@@ -14,24 +16,14 @@ export function Methodology() {
               title={methodology.title}
               description={methodology.subtitle}
             />
-            <div
-              className="methodology-wheel"
-              aria-label="Ciclo DQUILIBRIO: detener, observar, discernir, elegir y equilibrar"
-              role="img"
-            >
-              {methodology.steps.map((step, index) => (
-                <span
-                  className="methodology-wheel__step"
-                  key={step.step}
-                  style={{ "--step-color": stepColors[index] } as React.CSSProperties}
-                >
-                  {step.title}
-                </span>
-              ))}
-              <span className="methodology-wheel__center">
-                DQUILIBRIO
-                <small>volver a elegir</small>
-              </span>
+            <div className="methodology-wheel">
+              <Image
+                src="/diagrams/ciclo-dquilibrio-mejorado.png"
+                alt="Ciclo DQUILIBRIO: detener, observar, discernir, elegir y equilibrar"
+                width={610}
+                height={610}
+                sizes="(max-width: 700px) 100vw, (max-width: 1100px) 80vw, 610px"
+              />
             </div>
           </div>
           <ol className="methodology-list">

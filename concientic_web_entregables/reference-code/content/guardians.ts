@@ -1,9 +1,0 @@
-export const guardians = [
-  { name: 'Emi', role: 'Agente de Empatía Digital', competence: 'Empatía Digital', color: '#FF6EB6', image: '/guardians/emi.png', description: 'Promueve la empatía, el respeto y el bienestar en entornos digitales.' },
-  { name: 'Locky', role: 'Agente de Seguridad Digital', competence: 'Seguridad Digital', color: '#0077FF', image: '/guardians/locky.png', description: 'Protege la información y enseña buenas prácticas para navegar de forma segura.' },
-  { name: 'Lex', role: 'Agente de Pensamiento Crítico', competence: 'Pensamiento Crítico', color: '#FFC857', image: '/guardians/lex.png', description: 'Analiza, cuestiona y ayuda a tomar mejores decisiones digitales.' },
-  { name: 'Byte', role: 'Agente de Alfabetización Digital', competence: 'Alfabetización Digital', color: '#00C49A', image: '/guardians/byte.png', description: 'Hace fácil lo complejo y acompaña el aprendizaje en digital.' },
-  { name: 'Detective DQ', role: 'Agente de Discernimiento Digital', competence: 'Discernimiento Digital', color: '#6C63FF', image: '/guardians/detective-dq.png', description: 'Investiga, verifica fuentes y ayuda a distinguir evidencia de apariencia.' },
-  { name: 'Nexo', role: 'Agente de Conexión Digital', competence: 'Conexión Digital', color: '#00B4D8', image: '/guardians/nexo.png', description: 'Conecta personas, comparte conocimiento y construye comunidad.' },
-  { name: 'Nova', role: 'Agente de Innovación Digital', competence: 'Innovación Digital', color: '#FF7A00', image: '/guardians/nova.png', description: 'Inspira a crear, experimentar y transformar ideas en soluciones.' },
-] as const;

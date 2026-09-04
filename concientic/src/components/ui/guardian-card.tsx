@@ -28,7 +28,6 @@ export function GuardianCard({ guardian }: GuardianCardProps) {
         <div className="guardian-card__role">{guardian.role}</div>
         <div className="guardian-card__competence">{guardian.competence}</div>
         <p>{guardian.description}</p>
-        <span className="guardian-card__tag">Guardián ConcienTIC</span>
       </div>
     </article>
   );

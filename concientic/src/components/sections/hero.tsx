@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { hero } from "@/content/site";
 
 export function Hero() {
@@ -20,24 +22,15 @@ export function Hero() {
           </div>
         </div>
 
-        <div
-          className="hero-visual"
-          aria-label="Visual de equilibrio entre atención, tecnología, criterio y autonomía"
-          role="img"
-        >
-          <span className="hero-node hero-node--one">ATENCIÓN</span>
-          <span className="hero-node hero-node--two">IA + TECH</span>
-          <span className="hero-node hero-node--three">CRITERIO</span>
-          <span className="hero-node hero-node--four">AUTONOMÍA</span>
-          <span className="hero-node hero-node--five">HUMANIDAD</span>
-          <div className="hero-core">
-            <span>
-              <strong>DQUILIBRIO</strong>
-              tecnología
-              <br />
-              con conciencia
-            </span>
-          </div>
+        <div className="hero-visual">
+          <Image
+            src="/diagrams/equilibrio-concientic-mejorado.png"
+            alt="DQUILIBRIO: atención, IA y tecnología, criterio, autonomía y humanidad en equilibrio"
+            width={600}
+            height={600}
+            priority
+            sizes="(max-width: 700px) 100vw, (max-width: 1100px) 80vw, 600px"
+          />
         </div>
       </div>
     </section>

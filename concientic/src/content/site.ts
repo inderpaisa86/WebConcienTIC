@@ -12,8 +12,8 @@ export const site = {
 
 export const navLinks = [
   { label: "DQUILIBRIO", href: "#dquilibrio" },
-  { label: "El desafío", href: "#desafio" },
   { label: "Servicios", href: "#servicios" },
+  { label: "El desafío", href: "#desafio" },
   { label: "Metodología", href: "#metodologia" },
   { label: "Evidencia", href: "#evidencia" },
   { label: "Equipo", href: "#equipo" },
@@ -24,7 +24,7 @@ export const hero = {
   eyebrow: "Sistema de Inteligencia Digital",
   title: "Aprender tecnología. Sin perder humanidad.",
   subtitle:
-    "ConcienTIC desarrolla competencias digitales e inteligencia artificial mientras ayuda a personas y organizaciones a construir una relación consciente, autónoma y equilibrada con la tecnología.",
+    "ConcienTIC desarrolla Inteligencia Digital mientras ayuda a personas y organizaciones a construir una relación consciente, autónoma y equilibrada con la tecnología.",
   primaryCta: { label: "Conocer DQUILIBRIO", href: "#dquilibrio" },
   secondaryCta: { label: "Ver servicios", href: "#servicios" },
 } as const;
@@ -220,23 +220,11 @@ export const evidence = {
 
 export const team = {
   id: "equipo",
-  eyebrow: "Equipo",
+  eyebrow: "Nuestro equipo",
   title: "Guardianes de la Inteligencia Digital",
   subtitle:
     "Los Guardianes son los integrantes virtuales del equipo ConcienTIC: agentes especializados que educan, acompañan, protegen, investigan, conectan e impulsan la innovación.",
-  statements: [
-    { emphasis: "7 agentes.", text: "7 capacidades especializadas que se complementan." },
-    {
-      emphasis: "1 inteligencia colectiva.",
-      text: "Todos forman parte de ConcienTIC y trabajan al servicio de las personas.",
-    },
-  ],
-  guardiansEyebrow: "Nuestros",
-  guardiansTitle: "Agentes Virtuales",
-  guardiansDescription:
-    "Cada Guardián tiene un territorio de competencia y una función real dentro de las experiencias de ConcienTIC.",
-  principle:
-    "Juntos construyen una inteligencia digital consciente, crítica, creativa, colaborativa y transformadora.",
+  principle: "Juntos construyen una inteligencia digital",
 } as const;
 
 export const cases = {
@@ -302,7 +290,7 @@ export const references = {
 } as const;
 
 export const manifesto = {
-  id: "manifiesto",
+  id: "",
   eyebrow: "El principio ConcienTIC",
   title: "Si una experiencia necesita robarte atención para funcionar, debemos rediseñarla.",
   description:
@@ -332,9 +320,12 @@ export const footer = {
   links: [
     { label: "DQUILIBRIO", href: "#dquilibrio" },
     { label: "Servicios", href: "#servicios" },
+    { label: "El desafío", href: "#desafio" },
+    { label: "Desinfoxicación", href: "#desinfoxicacion" },
     { label: "Metodología", href: "#metodologia" },
     { label: "Evidencia", href: "#evidencia" },
     { label: "Equipo", href: "#equipo" },
+    { label: "Casos", href: "#casos" },
     { label: "Referentes", href: "#referentes" },
     { label: "Contacto", href: "#contacto" },
   ],
