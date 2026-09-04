@@ -628,6 +628,15 @@ h4 {
   transform: translate(-50%, -50%);
 }
 
+.methodology-wheel__center small {
+  display: block;
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: var(--font-inter), Inter, system-ui, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 400;
+}
+
 .methodology-wheel__step {
   position: absolute;
   display: grid;
@@ -718,6 +727,14 @@ h4 {
   letter-spacing: -0.035em;
 }
 
+.evidence-card a {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--ct-blue);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
 .evidence-caveat {
   margin-top: 22px;
   border-left: 4px solid var(--ct-yellow);
@@ -739,6 +756,49 @@ h4 {
 
 .guardians-section .ct-section-header p {
   color: rgba(255, 255, 255, 0.68);
+}
+
+.team-intro {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.team-statement {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--ct-radius-md);
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.team-statement strong {
+  color: var(--ct-primary);
+}
+
+.guardians-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  margin: 58px 0 35px;
+}
+
+.guardians-head h2 {
+  color: var(--ct-white);
+}
+
+.guardians-head p {
+  max-width: 560px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.case-card__result {
+  margin-top: 22px;
+  color: var(--ct-text);
+  font-weight: 800;
 }
 
 .guardian-grid {
@@ -1030,8 +1090,17 @@ h4 {
   .card-grid--five,
   .desinfoxication-grid,
   .guardian-grid,
-  .principles-grid {
+  .principles-grid,
+  .team-intro {
     grid-template-columns: 1fr;
+  }
+
+  .guardians-head {
+    display: block;
+  }
+
+  .guardians-head p {
+    margin-top: 18px;
   }
 
   .guardian-card__art {

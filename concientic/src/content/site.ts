@@ -21,10 +21,10 @@ export const navLinks = [
 ] as const;
 
 export const hero = {
-  eyebrow: "Inteligencia Digital con conciencia",
+  eyebrow: "Sistema de Inteligencia Digital",
   title: "Aprender tecnología. Sin perder humanidad.",
   subtitle:
-    "Acompañamos a personas y organizaciones a construir una relación más consciente, crítica y autónoma con la tecnología.",
+    "ConcienTIC desarrolla competencias digitales e inteligencia artificial mientras ayuda a personas y organizaciones a construir una relación consciente, autónoma y equilibrada con la tecnología.",
   primaryCta: { label: "Conocer DQUILIBRIO", href: "#dquilibrio" },
   secondaryCta: { label: "Ver servicios", href: "#servicios" },
 } as const;
@@ -42,24 +42,24 @@ export const dquilibrio = {
     "DQUILIBRIO es la filosofía transversal de ConcienTIC: aumentar nuestra capacidad de elegir cómo, cuándo, por qué y para qué usamos la tecnología.",
   items: [
     {
-      number: "01",
-      title: "Atención",
-      description: "Reconocer qué reclama nuestra atención y qué queremos cuidar.",
+      number: "01 · Atención",
+      title: "Recuperar presencia",
+      description: "Reconocer que la atención es limitada y diseñar experiencias que la respeten.",
     },
     {
-      number: "02",
-      title: "Criterio",
-      description: "Comprender antes de reaccionar, compartir o automatizar.",
+      number: "02 · Información",
+      title: "Reducir saturación",
+      description: "Pasar de acumular información a seleccionar, contextualizar y sintetizar.",
     },
     {
-      number: "03",
-      title: "Autonomía",
-      description: "Diseñar condiciones para decidir, no solo para responder.",
+      number: "03 · Discernimiento",
+      title: "Decidir con criterio",
+      description: "Verificar fuentes, reconocer sesgos y diferenciar evidencia de apariencia.",
     },
     {
-      number: "04",
-      title: "Humanidad",
-      description: "Usar la tecnología para ampliar posibilidades, no para reducirlas.",
+      number: "04 · Autonomía",
+      title: "Elegir conscientemente",
+      description: "Usar IA y tecnología como herramientas al servicio de objetivos humanos.",
     },
   ],
 } as const;
@@ -69,28 +69,31 @@ export const challenge = {
   eyebrow: "El desafío",
   title: "Vivimos entre abundancia tecnológica y escasez humana.",
   description:
-    "La investigación contemporánea conecta problemas que se refuerzan entre sí: atención limitada, sobrecarga informativa, diseño persuasivo, desinformación y nuevas formas de dependencia de sistemas digitales.",
+    "La investigación contemporánea conecta varios problemas que se refuerzan entre sí: atención limitada, sobrecarga informativa, diseño persuasivo, desinformación y nuevas formas de dependencia de sistemas automatizados.",
   items: [
     {
-      number: "01",
-      title: "Atención fragmentada",
+      number: "Fuerza 01",
+      title: "Economía de la atención",
       description:
-        "Interrupciones constantes que hacen más difícil estar presentes y terminar lo importante.",
+        "Cuando la información abunda, la atención se convierte en un recurso escaso y disputado.",
     },
     {
-      number: "02",
+      number: "Fuerza 02",
       title: "Infoxicación",
-      description: "Más señales, noticias y datos de los que podemos procesar con calma.",
+      description:
+        "La sobrecarga puede aumentar presión cognitiva, favorecer evitación y dificultar decisiones.",
     },
     {
-      number: "03",
+      number: "Fuerza 03",
       title: "Desinformación",
-      description: "Contenido convincente que exige verificar antes de confiar o difundir.",
+      description:
+        "La alfabetización mediática y el discernimiento son capacidades cada vez más necesarias.",
     },
     {
-      number: "04",
+      number: "Fuerza 04",
       title: "IA y automatización",
-      description: "Nuevas capacidades que necesitan criterio, transparencia y responsabilidad.",
+      description:
+        "La IA amplía capacidades, pero también introduce riesgos como desinformación y sesgos de automatización.",
     },
   ],
 } as const;
@@ -98,18 +101,26 @@ export const challenge = {
 export const desinfoxication = {
   id: "desinfoxicacion",
   eyebrow: "Desinfoxicación",
-  title: "Menos ruido. Más capacidad para comprender.",
+  title: "De la saturación informativa a la claridad.",
   description:
-    "Un hábito sencillo para recuperar margen de decisión frente a la velocidad de la información.",
+    "No se trata de consumir menos por obligación. Se trata de desarrollar mejores filtros: buscar, seleccionar, contextualizar, verificar, sintetizar y saber cuándo dejar de consumir información.",
   steps: [
-    { title: "Filtrar", description: "Decidir qué merece entrar en nuestro espacio de atención." },
     {
-      title: "Verificar",
-      description: "Buscar contexto, origen y evidencia antes de dar algo por cierto.",
+      title: "¿Qué merece mi atención?",
+      label: "Filtrar",
+      description: "Definir propósito antes de abrir una nueva fuente, canal o herramienta.",
     },
     {
-      title: "Cerrar",
-      description: "Poner límites a la exposición y volver a lo que elegimos hacer.",
+      title: "¿Puedo confiar en esto?",
+      label: "Verificar",
+      description:
+        "Contrastar fuentes, contexto, autoría, fecha, evidencia y señales de manipulación.",
+    },
+    {
+      title: "¿Cuándo es suficiente?",
+      label: "Cerrar",
+      description:
+        "Transformar información en criterio y permitir que la experiencia tenga un final.",
     },
   ],
 } as const;
@@ -117,39 +128,33 @@ export const desinfoxication = {
 export const services = {
   id: "servicios",
   eyebrow: "Servicios",
-  title: "Convertimos la conciencia digital en práctica.",
-  subtitle:
-    "Diseñamos experiencias, conversaciones y herramientas para que la tecnología se entienda mejor y se use con más libertad.",
+  title: "Capacidades para habitar el mundo tecnológico.",
+  subtitle: "La propuesta combina aprendizaje, tecnología, IA, transformación y DQUILIBRIO.",
   items: [
     {
-      title: "Estrategia digital consciente",
-      description:
-        "Mapeamos retos, hábitos y oportunidades para tomar decisiones tecnológicas con propósito.",
-      tag: "Estrategia",
-    },
-    {
-      title: "Formación y alfabetización en IA",
-      description:
-        "Traducimos conceptos complejos en aprendizajes útiles para equipos, docentes y comunidades.",
+      title: "Competencias Digitales",
+      description: "Rutas para desarrollar capacidades esenciales y transferibles.",
       tag: "Aprendizaje",
     },
     {
-      title: "Diseño de experiencias",
-      description:
-        "Creamos productos y servicios digitales claros, accesibles y respetuosos con la atención.",
-      tag: "Diseño",
+      title: "IA consciente",
+      description: "Comprender, experimentar y adoptar IA con criterio humano.",
+      tag: "Inteligencia",
     },
     {
-      title: "Investigación y evidencia",
-      description:
-        "Ordenamos preguntas, fuentes y hallazgos para distinguir datos, interpretaciones y propuestas.",
-      tag: "Criterio",
+      title: "Desinfoxicación",
+      description: "Herramientas para navegar abundancia, fuentes y desinformación.",
+      tag: "Discernimiento",
     },
     {
-      title: "Cultura y bienestar digital",
-      description:
-        "Acompañamos cambios sostenibles en las formas de trabajar, aprender y relacionarse con la tecnología.",
-      tag: "Cultura",
+      title: "Transformación cultural",
+      description: "Prácticas para integrar tecnología sin perder autonomía.",
+      tag: "Organizaciones",
+    },
+    {
+      title: "DQUILIBRIO",
+      description: "Experiencias para recuperar atención, criterio y capacidad de elección.",
+      tag: "Equilibrio",
     },
   ],
 } as const;
@@ -157,34 +162,15 @@ export const services = {
 export const methodology = {
   id: "metodologia",
   eyebrow: "Metodología",
-  title: "Antes de hacer, aprendemos a elegir.",
-  subtitle: "Un ciclo práctico para pasar de la reacción automática a una decisión más consciente.",
+  title: "Un ciclo, no una carrera.",
+  subtitle:
+    "La metodología ConcienTIC traduce la filosofía DQUILIBRIO en una práctica de aprendizaje y transformación. No es una escala clínica ni un instrumento científico validado.",
   steps: [
-    {
-      step: "01",
-      title: "DETENER",
-      description: "Interrumpir el piloto automático y crear un poco de espacio.",
-    },
-    {
-      step: "02",
-      title: "OBSERVAR",
-      description: "Mirar qué ocurre, qué sentimos y qué información tenemos.",
-    },
-    {
-      step: "03",
-      title: "DISCERNIR",
-      description: "Separar hechos, interpretaciones, riesgos y posibilidades.",
-    },
-    {
-      step: "04",
-      title: "ELEGIR",
-      description: "Tomar una decisión alineada con el propósito y el contexto.",
-    },
-    {
-      step: "05",
-      title: "EQUILIBRAR",
-      description: "Revisar el resultado y ajustar para sostener el cambio.",
-    },
+    { step: "01", title: "DETENER", description: "Interrumpir el piloto automático." },
+    { step: "02", title: "OBSERVAR", description: "Hacer visible contexto y hábitos." },
+    { step: "03", title: "DISCERNIR", description: "Contrastar información y riesgos." },
+    { step: "04", title: "ELEGIR", description: "Decidir con intención." },
+    { step: "05", title: "EQUILIBRAR", description: "Transferir, ajustar y volver a elegir." },
   ],
 } as const;
 
@@ -193,65 +179,93 @@ export const evidence = {
   eyebrow: "Centro de Evidencia",
   title: "No queremos que nos creas. Queremos que puedas comprobarlo.",
   subtitle:
-    "Un espacio para distinguir hallazgos científicos, interpretaciones y propuestas propias de ConcienTIC.",
+    "ConcienTIC construye su propuesta sobre investigación y reconoce también sus límites. La evidencia es amplia, pero heterogénea; distinguimos hallazgos, hipótesis y principios de diseño.",
   items: [
     {
-      type: "Hallazgo",
-      title: "La atención también es un recurso de diseño",
+      type: "Atención",
+      title: "La atención es escasa",
       description:
-        "Entender cómo se organiza la atención ayuda a crear entornos digitales más habitables.",
+        "La economía de la atención parte de una idea central: en entornos ricos en información, la atención humana es un recurso limitado.",
+      href: "https://onlinelibrary.wiley.com/doi/full/10.1111/j.1468-0297.2008.02182.x",
+      source: "Falkinger · 2008 ↗",
     },
     {
-      type: "Interpretación",
-      title: "La autonomía necesita condiciones",
+      type: "Sobrecarga",
+      title: "La abundancia puede saturar",
       description:
-        "Elegir no depende solo de la voluntad individual: también importa el contexto que diseñamos.",
+        "Una revisión de 146 artículos caracteriza la sobrecarga como un fenómeno cognitivo, afectivo y estructural con consecuencias conductuales.",
+      href: "https://doi.org/10.1108/JD-03-2026-0114",
+      source: "Dote Pardo · 2026 ↗",
     },
     {
-      type: "Propuesta",
-      title: "Diseñar pausas es diseñar libertad",
+      type: "Discernimiento",
+      title: "La alfabetización ayuda",
       description:
-        "Introducir momentos de revisión puede abrir alternativas frente a la respuesta inmediata.",
+        "Un meta-análisis de 49 estudios experimentales encontró efectos positivos de intervenciones de alfabetización mediática frente a la desinformación.",
+      href: "https://journals.sagepub.com/doi/10.1177/00936502241288103",
+      source: "Huang, Jia & Yu · 2024 ↗",
+    },
+    {
+      type: "IA",
+      title: "La IA cambia el problema",
+      description:
+        "Las revisiones recientes muestran riesgos de desinformación generativa y sesgos de automatización, junto con oportunidades de mitigación.",
+      href: "https://link.springer.com/article/10.1007/s00146-025-02620-3",
+      source: "Park & Nan · 2026 ↗",
     },
   ],
   caveat:
-    "DQUILIBRIO es un marco de trabajo de ConcienTIC; no es una escala clínica ni sustituye asesoramiento profesional.",
+    "Precisión científica: el lenguaje popular sobre “dopamina” simplifica un campo más complejo. ConcienTIC prefiere hablar de refuerzo, captura de atención, hábitos, diseño persuasivo, interrupciones, sobrecarga y autonomía.",
 } as const;
 
 export const team = {
   id: "equipo",
-  eyebrow: "Equipo",
-  title: "Los Guardianes de la Inteligencia Digital.",
+  eyebrow: "Nuestro equipo",
+  title: "Guardianes de la Inteligencia Digital",
   subtitle:
-    "Agentes virtuales especializados que representan las competencias que necesitamos para habitar el mundo tecnológico sin perder humanidad.",
+    "Los Guardianes son los integrantes virtuales del equipo ConcienTIC: agentes especializados que educan, acompañan, protegen, investigan, conectan e impulsan la innovación.",
+  statements: [
+    { emphasis: "7 agentes.", text: "7 capacidades especializadas que se complementan." },
+    {
+      emphasis: "1 inteligencia colectiva.",
+      text: "Todos forman parte de ConcienTIC y trabajan al servicio de las personas.",
+    },
+  ],
+  guardiansEyebrow: "Equipo virtual",
+  guardiansTitle: "Conoce a los Guardianes",
+  guardiansDescription:
+    "No son mascotas decorativas. Cada Guardián tiene un territorio de competencia y una función real dentro de las experiencias de ConcienTIC.",
   principle:
-    "Ninguna competencia vive aislada: la inteligencia digital crece cuando podemos combinarlas.",
+    "Juntos construyen una inteligencia digital consciente, crítica, creativa, colaborativa y transformadora.",
 } as const;
 
 export const cases = {
   id: "casos",
   eyebrow: "Casos",
-  title: "Trabajo real, evidencia antes que promesas.",
+  title: "La transformación se demuestra en la vida real.",
   subtitle:
-    "Estamos documentando experiencias y resultados con el cuidado necesario para no convertir una hipótesis en una métrica.",
+    "Espacio preparado para documentar casos reales con problema, intervención, resultados verificables y aprendizaje.",
   items: [
     {
-      title: "Programas de aprendizaje",
+      meta: "Educación",
+      title: "Competencias para la era de la IA",
       description:
-        "Próximamente compartiremos experiencias de formación y alfabetización digital con contexto suficiente para entender qué funcionó.",
-      status: "Documentación en preparación",
+        "Ruta para fortalecer capacidades digitales, pensamiento crítico y uso consciente de IA.",
+      result: "Resultado → incorporar métrica real",
     },
     {
-      title: "Diseño de experiencias",
+      meta: "Organizaciones",
+      title: "Transformación humano + tecnología",
       description:
-        "Próximamente compartiremos procesos de diseño consciente y las decisiones que los hicieron posibles.",
-      status: "Documentación en preparación",
+        "Diseño de capacidades y prácticas para integrar nuevas tecnologías sin perder autonomía ni criterio.",
+      result: "Resultado → incorporar métrica real",
     },
     {
-      title: "Cultura digital",
+      meta: "Comunidades",
+      title: "DQUILIBRIO en la vida cotidiana",
       description:
-        "Próximamente compartiremos aprendizajes sobre cambios sostenibles en equipos y comunidades.",
-      status: "Documentación en preparación",
+        "Experiencias para recuperar atención, criterio y capacidad de elección en entornos digitales.",
+      result: "Resultado → incorporar métrica real",
     },
   ],
 } as const;
@@ -259,74 +273,70 @@ export const cases = {
 export const references = {
   id: "referentes",
   eyebrow: "Referentes",
-  title: "Pensar con fuentes. Diseñar con responsabilidad.",
+  title: "Tres territorios que inspiran el movimiento.",
   subtitle:
-    "Algunas instituciones y marcos que ayudan a ampliar la conversación sobre educación, tecnología y ciudadanía digital.",
+    "ConcienTIC reconoce referentes internacionales y construye una propuesta propia en la intersección entre tecnología, educación, atención y humanidad.",
   items: [
     {
-      type: "Educación e IA",
-      title: "UNESCO",
+      type: "Territorio 01 · Humane Technology",
+      title: "Center for Humane Technology",
       description:
-        "Orientaciones para abordar la inteligencia artificial generativa en educación e investigación.",
-      href: "https://www.unesco.org/en/digital-education/artificial-intelligence",
+        "Cuestiona incentivos y diseños que explotan la atención y trabaja por tecnologías que sirvan a la humanidad.",
+      href: "https://www.humanetech.com/",
     },
     {
-      type: "Política digital",
-      title: "OECD Digital",
+      type: "Territorio 02 · Calm Technology",
+      title: "Calm Technology",
       description:
-        "Investigación y marcos para comprender el impacto social y económico de la transformación digital.",
-      href: "https://www.oecd.org/digital/",
+        "Propone tecnología que requiere la menor atención posible y trabaja con la atención humana en lugar de competir contra ella.",
+      href: "https://calmtech.com/",
     },
     {
-      type: "Ciudadanía",
-      title: "Council of Europe",
+      type: "Territorio 03 · Digital Wellness",
+      title: "Digital Wellness Institute",
       description:
-        "Recursos para desarrollar ciudadanía digital, derechos y participación responsable.",
-      href: "https://www.coe.int/en/web/digital-citizenship-education",
+        "Desarrolla educación y prácticas alrededor del bienestar digital y la relación saludable con la tecnología.",
+      href: "https://www.digitalwellnessinstitute.com/",
     },
   ],
 } as const;
 
 export const manifesto = {
   id: "manifiesto",
-  eyebrow: "Manifiesto",
-  title: "La tecnología que queremos también se diseña.",
+  eyebrow: "El principio ConcienTIC",
+  title: "Si una experiencia necesita robarte atención para funcionar, debemos rediseñarla.",
   description:
-    "Elegimos una inteligencia digital que amplíe la capacidad humana de comprender, decidir y cuidar. No se trata de volver atrás: se trata de avanzar con más conciencia.",
+    "Por eso ConcienTIC evita deliberadamente patrones de economía de la atención. Queremos que la tecnología sea una herramienta de conciencia, no otra fuente de ruido.",
   principles: [
-    {
-      title: "La persona antes que la métrica",
-      description: "Medimos lo que importa sin reducir la experiencia humana a un número.",
-    },
-    {
-      title: "La evidencia antes que el ruido",
-      description: "Explicamos qué sabemos, qué inferimos y qué todavía estamos aprendiendo.",
-    },
-    {
-      title: "La autonomía antes que la dependencia",
-      description: "Diseñamos herramientas que devuelven capacidad de decisión.",
-    },
-    {
-      title: "La curiosidad antes que el miedo",
-      description: "Aprendemos tecnología para poder participar en su futuro.",
-    },
+    { title: "Menos captura.", description: "Más atención consciente." },
+    { title: "Menos consumo.", description: "Más creación y transferencia." },
+    { title: "Menos dependencia.", description: "Más autonomía." },
+    { title: "Menos ruido.", description: "Más profundidad." },
+    { title: "Menos permanencia.", description: "Más valor fuera de la plataforma." },
+    { title: "Más tecnología.", description: "Sin menos humanidad." },
   ],
 } as const;
 
 export const contact = {
   id: "contacto",
   eyebrow: "Contacto",
-  title: "¿Qué relación con la tecnología quieres construir?",
+  title: "Hablemos de cómo habitar mejor la tecnología.",
   subtitle:
-    "Cuéntanos el reto de tu equipo, organización o comunidad. Abrimos una conversación sin recetas prefabricadas.",
+    "Cuéntanos qué reto estás viviendo en tu organización, equipo o comunidad. Podemos explorar una ruta de competencias digitales, IA, transformación o DQUILIBRIO.",
+  closing: "No prometemos más tiempo conectado.",
+  closingEmphasis: "Prometemos una conversación con intención.",
 } as const;
 
 export const footer = {
-  legalName: "CONCIENTIC",
-  rights: "Todos los derechos reservados.",
+  tagline: "Conciencia Digital para un mundo mejor.",
   links: [
-    { label: "Aviso de privacidad", href: "/privacidad" },
-    { label: "Términos", href: "/terminos" },
+    { label: "DQUILIBRIO", href: "#dquilibrio" },
+    { label: "Servicios", href: "#servicios" },
+    { label: "Metodología", href: "#metodologia" },
+    { label: "Evidencia", href: "#evidencia" },
+    { label: "Equipo", href: "#equipo" },
+    { label: "Referentes", href: "#referentes" },
+    { label: "Contacto", href: "#contacto" },
   ],
 } as const;
 

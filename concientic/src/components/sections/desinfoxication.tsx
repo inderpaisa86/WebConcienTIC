@@ -12,9 +12,9 @@ export function Desinfoxication() {
           dark
         />
         <div className="desinfoxication-grid">
-          {desinfoxication.steps.map((step, index) => (
-            <article className="desinfoxication-card" key={step.title}>
-              <span className="info-card__number">0{index + 1}</span>
+          {desinfoxication.steps.map((step) => (
+            <article className="desinfoxication-card" key={step.label}>
+              <span className="info-card__number">{step.label}</span>
               <h3>{step.title}</h3>
               <p>{step.description}</p>
             </article>

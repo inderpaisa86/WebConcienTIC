@@ -9,6 +9,11 @@ export function Contact() {
         <div className="contact-copy">
           <SectionHeader eyebrow={contact.eyebrow} title={contact.title} />
           <p>{contact.subtitle}</p>
+          <p>
+            <strong>{contact.closing}</strong>
+            <br />
+            {contact.closingEmphasis}
+          </p>
         </div>
         <div className="contact-form-shell">
           <ContactForm />

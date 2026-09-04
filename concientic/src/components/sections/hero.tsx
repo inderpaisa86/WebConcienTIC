@@ -32,8 +32,10 @@ export function Hero() {
           <span className="hero-node hero-node--five">HUMANIDAD</span>
           <div className="hero-core">
             <span>
-              <strong>DQUI</strong>
-              LIBRIO
+              <strong>DQUILIBRIO</strong>
+              tecnología
+              <br />
+              con conciencia
             </span>
           </div>
         </div>

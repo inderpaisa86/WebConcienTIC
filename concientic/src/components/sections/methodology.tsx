@@ -16,7 +16,7 @@ export function Methodology() {
             />
             <div
               className="methodology-wheel"
-              aria-label="Ciclo de metodología ConcienTIC"
+              aria-label="Ciclo DQUILIBRIO: detener, observar, discernir, elegir y equilibrar"
               role="img"
             >
               {methodology.steps.map((step, index) => (
@@ -28,7 +28,10 @@ export function Methodology() {
                   {step.title}
                 </span>
               ))}
-              <span className="methodology-wheel__center">DQUILIBRIO</span>
+              <span className="methodology-wheel__center">
+                DQUILIBRIO
+                <small>volver a elegir</small>
+              </span>
             </div>
           </div>
           <ol className="methodology-list">
