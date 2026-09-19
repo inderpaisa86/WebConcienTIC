@@ -45,21 +45,25 @@ export const dquilibrio = {
       number: "01 · Atención",
       title: "Recuperar presencia",
       description: "Reconocer que la atención es limitada y diseñar experiencias que la respeten.",
+      href: "/dquilibrio/atencion.html",
     },
     {
       number: "02 · Información",
       title: "Reducir saturación",
-      description: "Pasar de acumular información a seleccionar, contextualizar y sintetizar.",
+      description: "Pasar de acumular información a seleccionar, contextualizar y comprender.",
+      href: "/dquilibrio/informacion.html",
     },
     {
-      number: "03 · Discernimiento",
+      number: "03 · Criterio",
       title: "Decidir con criterio",
-      description: "Verificar fuentes, reconocer sesgos y diferenciar evidencia de apariencia.",
+      description: "Distinguir evidencia, interpretación y opinión antes de actuar.",
+      href: "/dquilibrio/discernimiento.html",
     },
     {
       number: "04 · Autonomía",
       title: "Elegir conscientemente",
-      description: "Usar IA y tecnología como herramientas al servicio de objetivos humanos.",
+      description: "Usar la tecnología por decisión propia, no por inercia.",
+      href: "/dquilibrio/autonomia.html",
     },
   ],
 } as const;
@@ -249,10 +253,10 @@ export const cases = {
       result: "Resultado → incorporar métrica real",
     },
     {
-      meta: "Comunidades",
-      title: "DQUILIBRIO en la vida cotidiana",
+      meta: "Ecosistema",
+      title: "DQUILIBRIO en acción",
       description:
-        "Experiencias para recuperar atención, criterio y capacidad de elección en entornos digitales.",
+        "Experiencia para transformar la relación de las personas con atención, información y tecnología.",
       result: "Resultado → incorporar métrica real",
     },
   ],

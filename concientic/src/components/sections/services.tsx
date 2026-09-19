@@ -3,7 +3,7 @@ import { SectionHeader } from "@/components/ui/section-header";
 
 export function Services() {
   return (
-    <section id={services.id} className="ct-section">
+    <section id={services.id} className="ct-section ct-section--soft">
       <div className="ct-container">
         <SectionHeader
           eyebrow={services.eyebrow}

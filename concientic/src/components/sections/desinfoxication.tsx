@@ -3,13 +3,12 @@ import { SectionHeader } from "@/components/ui/section-header";
 
 export function Desinfoxication() {
   return (
-    <section id={desinfoxication.id} className="ct-section desinfoxication-section">
+    <section id={desinfoxication.id} className="ct-section">
       <div className="ct-container">
         <SectionHeader
           eyebrow={desinfoxication.eyebrow}
           title={desinfoxication.title}
           description={desinfoxication.description}
-          dark
         />
         <div className="desinfoxication-grid">
           {desinfoxication.steps.map((step) => (

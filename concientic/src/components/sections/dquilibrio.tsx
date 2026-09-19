@@ -12,11 +12,18 @@ export function Dquilibrio() {
         />
         <div className="card-grid card-grid--four">
           {dquilibrio.items.map((item) => (
-            <article className="info-card" key={item.number}>
+            <a
+              className="info-card"
+              key={item.number}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Abrir la experiencia ${item.title} en una pestaña nueva`}
+            >
               <span className="info-card__number">{item.number}</span>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
-            </article>
+            </a>
           ))}
         </div>
       </div>

@@ -498,11 +498,34 @@ h4 {
 }
 
 .info-card {
+  position: relative;
+  display: block;
   min-height: 230px;
   border: 1px solid var(--ct-line);
   border-radius: var(--ct-radius-md);
   padding: 26px;
   background: var(--ct-white);
+}
+
+a.info-card::after {
+  position: absolute;
+  right: 26px;
+  bottom: 22px;
+  content: "Abrir →";
+  color: var(--ct-primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+
+a.info-card:hover::after,
+a.info-card:focus-visible::after {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .info-card__number {
@@ -538,30 +561,11 @@ h4 {
   font-size: 0.9rem;
 }
 
-.desinfoxication-section {
-  background: linear-gradient(135deg, var(--ct-dark), #172e44);
-  color: var(--ct-white);
-}
-
-.desinfoxication-section h2 {
-  color: var(--ct-white);
-}
-
-.desinfoxication-section .ct-section-header p {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.desinfoxication-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
 .desinfoxication-card {
   border-top: 3px solid var(--ct-primary);
   border-radius: 0 0 var(--ct-radius-md) var(--ct-radius-md);
   padding: 24px;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--ct-white);
 }
 
 .desinfoxication-card:nth-child(2) {
@@ -573,13 +577,13 @@ h4 {
 
 .desinfoxication-card h3 {
   margin: 26px 0 8px;
-  color: var(--ct-white);
+  color: var(--ct-dark);
   font-size: 1.35rem;
 }
 
 .desinfoxication-card p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.68);
+  color: var(--ct-muted);
   font-size: 0.9rem;
 }
 
@@ -1062,7 +1066,7 @@ h4 {
   font-size: 0.72rem;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1050px) {
   .site-nav,
   .header-actions > .ct-button {
     display: none;
@@ -1090,12 +1094,6 @@ h4 {
 
   .guardian-grid {
     grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (min-width: 1051px) and (max-width: 1100px) {
-  .evidence-section .card-grid--four {
-    grid-template-columns: repeat(4, 1fr);
   }
 }
 
