@@ -5,6 +5,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { GoogleAnalytics } from "@/components/analytics/google-analytics";
+import { VercelAnalyticsComponent } from "@/components/analytics/vercel-analytics";
 import { CookieConsent } from "@/components/analytics/cookie-consent";
 import { site } from "@/content/site";
 
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
+        <VercelAnalyticsComponent />
         <GoogleAnalytics />
         <CookieConsent />
       </body>
