@@ -233,11 +233,7 @@ Si Upstash no está configurado, el sistema degrada de forma segura y permite co
 
 ### Google Analytics 4
 
-La analítica es opcional y se activa con:
-
-```env
-NEXT_PUBLIC_GA_ID=
-```
+La analítica es opcional y se activa con la variable de entorno `GA_ID` en Vercel (Settings → Environment Variables, sin prefijo).
 
 ### Vercel Analytics y SpeedInsights
 

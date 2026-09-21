@@ -14,7 +14,7 @@ import Script from "next/script";
  * Si NEXT_PUBLIC_GA_ID no está definido (dev/build), no se inyecta nada.
  */
 export function GoogleAnalytics() {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const gaId = process.env.GA_ID;
   if (!gaId) return null;
 
   return (
