@@ -21,10 +21,12 @@ La página presenta la propuesta de ConcienTIC a través de la filosofía **DQUI
 - Navegación por anclas entre las secciones de la página.
 - Formulario de contacto con validación, protección honeypot y rate limiting.
 - Envío de mensajes mediante Resend.
-- Integración opcional con Google Analytics 4 y Upstash Redis.
+- Integración opcional con Google Analytics 4, Vercel Analytics y Vercel SpeedInsights.
 - Rutas legales de privacidad y términos y condiciones.
 - Skip link, foco visible, textos alternativos y estados accesibles del formulario.
 - Soporte para `prefers-reduced-motion`.
+- Integración con Vercel Analytics para medir tráfico y métricas de rendimiento.
+- Integración con Vercel SpeedInsights para monitorear Core Web Vitals (LCP, FID, CLS, TTI).
 
 ## Orden de la página
 
@@ -124,6 +126,8 @@ Permite enviar consultas sobre retos de organizaciones, equipos y comunidades re
 - Resend para el envío de correos.
 - Upstash Redis / Vercel KV para rate limiting opcional.
 - Google Analytics 4 opcional.
+- Vercel Analytics opcional para métricas de tráfico y rendimiento.
+- Vercel SpeedInsights opcional para Core Web Vitals (LCP, FID, CLS, TTI).
 - Lucide React para iconos.
 
 ## Requisitos
@@ -234,6 +238,14 @@ La analítica es opcional y se activa con:
 ```env
 NEXT_PUBLIC_GA_ID=
 ```
+
+### Vercel Analytics y SpeedInsights
+
+**Vercel Analytics** opcional para métricas de tráfico (páginas vistas, dispositivos, ubicación).
+
+**Vercel SpeedInsights** opcional para métricas de rendimiento (LCP, FID, CLS, TTI).
+
+Ambos se activan automáticamente cuando el proyecto está desplegado en Vercel. No requieren variables de entorno.
 
 ## API de contacto
 
