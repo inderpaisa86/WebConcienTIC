@@ -52,6 +52,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: site.domain,
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
