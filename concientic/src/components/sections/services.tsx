@@ -11,13 +11,44 @@ export function Services() {
           description={services.subtitle}
         />
         <div className="card-grid card-grid--five">
-          {services.items.map((item) => (
-            <article className="service-card" key={item.title}>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              <span className="service-card__tag">{item.tag}</span>
-            </article>
-          ))}
+          {services.items.map((item) => {
+            const className = `service-card service-card--${item.state}`;
+            const content = (
+              <>
+                {item.state === "disabled" ? (
+                  <span className="service-card__soon">En construcción</span>
+                ) : null}
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <span className="service-card__tag">{item.tag}</span>
+              </>
+            );
+
+            if (item.href) {
+              return (
+                <a
+                  className={className}
+                  href={item.href}
+                  key={item.title}
+                  target={item.target ?? undefined}
+                  rel={item.rel ?? undefined}
+                  aria-label={item.ariaLabel ?? undefined}
+                >
+                  {content}
+                </a>
+              );
+            }
+
+            return (
+              <article
+                aria-disabled={item.state === "disabled" ? true : undefined}
+                className={className}
+                key={item.title}
+              >
+                {content}
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

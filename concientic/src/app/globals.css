@@ -615,6 +615,70 @@ a.info-card:focus-visible::after {
   text-transform: uppercase;
 }
 
+.service-card--link,
+.service-card--anchor {
+  position: relative;
+  display: block;
+}
+
+.service-card--link::after,
+.service-card--anchor::after {
+  position: absolute;
+  right: 23px;
+  bottom: 20px;
+  color: var(--ct-primary);
+  content: "Abrir →";
+  font-size: 0.72rem;
+  font-weight: 800;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+
+.service-card--anchor::after {
+  content: "Ver ↓";
+}
+
+.service-card--link:hover::after,
+.service-card--link:focus-visible::after,
+.service-card--anchor:hover::after,
+.service-card--anchor:focus-visible::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.service-card__soon {
+  display: inline-block;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  padding: 3px 10px;
+  background: var(--ct-muted);
+  color: var(--ct-white);
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.service-card--disabled {
+  border-style: dashed;
+  background: #f1f3f5;
+  cursor: not-allowed;
+}
+
+.service-card--disabled:hover {
+  box-shadow: none;
+  transform: none;
+}
+
+.service-card--disabled h3,
+.service-card--disabled p,
+.service-card--disabled .service-card__tag {
+  color: var(--ct-muted);
+}
+
 .methodology-grid {
   display: grid;
   grid-template-columns: 0.72fr 1.28fr;
