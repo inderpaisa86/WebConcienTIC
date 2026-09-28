@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +13,7 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="ct-container header-inner">
-        <a className="brand-link" href="#inicio" aria-label={`${site.name}, inicio`}>
+        <Link className="brand-link" href="/" aria-label={`${site.name}, inicio`}>
           <span className="brand-mark">
             <Image
               src="/brand/concientic-nexus-wordmark-transparente-fondo-claro.png"
@@ -22,7 +23,7 @@ export function Header() {
               sizes="320px"
             />
           </span>
-        </a>
+        </Link>
 
         <nav className="site-nav" aria-label="Principal">
           {navLinks.map((link) => (
