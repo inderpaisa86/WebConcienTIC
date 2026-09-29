@@ -21,3 +21,4 @@ jobs:
             -X POST "$CATALOG_URL/internal/runs/daily" \
             -H "Authorization: Bearer $INGESTION_TOKEN" \
             -H "Idempotency-Key: catalog-${{ github.run_id }}"
+
