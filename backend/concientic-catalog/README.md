@@ -25,3 +25,27 @@ TIMEZONE=America/Bogota
 ```
 
 El primer incremento expone el catálogo y el contrato del orquestador. La investigación real de fuentes se habilitará después de implementar y probar los adaptadores especializados.
+
+## Despliegue en Render con Docker
+
+En Render crea un **Web Service** usando el repositorio actual y configura:
+
+```text
+Root Directory: backend/concientic-catalog
+Runtime: Docker
+Dockerfile Path: Dockerfile
+Health Check Path: /actuator/health
+```
+
+No es necesario seleccionar un runtime Java: el `Dockerfile` fija Java 25 y ejecuta el Gradle Wrapper.
+
+Variables de entorno requeridas en Render:
+
+```text
+DATABASE_URL=jdbc:postgresql://HOST_DIRECTO/concienticdb?sslmode=require
+DATABASE_USERNAME=neondb_owner
+DATABASE_PASSWORD=<configurar directamente en Render>
+TIMEZONE=America/Bogota
+INGESTION_TOKEN=<token seguro>
+CORS_ALLOWED_ORIGINS=https://concientic.com
+```
