@@ -2,10 +2,12 @@ package com.concientic.catalog.ingestion;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLException;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -22,14 +24,26 @@ public class JdbcIngestionRunStore implements IngestionRunStore {
     @Override
     public void start(UUID runId, Instant startedAt, String timezone) {
         log.info("Inserting ingestion_runs start record runId={}", runId);
-        int rows = jdbc.update("""
-                INSERT INTO ingestion_runs (id, status, started_at, timezone)
-                VALUES (:id, 'STARTED', :startedAt, :timezone)
-                """, new MapSqlParameterSource()
-                .addValue("id", runId)
-                .addValue("startedAt", startedAt)
-                .addValue("timezone", timezone));
-        log.info("Inserted ingestion_runs start record runId={} rows={}", runId, rows);
+        try {
+            int rows = jdbc.update("""
+                    INSERT INTO ingestion_runs (id, status, started_at, timezone)
+                    VALUES (:id, 'STARTED', :startedAt, :timezone)
+                    """, new MapSqlParameterSource()
+                    .addValue("id", runId)
+                    .addValue("startedAt", startedAt)
+                    .addValue("timezone", timezone));
+            log.info("Inserted ingestion_runs start record runId={} rows={}", runId, rows);
+        } catch (DataAccessException exception) {
+            Throwable rootCause = exception.getMostSpecificCause();
+            if (rootCause instanceof SQLException sqlException) {
+                log.error("ingestion_runs INSERT failed runId={} sqlState={} vendorCode={} rootMessage={}",
+                        runId, sqlException.getSQLState(), sqlException.getErrorCode(), sqlException.getMessage(), exception);
+            } else {
+                log.error("ingestion_runs INSERT failed runId={} rootType={} rootMessage={}",
+                        runId, rootCause.getClass().getName(), rootCause.getMessage(), exception);
+            }
+            throw exception;
+        }
     }
 
     @Override
