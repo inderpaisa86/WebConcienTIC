@@ -1,6 +1,7 @@
 package com.concientic.catalog.ingestion;
 
 import com.concientic.catalog.api.DailyRunResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ public class DailyRunOrchestrator {
     private final String timezone;
     private final IngestionRunService ingestionRunService;
 
+    @Autowired
     public DailyRunOrchestrator(
             @Value("${concientic.timezone:America/Bogota}") String timezone,
             IngestionRunService ingestionRunService) {
