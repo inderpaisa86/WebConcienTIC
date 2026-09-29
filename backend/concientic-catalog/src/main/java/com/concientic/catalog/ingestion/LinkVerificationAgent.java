@@ -1,5 +1,6 @@
 package com.concientic.catalog.ingestion;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class LinkVerificationAgent implements ResourceVerifier {
     private final boolean allowLocalAddresses;
     private final HtmlSemanticAnalyzer analyzer = new HtmlSemanticAnalyzer();
 
+    @Autowired
     public LinkVerificationAgent(
             @Value("${concientic.verification.timeout-seconds:15}") long timeoutSeconds,
             @Value("${concientic.verification.max-body-bytes:1000000}") int maxBodyBytes) {
