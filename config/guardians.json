@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "guardians": [
+    {"name":"Emi","role":"Agente de Empatía Digital","territory":"Empatía y bienestar digital","color":"#FF6EB6","asset":"/guardians/emi.png"},
+    {"name":"Locky","role":"Agente de Seguridad Digital","territory":"Seguridad y protección","color":"#0077FF","asset":"/guardians/locky.png"},
+    {"name":"Lex","role":"Agente de Pensamiento Crítico","territory":"Pensamiento crítico y ética","color":"#FFC857","asset":"/guardians/lex.png"},
+    {"name":"Byte","role":"Agente de Alfabetización Digital","territory":"Aprendizaje e inteligencia digital","color":"#00C49A","asset":"/guardians/byte.png"},
+    {"name":"Detective DQ","role":"Agente de Discernimiento Digital","territory":"Investigación y verificación","color":"#6C63FF","asset":"/guardians/detective-dq.png"},
+    {"name":"Nexo","role":"Agente de Conexión Digital","territory":"Colaboración y comunidad","color":"#00B4D8","asset":"/guardians/nexo.png"},
+    {"name":"Nova","role":"Agente de Innovación Digital","territory":"Innovación y transformación","color":"#FF7A00","asset":"/guardians/nova.png"}
+  ]
+}

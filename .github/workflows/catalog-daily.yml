@@ -1,0 +1,23 @@
+name: ConcienTIC catalog daily run
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * *"
+
+jobs:
+  trigger-catalog-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger protected catalog endpoint
+        env:
+          CATALOG_URL: ${{ secrets.CATALOG_URL }}
+          INGESTION_TOKEN: ${{ secrets.INGESTION_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -n "$CATALOG_URL"
+          test -n "$INGESTION_TOKEN"
+          curl --fail-with-body --retry 2 --max-time 30 \
+            -X POST "$CATALOG_URL/internal/runs/daily" \
+            -H "Authorization: Bearer $INGESTION_TOKEN" \
+            -H "Idempotency-Key: catalog-${{ github.run_id }}"

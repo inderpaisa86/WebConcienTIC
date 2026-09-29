@@ -608,3 +608,479 @@ No se migrará a microservicios, workers permanentes u OpenSearch por anticipaci
 ## 17. Decisión pendiente
 
 La siguiente decisión de producto antes de programar no es todavía el framework, sino la lista inicial de fuentes y los criterios exactos para considerar un curso publicable. Esa definición determinará los primeros adaptadores, el modelo de datos y las reglas de calidad.
+
+
+---
+
+# Anexo A — Requisitos operativos del catálogo vivo
+
+Este anexo precisa el comportamiento esperado del catálogo para la ruta:
+
+```text
+Servicios → Competencias Digitales → Contenidos → Biblioteca abierta
+```
+
+## A.1 Definición del producto
+
+El sistema no debe limitarse a buscar “cursos gratis”. Debe descubrir, evaluar, verificar, clasificar y mantener **recursos de aprendizaje digital confiables y realmente accesibles**.
+
+Un recurso puede ser un curso, ruta, lección, biblioteca, marco, módulo, tutorial u otra experiencia de aprendizaje digital que permita desarrollar una o más competencias de ConcienTIC.
+
+La condición de publicación debe considerar simultáneamente:
+
+- Confiabilidad de la fuente.
+- Disponibilidad actual del enlace.
+- Accesibilidad real del recurso.
+- Condición de gratuidad verificada.
+- Idioma disponible.
+- Modalidad y duración identificables.
+- Relación con una competencia digital.
+- Relación con uno o más Guardianes.
+- Evidencia suficiente para explicar por qué el recurso fue publicado.
+
+La palabra `free` no deberá determinarse únicamente por el título del recurso. Debe existir una verificación reciente de su acceso y de sus condiciones.
+
+## A.2 Principio de operación
+
+El proceso debe ser:
+
+```text
+AUTOMÁTICO → DIARIO → VERIFICABLE → ACUMULATIVO
+```
+
+- **Automático:** una ejecución programada inicia el ciclo sin intervención manual.
+- **Diario:** el sistema intenta realizar una sincronización cada día.
+- **Verificable:** cada decisión y cada cambio conserva fecha, fuente, resultado y evidencia técnica.
+- **Acumulativo:** el sistema conserva el historial; no reemplaza silenciosamente el estado anterior.
+
+La automatización no significa publicar ciegamente cualquier resultado. Los candidatos dudosos pueden quedar en revisión, mientras que las comprobaciones técnicas rutinarias sí deben ejecutarse automáticamente.
+
+## A.3 Ciclo diario completo
+
+Cada ejecución diaria debe realizar, como mínimo, estas etapas:
+
+1. **Investigar nuevas fuentes** dentro de los canales permitidos.
+2. **Revisar las fuentes registradas** y comprobar si siguen activas.
+3. **Detectar nuevos recursos**.
+4. **Revisar recursos previamente registrados**.
+5. **Detectar recursos retirados o temporalmente inaccesibles**.
+6. **Detectar cambios de URL**, incluyendo redirecciones y URL canónica.
+7. **Detectar cambios de idioma**.
+8. **Detectar cambios de duración**.
+9. **Detectar cambios de modalidad o formato**.
+10. **Detectar cambios en la condición de gratuidad**.
+11. **Verificar que los enlaces funcionen**.
+12. **Clasificar cada recurso**.
+13. **Asociar cada recurso con una o más competencias digitales**.
+14. **Asociar cada recurso con uno o más Guardianes**.
+15. **Calcular o actualizar la puntuación de calidad**.
+16. **Actualizar el estado del recurso**.
+17. **Guardar el historial y los cambios detectados**.
+18. **Actualizar el índice de búsqueda**.
+19. **Publicar el nuevo snapshot del catálogo**.
+20. **Generar los datos que consumen las tarjetas de Biblioteca abierta**.
+21. **Registrar métricas, errores y resumen de la ejecución**.
+
+## A.4 Descubrimiento de nuevas fuentes
+
+El descubrimiento diario de fuentes debe ser controlado. El sistema no debe aceptar automáticamente cualquier dominio encontrado en Internet.
+
+Canales posibles, en este orden:
+
+1. Catálogos, APIs, RSS y sitemaps de fuentes ya confiables.
+2. Enlaces recomendados por fuentes registradas.
+3. Listas públicas de instituciones educativas, gubernamentales o internacionales.
+4. Descubrimiento web limitado y sujeto a validación.
+5. Incorporación manual de una fuente propuesta.
+
+Las nuevas fuentes encontradas se guardarán como candidatas en `source_discovery_candidates`, con estado `PENDING_REVIEW`. Una fuente solo podrá alimentar recursos publicados cuando haya sido aprobada y configurada en `sources`.
+
+Esto permite que la investigación sea automática sin convertirla en una publicación automática sin control.
+
+## A.5 Verificación de disponibilidad y accesibilidad
+
+Cada recurso debe tener una verificación reciente. La verificación no se limita a comprobar que el servidor responde `200`.
+
+Se deben registrar, cuando sea posible:
+
+- Código HTTP.
+- URL solicitada.
+- URL final después de redirecciones.
+- URL canónica detectada.
+- Fecha y hora de comprobación.
+- Tiempo de respuesta.
+- Tipo de contenido.
+- Si requiere autenticación.
+- Si requiere una cuenta gratuita.
+- Si solicita pago.
+- Si está bloqueado por región o navegador.
+- Si muestra que el contenido fue retirado.
+- Huella o hash de metadatos relevantes.
+
+Estados de acceso previstos:
+
+```text
+PUBLIC_FREE
+FREE_ACCOUNT_REQUIRED
+ACCESSIBLE_WITH_LIMITATIONS
+PAYWALLED
+UNAVAILABLE
+BLOCKED
+UNKNOWN
+```
+
+Solo `PUBLIC_FREE`, `FREE_ACCOUNT_REQUIRED` y, si se decide expresamente, `ACCESSIBLE_WITH_LIMITATIONS` podrán ser candidatos a publicación. Los demás estados deben retirar el recurso de las tarjetas o enviarlo a revisión.
+
+Un recurso no debe desaparecer inmediatamente ante un único error de red. El sistema debe aplicar una política de reintentos y confirmar la indisponibilidad en ejecuciones posteriores antes de marcarlo como `STALE` o `ARCHIVED`, salvo que la propia página indique que fue retirado.
+
+## A.6 Detección de cambios
+
+Cada comprobación debe comparar el resultado actual con el último estado conocido.
+
+Cambios que deben detectarse:
+
+- Título.
+- Descripción.
+- Proveedor.
+- URL solicitada.
+- URL final o canónica.
+- Idioma.
+- Duración.
+- Modalidad o formato.
+- Condición de gratuidad.
+- Disponibilidad.
+- Certificación.
+- Competencias asociadas.
+- Guardianes asociados.
+- Fecha de actualización de la fuente.
+
+Cada cambio debe producir un registro en `resource_changes`:
+
+```text
+resource_changes
+├── id
+├── resource_id
+├── ingestion_run_id
+├── field_name
+├── previous_value
+├── current_value
+├── detected_at
+├── change_type
+└── evidence_reference
+```
+
+Tipos de cambio previstos:
+
+```text
+CREATED
+UPDATED
+URL_CHANGED
+REDIRECT_CHANGED
+LANGUAGE_CHANGED
+DURATION_CHANGED
+FORMAT_CHANGED
+PRICE_CHANGED
+AVAILABILITY_CHANGED
+CLASSIFICATION_CHANGED
+GUARDIAN_CHANGED
+STALE_MARKED
+ARCHIVED
+```
+
+Los valores anteriores no deben perderse. Para campos importantes se conservarán snapshots o versiones.
+
+## A.7 Modelo complementario de datos
+
+Además de las tablas descritas en el documento principal, el proceso diario necesitará las siguientes entidades.
+
+### `resource_checks`
+
+Una fila por cada comprobación de disponibilidad de un recurso.
+
+Campos previstos:
+
+- `id`
+- `resource_id`
+- `ingestion_run_id`
+- `requested_url`
+- `final_url`
+- `canonical_url`
+- `http_status`
+- `response_time_ms`
+- `access_status`
+- `requires_account`
+- `requires_payment`
+- `language_detected`
+- `checked_at`
+- `evidence_hash`
+- `error_code`
+- `error_message`
+
+### `resource_versions`
+
+Representa una versión conocida de los metadatos de un recurso.
+
+Campos previstos:
+
+- `id`
+- `resource_id`
+- `version_number`
+- `title`
+- `description`
+- `language`
+- `duration`
+- `format`
+- `is_free`
+- `canonical_url`
+- `captured_at`
+- `content_hash`
+- `source_check_id`
+
+### `resource_changes`
+
+Registra diferencias entre la versión anterior y la actual. Debe permitir responder qué cambió, cuándo cambió y durante qué ejecución se detectó.
+
+### `source_discovery_candidates`
+
+Representa fuentes nuevas encontradas automáticamente o propuestas manualmente.
+
+Estados previstos:
+
+```text
+PENDING_REVIEW
+APPROVED
+REJECTED
+DUPLICATE
+BLOCKED
+```
+
+### `guardians`
+
+Catálogo de Guardianes de ConcienTIC. Como referencia inicial, el frontend actual contiene Guardianes como Byte, Detective DQ, Emi, Lex, Locky, Nexo y Nova. La lista definitiva y la semántica de cada Guardián deberán confirmarse antes de implementar la clasificación.
+
+### `resource_guardians`
+
+Relación muchos a muchos entre recursos y Guardianes, incluyendo:
+
+- `resource_id`
+- `guardian_id`
+- `assignment_source`
+- `confidence_score`
+- `is_primary`
+- `assigned_at`
+
+### `resource_competencies`
+
+Relación muchos a muchos entre recursos y competencias. Puede reemplazar o especializar la tabla `course_competencies` cuando el catálogo deje de tratar exclusivamente cursos.
+
+## A.8 Clasificación y Guardianes
+
+La clasificación debe ser explicable. Para cada asociación se debe poder conocer si provino de:
+
+- Regla explícita.
+- Metadato de la fuente.
+- Coincidencia de palabras clave.
+- Clasificación automática.
+- Revisión manual.
+
+La asociación con Guardianes debe incluir un nivel de confianza y, cuando sea posible, una regla o evidencia. Por ejemplo:
+
+```text
+Seguridad + privacidad + ciberseguridad → Locky
+Información + búsqueda + alfabetización → Byte
+Discernimiento + fuentes + desinformación → Detective DQ / Lex
+IA + tecnología + creación → Nova
+Bienestar + uso equilibrado → Emi
+Comunicación + colaboración → Nexo
+```
+
+Estas asociaciones son ejemplos iniciales de diseño y no deben considerarse taxonomía definitiva hasta validarlas con el producto.
+
+Un recurso puede tener:
+
+- Una competencia principal.
+- Varias competencias secundarias.
+- Un Guardián principal.
+- Varios Guardianes relacionados.
+
+## A.9 Catálogo y tarjetas de Biblioteca abierta
+
+Las tarjetas no deben generarse modificando diariamente archivos HTML, JSX o JavaScript. El backend debe generar datos de catálogo y el frontend debe renderizarlos.
+
+Flujo previsto:
+
+```text
+PostgreSQL
+    ↓
+Vista de recursos publicados
+    ↓
+API /api/v1/resources
+    ↓
+Frontend Biblioteca abierta
+    ↓
+Tarjetas filtrables
+```
+
+La respuesta de la API debe incluir todos los datos necesarios para una tarjeta:
+
+- Identificador.
+- Título.
+- Descripción breve.
+- Fuente.
+- URL original.
+- URL final verificada.
+- Competencias.
+- Guardianes.
+- Idioma.
+- Nivel.
+- Duración.
+- Modalidad.
+- Gratuidad verificada.
+- Estado de disponibilidad.
+- Fecha de última verificación.
+- Etiquetas.
+
+Endpoint previsto:
+
+```http
+GET /api/v1/resources
+GET /api/v1/resources/{id}
+GET /api/v1/resources/facets
+GET /api/v1/catalog/status
+```
+
+`GET /api/v1/catalog/status` debe permitir mostrar o registrar:
+
+```json
+{
+  "catalogVersion": "2026-09-29T03:00:00Z",
+  "lastSuccessfulRun": "2026-09-29T03:00:00Z",
+  "publishedResources": 128,
+  "lastVerifiedAt": "2026-09-29T03:00:00Z"
+}
+```
+
+La generación de datos para tarjetas significa construir el snapshot y la respuesta API del catálogo. No significa crear commits automáticos ni reescribir el código del frontend cada día.
+
+## A.10 Ejecución idempotente y acumulativa
+
+Cada ejecución diaria debe tener un `ingestion_run_id` único y ser idempotente:
+
+- Repetir una ejecución no debe duplicar recursos.
+- La URL canónica y la identificación externa deben usarse para deduplicar.
+- Un error parcial no debe borrar el catálogo válido anterior.
+- La publicación del snapshot debe ocurrir solo después de finalizar las validaciones.
+- Los recursos anteriores deben conservarse hasta confirmar su retiro.
+- La ejecución debe poder reintentarse sin corromper los estados.
+- Los cambios deben quedar asociados a la ejecución que los detectó.
+
+La actualización se puede modelar como dos pasos:
+
+```text
+1. Ingestar y validar en estado de trabajo
+2. Publicar atómicamente el nuevo snapshot válido
+```
+
+Si una fuente falla, el sistema debe conservar la última versión válida y marcar la fuente o el recurso con una advertencia interna, sin eliminar automáticamente todas sus tarjetas.
+
+## A.11 Resultado verificable de cada día
+
+Cada ejecución deberá producir un resumen consultable:
+
+```text
+DailyCatalogRun
+├── runId
+├── startedAt
+├── finishedAt
+├── status
+├── sourcesInvestigated
+├── newSourcesFound
+├── resourcesDetected
+├── resourcesCreated
+├── resourcesUpdated
+├── resourcesUnavailable
+├── urlsChanged
+├── classificationsChanged
+├── guardiansAssigned
+├── cardsPublished
+├── warnings
+└── errors
+```
+
+Estados de ejecución:
+
+```text
+STARTED
+PARTIAL_SUCCESS
+SUCCESS
+FAILED
+```
+
+La ejecución `PARTIAL_SUCCESS` es válida cuando algunas fuentes funcionan y otras fallan, siempre que el catálogo anterior se mantenga consistente y el fallo quede registrado.
+
+## A.12 Criterios de aceptación funcional
+
+La futura implementación deberá demostrar que:
+
+- [ ] El proceso puede ejecutarse automáticamente una vez al día.
+- [ ] El proceso registra qué fuentes investigó.
+- [ ] Los nuevos recursos no duplican recursos existentes.
+- [ ] Un recurso retirado puede pasar a `STALE` o `ARCHIVED` con evidencia.
+- [ ] Un cambio de URL queda registrado sin perder la URL anterior.
+- [ ] Un cambio de idioma, duración, modalidad o gratuidad queda registrado.
+- [ ] Los enlaces se verifican y tienen fecha de última comprobación.
+- [ ] Los recursos se clasifican por una o más competencias.
+- [ ] Los recursos se asocian con uno o más Guardianes.
+- [ ] Las asociaciones automáticas tienen origen y confianza.
+- [ ] Los cambios se conservan acumulativamente.
+- [ ] Las tarjetas se alimentan del catálogo publicado mediante API.
+- [ ] Una falla de una fuente no elimina el catálogo válido anterior.
+- [ ] El resultado diario es consultable y auditable.
+- [ ] No se generan cambios de código automáticos para actualizar las tarjetas.
+
+## A.13 Ajuste a las fases de implementación
+
+Las fases del documento principal deben interpretarse así:
+
+### Fase 1 — Catálogo y contrato
+
+- Usar el concepto `resource` además de `course`.
+- Definir estados de disponibilidad.
+- Definir competencias y Guardianes.
+- Definir el contrato de las tarjetas.
+
+### Fase 2 — Verificación e historial
+
+- Implementar `resource_checks`.
+- Implementar `resource_versions`.
+- Implementar `resource_changes`.
+- Implementar redirecciones y URL canónica.
+- Implementar reintentos y estados `STALE`.
+
+### Fase 3 — Clasificación
+
+- Implementar competencias.
+- Implementar Guardianes.
+- Registrar la procedencia y confianza de cada asociación.
+- Añadir revisión manual para casos ambiguos.
+
+### Fase 4 — Automatización diaria
+
+- Ejecutar el ciclo completo mediante GitHub Actions.
+- Proteger el endpoint interno.
+- Registrar el resumen diario.
+- Publicar snapshots válidos.
+- Mantener el resultado anterior ante fallos parciales.
+
+### Fase 5 — Frontend dinámico
+
+- Reemplazar el arreglo estático de recursos por `GET /api/v1/resources`.
+- Mantener filtros, tarjetas y diseño de la Biblioteca abierta.
+- Mostrar la fecha de actualización o verificación cuando corresponda.
+
+### Fase 6 — Mejora continua
+
+- Añadir nuevas fuentes aprobadas.
+- Mejorar reglas de calidad y clasificación.
+- Medir precisión de las asociaciones con Guardianes.
+- Evaluar búsqueda avanzada solo si los datos lo justifican.

@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "allFilterLabel": "Todos",
+  "competencies": [
+    {"id":"informacion","label":"01 · Información","verbs":["Buscar","evaluar","comprender","organizar"]},
+    {"id":"comunicacion","label":"02 · Comunicación","verbs":["Conectar","colaborar","participar"]},
+    {"id":"creacion","label":"03 · Creación","verbs":["Crear","producir","programar"]},
+    {"id":"seguridad","label":"04 · Seguridad","verbs":["Proteger","prevenir","cuidar"]},
+    {"id":"discernimiento","label":"05 · Discernimiento","verbs":["Verificar","contrastar","cuestionar"]},
+    {"id":"ia","label":"06 · IA","verbs":["Comprender","experimentar","evaluar"]},
+    {"id":"bienestar","label":"07 · Bienestar","verbs":["Equilibrar","autorregular","cuidar"]},
+    {"id":"ciudadania","label":"08 · Ciudadanía","verbs":["Participar","respetar","ejercer derechos"]}
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "languages": ["es","en","pt","fr"],
+  "queries": {
+    "es": [
+      "curso gratuito competencias digitales",
+      "recursos gratuitos alfabetización digital",
+      "curso gratuito alfabetización en IA responsable",
+      "curso gratuito ciberseguridad",
+      "curso gratuito ciudadanía digital",
+      "curso gratuito alfabetización mediática",
+      "curso gratuito alfabetización informacional",
+      "curso gratuito bienestar digital",
+      "curso universitario gratuito inteligencia artificial"
+    ],
+    "en": [
+      "free digital literacy course",
+      "free digital skills course",
+      "free AI literacy course",
+      "free responsible AI course",
+      "free cybersecurity course",
+      "free digital citizenship course",
+      "free media literacy course",
+      "free information literacy course",
+      "free digital wellbeing course",
+      "free university AI course"
+    ],
+    "pt": [
+      "curso gratuito competências digitais",
+      "curso gratuito alfabetização digital",
+      "curso gratuito inteligência artificial responsável",
+      "curso gratuito cidadania digital"
+    ],
+    "fr": [
+      "cours gratuit compétences numériques",
+      "cours gratuit culture numérique",
+      "cours gratuit intelligence artificielle responsable",
+      "cours gratuit citoyenneté numérique"
+    ]
+  },
+  "expansionRule": "Las nuevas consultas se proponen a partir de brechas verificadas del catálogo y requieren registro en research_log antes de usarse."
+}
