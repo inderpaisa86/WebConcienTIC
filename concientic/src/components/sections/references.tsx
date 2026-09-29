@@ -16,7 +16,7 @@ export function References() {
               <span className="reference-card__type">{item.type}</span>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
-              <a href={item.href} target="_blank" rel="noopener noreferrer">
+              <a href={item.href} rel="noopener noreferrer">
                 Explorar referente <span aria-hidden="true">↗</span>
               </a>
             </article>

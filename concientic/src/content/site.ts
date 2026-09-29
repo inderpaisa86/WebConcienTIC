@@ -141,10 +141,9 @@ export const services = {
       tag: "Aprendizaje",
       state: "link",
       href: "/servicios/contenidos.html",
-      target: "_blank",
       rel: "noopener noreferrer",
       ariaLabel:
-        "Abrir Contenidos, la biblioteca de Competencias Digitales, en una pestaña nueva",
+        "Abrir Contenidos, la biblioteca de Competencias Digitales en esta pestaña",
     },
     {
       title: "IA consciente",
@@ -152,8 +151,6 @@ export const services = {
       tag: "Inteligencia",
       state: "card",
       href: null,
-      target: null,
-      rel: null,
       ariaLabel: null,
     },
     {
@@ -162,8 +159,6 @@ export const services = {
       tag: "Discernimiento",
       state: "disabled",
       href: null,
-      target: null,
-      rel: null,
       ariaLabel: null,
     },
     {
@@ -172,8 +167,6 @@ export const services = {
       tag: "Organizaciones",
       state: "disabled",
       href: null,
-      target: null,
-      rel: null,
       ariaLabel: null,
     },
     {
@@ -182,8 +175,6 @@ export const services = {
       tag: "Equilibrio",
       state: "anchor",
       href: "#dquilibrio",
-      target: null,
-      rel: null,
       ariaLabel: "Ir a la sección DQUILIBRIO de este sitio",
     },
   ],

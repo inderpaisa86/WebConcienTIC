@@ -30,8 +30,6 @@ export function Services() {
                   className={className}
                   href={item.href}
                   key={item.title}
-                  target={item.target ?? undefined}
-                  rel={item.rel ?? undefined}
                   aria-label={item.ariaLabel ?? undefined}
                 >
                   {content}

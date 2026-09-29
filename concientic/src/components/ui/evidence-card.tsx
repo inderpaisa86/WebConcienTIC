@@ -13,7 +13,7 @@ export function EvidenceCard({ type, title, description, href, source }: Evidenc
       <h3>{title}</h3>
       <p>{description}</p>
       {href && source ? (
-        <a href={href} target="_blank" rel="noopener noreferrer">
+        <a href={href} rel="noopener noreferrer">
           {source}
         </a>
       ) : null}

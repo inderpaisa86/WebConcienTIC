@@ -16,9 +16,8 @@ export function Dquilibrio() {
               className="info-card"
               key={item.number}
               href={item.href}
-              target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Abrir la experiencia ${item.title} en una pestaña nueva`}
+              aria-label={`Abrir la experiencia ${item.title} en esta pestaña`}
             >
               <span className="info-card__number">{item.number}</span>
               <h3>{item.title}</h3>
