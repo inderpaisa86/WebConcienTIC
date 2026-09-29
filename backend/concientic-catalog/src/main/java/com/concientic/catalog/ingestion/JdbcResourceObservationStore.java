@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -114,7 +115,7 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
                 .addValue("verifiedUrl", verifiedUrl)
                 .addValue("urlStatus", verification.accessStatus().name())
                 .addValue("httpStatus", verification.httpStatus())
-                .addValue("lastVerifiedAt", verification.checkedAt() == null ? Instant.now() : verification.checkedAt())
+                .addValue("lastVerifiedAt", timestamp(verification.checkedAt()))
                 .addValue("freeStatus", freeStatus.name())
                 .addValue("freeExplanation", freeStatus == FreeStatus.PAID ? "La página presenta señales de pago." : "La gratuidad aún no ha sido verificada.")
                 .addValue("verificationScore", verification.semanticMatch() ? 1.0 : 0.0)
@@ -146,7 +147,7 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
                 .addValue("accessStatus", verification.accessStatus().name())
                 .addValue("requiresAccount", verification.requiresAccount())
                 .addValue("requiresPayment", verification.requiresPayment())
-                .addValue("checkedAt", verification.checkedAt() == null ? Instant.now() : verification.checkedAt())
+                .addValue("checkedAt", timestamp(verification.checkedAt()))
                 .addValue("errorCode", verification.errorCode())
                 .addValue("errorMessage", verification.errorMessage()));
     }
@@ -166,6 +167,10 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
                 .addValue("decision", verification.accessStatus().name())
                 .addValue("confidence", verification.semanticMatch() ? 1.0 : 0.0)
                 .addValue("action", action));
+    }
+
+    private static Timestamp timestamp(Instant value) {
+        return Timestamp.from(value == null ? Instant.now() : value);
     }
 
     private static ResourceStatus mapStatus(AccessStatus status) {

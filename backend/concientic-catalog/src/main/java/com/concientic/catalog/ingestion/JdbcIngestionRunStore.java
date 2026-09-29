@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -30,7 +31,7 @@ public class JdbcIngestionRunStore implements IngestionRunStore {
                     VALUES (:id, 'STARTED', :startedAt, :timezone)
                     """, new MapSqlParameterSource()
                     .addValue("id", runId)
-                    .addValue("startedAt", startedAt)
+                    .addValue("startedAt", Timestamp.from(startedAt))
                     .addValue("timezone", timezone));
             log.info("Inserted ingestion_runs start record runId={} rows={}", runId, rows);
         } catch (DataAccessException exception) {
