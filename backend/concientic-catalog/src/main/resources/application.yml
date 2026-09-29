@@ -36,8 +36,5 @@ concientic:
   verification:
     timeout-seconds: ${VERIFICATION_TIMEOUT_SECONDS:15}
     max-body-bytes: ${VERIFICATION_MAX_BODY_BYTES:1000000}
-  ingestion:
-    openlearn:
-      urls: ${OPENLEARN_SEED_URLS:https://www.open.edu/openlearn/digital-computing/digital-skills-succeeding-digital-world,https://www.open.edu/openlearn/digital-computing/introduction-cyber-security-stay-safe-online}
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:https://concientic.com,http://localhost:3000}
