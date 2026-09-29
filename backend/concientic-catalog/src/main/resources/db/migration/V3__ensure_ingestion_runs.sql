@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS ingestion_runs (
+    id UUID PRIMARY KEY,
+    status VARCHAR(40) NOT NULL DEFAULT 'STARTED',
+    started_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    finished_at TIMESTAMPTZ,
+    timezone VARCHAR(80) NOT NULL DEFAULT 'America/Bogota',
+    sources_investigated INTEGER NOT NULL DEFAULT 0,
+    resources_discovered INTEGER NOT NULL DEFAULT 0,
+    resources_updated INTEGER NOT NULL DEFAULT 0,
+    resources_removed INTEGER NOT NULL DEFAULT 0,
+    review_required INTEGER NOT NULL DEFAULT 0,
+    error_message TEXT
+);
+
+ALTER TABLE ingestion_runs
+    ADD COLUMN IF NOT EXISTS finished_at TIMESTAMPTZ,
+    ADD COLUMN IF NOT EXISTS timezone VARCHAR(80) NOT NULL DEFAULT 'America/Bogota',
+    ADD COLUMN IF NOT EXISTS sources_investigated INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS resources_discovered INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS resources_updated INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS resources_removed INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS review_required INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS error_message TEXT;
