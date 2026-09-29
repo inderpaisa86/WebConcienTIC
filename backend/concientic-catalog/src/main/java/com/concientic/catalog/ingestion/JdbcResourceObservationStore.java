@@ -2,6 +2,8 @@ package com.concientic.catalog.ingestion;
 
 import com.concientic.catalog.catalog.PublicationPolicy;
 import com.concientic.catalog.domain.FreeStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.concientic.catalog.domain.ResourceStatus;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -13,6 +15,8 @@ import java.util.UUID;
 
 @Repository
 public class JdbcResourceObservationStore implements ResourceObservationStore {
+    private static final Logger log = LoggerFactory.getLogger(JdbcResourceObservationStore.class);
+
     private final NamedParameterJdbcTemplate jdbc;
 
     public JdbcResourceObservationStore(NamedParameterJdbcTemplate jdbc) {
@@ -21,6 +25,7 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
 
     @Override
     public PersistedCounts persist(UUID runId, ResearchCycleResult result) {
+        log.info("Persisting research observations runId={} observations={}", runId, result.observations().size());
         int resources = 0;
         int checks = 0;
         int reviews = 0;
@@ -29,6 +34,7 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
             VerificationResult verification = observation.verification();
             String title = verification.title();
             if (title == null || title.isBlank()) {
+                log.warn("Resource sent to review because verified title is missing runId={} source={} url={}", runId, candidate.sourceName(), candidate.sourceUrl());
                 createReviewItem(null, candidate, "MISSING_VERIFIED_TITLE", verification, "Confirm resource identity manually");
                 reviews++;
                 continue;
@@ -41,11 +47,14 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
             ResourceStatus resourceStatus = mapStatus(verification.accessStatus());
             FreeStatus freeStatus = verification.requiresPayment() ? FreeStatus.PAID : FreeStatus.UNKNOWN;
             PublicationPolicy.Decision decision = PublicationPolicy.evaluate(resourceStatus, freeStatus, true);
+            log.info("Resource upserted runId={} resourceId={} source={} accessStatus={} resourceStatus={} freeStatus={} publishable={}",
+                    runId, resourceId, candidate.sourceName(), verification.accessStatus(), resourceStatus, freeStatus, decision.publishable());
             if (!decision.publishable()) {
                 createReviewItem(resourceId, candidate, decision.explanation(), verification, "Verify classification and free access before publication");
                 reviews++;
             }
         }
+        log.info("Research observations persistence finished runId={} resourcesPersisted={} checksPersisted={} reviewItemsCreated={}", runId, resources, checks, reviews);
         return new PersistedCounts(resources, checks, reviews);
     }
 
