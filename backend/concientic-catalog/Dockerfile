@@ -3,7 +3,17 @@ FROM eclipse-temurin:25-jdk AS build
 WORKDIR /workspace
 COPY . .
 
-RUN chmod +x gradlew && ./gradlew clean bootJar --no-daemon
+RUN chmod +x gradlew && \
+    for attempt in 1 2 3 4 5; do \
+      echo "Gradle build attempt ${attempt}/5"; \
+      ./gradlew clean bootJar --no-daemon && exit 0; \
+      if [ "$attempt" -lt 5 ]; then \
+        delay=$((attempt * 20)); \
+        echo "Gradle build failed; retrying in ${delay}s"; \
+        sleep "$delay"; \
+      fi; \
+    done; \
+    exit 1
 
 FROM eclipse-temurin:25-jre
 
