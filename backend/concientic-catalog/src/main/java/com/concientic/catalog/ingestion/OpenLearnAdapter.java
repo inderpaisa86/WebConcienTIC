@@ -1,5 +1,6 @@
 package com.concientic.catalog.ingestion;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public class OpenLearnAdapter implements SourceAdapter {
     private final List<URI> seedUrls;
 
+    @Autowired
     public OpenLearnAdapter(@Value("${concientic.ingestion.openlearn.urls:}") String configuredUrls) {
         this(parseUrls(configuredUrls));
     }
