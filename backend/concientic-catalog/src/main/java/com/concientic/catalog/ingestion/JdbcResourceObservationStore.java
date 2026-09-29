@@ -33,14 +33,14 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
         for (ResearchObservation observation : result.observations()) {
             ResourceCandidate candidate = observation.candidate();
             VerificationResult verification = observation.verification();
-            String title = verification.title();
-            if (title == null || title.isBlank()) {
-                log.warn("Resource sent to review because verified title is missing runId={} source={} url={}", runId, candidate.sourceName(), candidate.sourceUrl());
-                createReviewItem(null, candidate, "MISSING_VERIFIED_TITLE", verification, "Confirm resource identity manually");
-                reviews++;
-                continue;
+            boolean titleMissing = verification.title() == null || verification.title().isBlank();
+            String title = titleMissing ? fallbackTitle(candidate) : verification.title();
+            if (titleMissing) {
+                log.warn("Verified title missing; persisting provisional title runId={} source={} provisionalTitle={}",
+                        runId, candidate.sourceName(), title);
             }
-            UUID resourceId = upsertResource(candidate, verification);
+
+            UUID resourceId = upsertResource(candidate, verification, title);
             persistCheck(resourceId, runId, verification);
             resources++;
             checks++;
@@ -48,9 +48,12 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
             ResourceStatus resourceStatus = mapStatus(verification.accessStatus());
             FreeStatus freeStatus = verification.requiresPayment() ? FreeStatus.PAID : FreeStatus.UNKNOWN;
             PublicationPolicy.Decision decision = PublicationPolicy.evaluate(resourceStatus, freeStatus, true);
-            log.info("Resource upserted runId={} resourceId={} source={} accessStatus={} resourceStatus={} freeStatus={} publishable={}",
-                    runId, resourceId, candidate.sourceName(), verification.accessStatus(), resourceStatus, freeStatus, decision.publishable());
-            if (!decision.publishable()) {
+            log.info("Resource upserted runId={} resourceId={} source={} accessStatus={} resourceStatus={} freeStatus={} publishable={} titleFallback={}",
+                    runId, resourceId, candidate.sourceName(), verification.accessStatus(), resourceStatus, freeStatus, decision.publishable(), titleMissing);
+            if (titleMissing) {
+                createReviewItem(resourceId, candidate, "MISSING_VERIFIED_TITLE", verification, "Confirm resource identity and replace provisional title");
+                reviews++;
+            } else if (!decision.publishable()) {
                 createReviewItem(resourceId, candidate, decision.explanation(), verification, "Verify classification and free access before publication");
                 reviews++;
             }
@@ -59,7 +62,7 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
         return new PersistedCounts(resources, checks, reviews);
     }
 
-    private UUID upsertResource(ResourceCandidate candidate, VerificationResult verification) {
+    private UUID upsertResource(ResourceCandidate candidate, VerificationResult verification, String title) {
         UUID stableId = UUID.nameUUIDFromBytes(candidate.sourceUrl().toString().getBytes(StandardCharsets.UTF_8));
         ResourceStatus status = mapStatus(verification.accessStatus());
         FreeStatus freeStatus = verification.requiresPayment() ? FreeStatus.PAID : FreeStatus.UNKNOWN;
@@ -106,7 +109,7 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
                 """;
         UUID persistedId = jdbc.queryForObject(sql, new MapSqlParameterSource()
                 .addValue("id", stableId)
-                .addValue("title", verification.title())
+                .addValue("title", title)
                 .addValue("description", description)
                 .addValue("provider", candidate.provider())
                 .addValue("providerType", candidate.providerType())
@@ -167,6 +170,31 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
                 .addValue("decision", verification.accessStatus().name())
                 .addValue("confidence", verification.semanticMatch() ? 1.0 : 0.0)
                 .addValue("action", action));
+    }
+
+    private static String fallbackTitle(ResourceCandidate candidate) {
+        if (candidate.expectedTitle() != null && !candidate.expectedTitle().isBlank()) {
+            return candidate.expectedTitle().trim();
+        }
+        String path = candidate.sourceUrl().getPath();
+        if (path != null) {
+            String[] segments = path.split("/");
+            for (int index = segments.length - 1; index >= 0; index--) {
+                String segment = segments[index].replace('-', ' ').replace('_', ' ').trim();
+                if (!segment.isBlank()) return titleCase(segment);
+            }
+        }
+        return candidate.sourceUrl().getHost() == null ? "Recurso sin título verificado" : candidate.sourceUrl().getHost();
+    }
+
+    private static String titleCase(String value) {
+        StringBuilder result = new StringBuilder();
+        for (String word : value.split("\\s+")) {
+            if (word.isBlank()) continue;
+            if (result.length() > 0) result.append(' ');
+            result.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1));
+        }
+        return result.toString();
     }
 
     private static Timestamp timestamp(Instant value) {
