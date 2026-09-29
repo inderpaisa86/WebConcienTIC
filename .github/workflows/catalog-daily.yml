@@ -17,7 +17,7 @@ jobs:
           set -euo pipefail
           test -n "$CATALOG_URL"
           test -n "$INGESTION_TOKEN"
-          curl --fail-with-body --retry 2 --max-time 30 \
+          curl --fail-with-body --retry 3 --retry-delay 10 --connect-timeout 30 --max-time 180 \
             -X POST "$CATALOG_URL/internal/runs/daily" \
             -H "Authorization: Bearer $INGESTION_TOKEN" \
             -H "Idempotency-Key: catalog-${{ github.run_id }}"
