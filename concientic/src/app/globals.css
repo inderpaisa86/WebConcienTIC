@@ -1665,7 +1665,7 @@ a.info-card:focus-visible::after {
   }
 }
 
-/* Guardianes visuales exclusivos de las tarjetas de Biblioteca */
+/* Estilos visuales de las tarjetas de Biblioteca */
 .library-card {
   min-height: 0;
   overflow: hidden;

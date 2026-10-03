@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
+import { guardians } from "@/content/guardians";
 import { staticCourses } from "@/content/static-courses";
-import { libraryGuardians } from "@/content/library-guardians";
 import {
   buildCatalogQuery,
   competencyOptions,
@@ -28,7 +28,7 @@ function competencyLabel(id: string | null) {
 }
 
 function guardianFor(resource: CatalogResource) {
-  return libraryGuardians.find((guardian) => guardian.category === resource.primaryCompetency);
+  return guardians.find((guardian) => guardian.name === resource.guardianPrimary);
 }
 
 function freeLabel(resource: CatalogResource) {
