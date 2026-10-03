@@ -23,8 +23,9 @@ public class ResourceController {
             @RequestParam(required = false) String language,
             @RequestParam(required = false) String level,
             @RequestParam(required = false) String format,
+            @RequestParam(required = false) String provider,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "24") int size) {
-        return catalogService.search(q, competency, language, level, format, page, size);
+        return catalogService.search(q, competency, language, level, format, provider, page, size);
     }
 }

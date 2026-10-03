@@ -20,6 +20,16 @@ public class CatalogService {
         return PageResponse.of(repository.search(query, competency, language, level, format, safePage * safeSize, safeSize), safePage, safeSize, total);
     }
 
+    public PageResponse<ResourceResponse> search(String query, String competency, String language, String level, String format, String provider, int page, int size) {
+        if (provider == null || provider.isBlank()) {
+            return search(query, competency, language, level, format, page, size);
+        }
+        int safePage = Math.max(page, 0);
+        int safeSize = Math.min(Math.max(size, 1), MAX_PAGE_SIZE);
+        long total = repository.count(query, competency, language, level, format, provider);
+        return PageResponse.of(repository.search(query, competency, language, level, format, provider, safePage * safeSize, safeSize), safePage, safeSize, total);
+    }
+
     public long countPublished() {
         return repository.countPublished();
     }

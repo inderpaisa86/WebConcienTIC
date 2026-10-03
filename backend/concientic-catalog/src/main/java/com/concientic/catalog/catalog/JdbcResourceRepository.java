@@ -23,19 +23,19 @@ public class JdbcResourceRepository implements ResourceRepository {
     }
 
     @Override
-    public List<ResourceResponse> search(String query, String competency, String language, String level, String format, int offset, int limit) {
+    public List<ResourceResponse> search(String query, String competency, String language, String level, String format, String provider, int offset, int limit) {
         String sql = "SELECT r.* FROM resources r "
-                + whereClause(query, competency, language, level, format)
+                + whereClause(query, competency, language, level, format, provider)
                 + " ORDER BY COALESCE(r.overall_score, 0) DESC, r.last_verified_at DESC NULLS LAST LIMIT :limit OFFSET :offset";
-        MapSqlParameterSource parameters = parameters(query, competency, language, level, format)
+        MapSqlParameterSource parameters = parameters(query, competency, language, level, format, provider)
                 .addValue("limit", limit)
                 .addValue("offset", offset);
         return jdbc.query(sql, parameters, resourceRowMapper());
     }
 
     @Override
-    public long count(String query, String competency, String language, String level, String format) {
-        return jdbc.queryForObject("SELECT COUNT(*) FROM resources r " + whereClause(query, competency, language, level, format), parameters(query, competency, language, level, format), Long.class);
+    public long count(String query, String competency, String language, String level, String format, String provider) {
+        return jdbc.queryForObject("SELECT COUNT(*) FROM resources r " + whereClause(query, competency, language, level, format, provider), parameters(query, competency, language, level, format, provider), Long.class);
     }
 
     @Override
@@ -44,23 +44,25 @@ public class JdbcResourceRepository implements ResourceRepository {
         return result == null ? 0 : result;
     }
 
-    private String whereClause(String query, String competency, String language, String level, String format) {
+    private String whereClause(String query, String competency, String language, String level, String format, String provider) {
         StringBuilder where = new StringBuilder("WHERE r.status IN ('ACTIVE', 'UPDATED', 'VERIFIED', 'LINK_CHANGED') AND r.free_status IN ('FREE', 'FREE_CONTENT_PAID_CERTIFICATE', 'AUDIT_FREE', 'PARTIAL_FREE')");
         if (query != null && !query.isBlank()) where.append(" AND r.search_document @@ plainto_tsquery('simple', :query)");
-        if (competency != null && !competency.isBlank()) where.append(" AND EXISTS (SELECT 1 FROM resource_competencies rc WHERE rc.resource_id = r.id AND rc.competency_id = :competency)");
+        if (competency != null && !competency.isBlank()) where.append(" AND (r.primary_competency = :competency OR EXISTS (SELECT 1 FROM resource_competencies rc WHERE rc.resource_id = r.id AND rc.competency_id = :competency))");
         if (language != null && !language.isBlank()) where.append(" AND :language = ANY(r.languages)");
         if (level != null && !level.isBlank()) where.append(" AND r.level = :level");
         if (format != null && !format.isBlank()) where.append(" AND r.format = :format");
+        if (provider != null && !provider.isBlank()) where.append(" AND r.provider = :provider");
         return where.toString();
     }
 
-    private MapSqlParameterSource parameters(String query, String competency, String language, String level, String format) {
+    private MapSqlParameterSource parameters(String query, String competency, String language, String level, String format, String provider) {
         return new MapSqlParameterSource()
                 .addValue("query", query)
                 .addValue("competency", competency)
                 .addValue("language", language)
                 .addValue("level", level)
-                .addValue("format", format);
+                .addValue("format", format)
+                .addValue("provider", provider);
     }
 
     private RowMapper<ResourceResponse> resourceRowMapper() {

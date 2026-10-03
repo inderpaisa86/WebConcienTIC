@@ -140,7 +140,7 @@ export const services = {
       description: "Rutas para desarrollar capacidades esenciales y transferibles.",
       tag: "Aprendizaje",
       state: "link",
-      href: "/servicios/contenidos.html",
+      href: "/servicios/contenidos",
       rel: "noopener noreferrer",
       ariaLabel:
         "Abrir Contenidos, la biblioteca de Competencias Digitales en esta pestaña",
