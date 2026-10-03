@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
-import { guardians } from "@/content/guardians";
 import { staticCourses } from "@/content/static-courses";
+import { libraryGuardians } from "@/content/library-guardians";
 import {
   buildCatalogQuery,
   competencyOptions,
@@ -28,7 +28,7 @@ function competencyLabel(id: string | null) {
 }
 
 function guardianFor(resource: CatalogResource) {
-  return guardians.find((guardian) => guardian.name === resource.guardianPrimary);
+  return libraryGuardians.find((guardian) => guardian.category === resource.primaryCompetency);
 }
 
 function freeLabel(resource: CatalogResource) {
@@ -292,31 +292,35 @@ function ResourceCard({ resource }: { resource: CatalogResource }) {
   const guardian = guardianFor(resource);
   const guardianColor = guardian?.color ?? "var(--ct-primary)";
   const metadata = [resource.level, resource.duration, resource.language[0], formatLabel(resource.format)].filter(Boolean);
+  const category = competencyLabel(resource.primaryCompetency);
+  const providerMark = resource.provider.slice(0, 2).toUpperCase();
 
   return (
     <article className="library-card" style={{ "--guardian-color": guardianColor } as React.CSSProperties}>
-      <div className="library-card__topline">
-        <span>{competencyLabel(resource.primaryCompetency)}</span>
+      <div className="library-card__visual">
+        <div className="library-card__topline">
+          <span>{category}</span>
+        </div>
+        <div className="library-card__provider">
+          <span className="library-card__provider-mark" aria-hidden="true">{providerMark}</span>
+          <span>{resource.provider}</span>
+        </div>
         {guardian ? (
-          <span className="library-card__guardian" style={{ color: guardian.color }}>
-            {guardian.name}
-          </span>
+          <Image className="library-card__guardian-image" src={guardian.image} alt="" width={132} height={122} />
         ) : null}
       </div>
-      <div className="library-card__identity">
-        {guardian ? <Image src={guardian.image} alt="" width={52} height={52} /> : <span className="library-card__dot" />}
-        <span>{resource.provider}</span>
+      <div className="library-card__body">
+        <h3>{resource.title}</h3>
+        <p>{resource.shortDescription}</p>
+        {metadata.length ? <div className="library-card__metadata">{metadata.map((item) => <span key={item}>{item}</span>)}</div> : null}
+        <div className="library-card__free">
+          <strong>{freeLabel(resource)}</strong>
+          {resource.freeExplanation && resource.freeStatus !== "FREE" ? <span>{resource.freeExplanation}</span> : null}
+        </div>
+        <a className="ct-button library-card__cta" href={resource.verifiedUrl ?? resource.sourceUrl} target="_blank" rel="noreferrer">
+          Explorar recurso <span aria-hidden="true">→</span>
+        </a>
       </div>
-      <h3>{resource.title}</h3>
-      <p>{resource.shortDescription}</p>
-      {metadata.length ? <div className="library-card__metadata">{metadata.map((item) => <span key={item}>{item}</span>)}</div> : null}
-      <div className="library-card__free">
-        <strong>{freeLabel(resource)}</strong>
-        {resource.freeExplanation && resource.freeStatus !== "FREE" ? <span>{resource.freeExplanation}</span> : null}
-      </div>
-      <a className="ct-button ct-button--dark library-card__cta" href={resource.verifiedUrl ?? resource.sourceUrl} target="_blank" rel="noreferrer">
-        Explorar recurso <span aria-hidden="true">↗</span>
-      </a>
     </article>
   );
 }

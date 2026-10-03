@@ -8,10 +8,13 @@ import com.concientic.catalog.domain.ResourceStatus;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,17 +23,22 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
     private static final Logger log = LoggerFactory.getLogger(JdbcResourceObservationStore.class);
 
     private final NamedParameterJdbcTemplate jdbc;
+    private final CatalogHistoryRepository historyRepository;
 
-    public JdbcResourceObservationStore(NamedParameterJdbcTemplate jdbc) {
+    public JdbcResourceObservationStore(NamedParameterJdbcTemplate jdbc, CatalogHistoryRepository historyRepository) {
         this.jdbc = jdbc;
+        this.historyRepository = historyRepository;
     }
 
     @Override
+    @Transactional
     public PersistedCounts persist(UUID runId, ResearchCycleResult result) {
         log.info("Persisting research observations runId={} observations={}", runId, result.observations().size());
         int resources = 0;
         int checks = 0;
         int reviews = 0;
+        int changes = 0;
+        int duplicates = 0;
         for (ResearchObservation observation : result.observations()) {
             ResourceCandidate candidate = observation.candidate();
             VerificationResult verification = observation.verification();
@@ -43,25 +51,51 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
 
             ResourceStatus resourceStatus = titleMissing ? ResourceStatus.REVIEW_REQUIRED : mapStatus(verification.accessStatus());
             FreeStatus freeStatus = inferFreeStatus(candidate, verification);
-            UUID resourceId = upsertResource(candidate, verification, title, resourceStatus, freeStatus);
-            persistCheck(resourceId, runId, verification);
-            persistClassification(resourceId, candidate);
+            UUID resourceId = UUID.nameUUIDFromBytes(candidate.sourceUrl().toString().getBytes(StandardCharsets.UTF_8));
+            ResourceSnapshot previous = historyRepository.latestSnapshot(resourceId).orElse(null);
+            UUID persistedId = upsertResource(candidate, verification, title, resourceStatus, freeStatus);
+            persistCheck(persistedId, runId, verification);
+            persistClassification(persistedId, candidate);
+
+            ResourceSnapshot current = snapshot(title, verification, freeStatus);
+            List<ResourceChange> detectedChanges = ChangeMonitor.compare(previous, current);
+            historyRepository.saveVersionAndChanges(persistedId, runId, previous, current, detectedChanges);
+            changes += detectedChanges.size();
+
+            String canonicalUrl = current.canonicalUrl() == null ? null : current.canonicalUrl().toString();
+            UUID winner = historyRepository.findDuplicate(persistedId, canonicalUrl, candidate.provider(), title).orElse(null);
+            if (winner != null && historyRepository.markDuplicate(persistedId, winner)) {
+                duplicates++;
+                createReviewItem(persistedId, candidate, "DUPLICATE_RESOURCE", verification,
+                        "Confirm the canonical resource and keep the oldest verified record");
+                reviews++;
+            }
+
             resources++;
             checks++;
-
             PublicationPolicy.Decision decision = PublicationPolicy.evaluate(resourceStatus, freeStatus, true);
-            log.info("Resource upserted runId={} resourceId={} source={} accessStatus={} resourceStatus={} freeStatus={} publishable={} titleFallback={}",
-                    runId, resourceId, candidate.sourceName(), verification.accessStatus(), resourceStatus, freeStatus, decision.publishable(), titleMissing);
+            log.info("Resource upserted runId={} resourceId={} source={} accessStatus={} resourceStatus={} freeStatus={} publishable={} titleFallback={} changes={} duplicate={}",
+                    runId, persistedId, candidate.sourceName(), verification.accessStatus(), resourceStatus, freeStatus, decision.publishable(), titleMissing, detectedChanges.size(), winner != null);
             if (titleMissing) {
-                createReviewItem(resourceId, candidate, "MISSING_VERIFIED_TITLE", verification, "Confirm resource identity and replace provisional title");
+                createReviewItem(persistedId, candidate, "MISSING_VERIFIED_TITLE", verification, "Confirm resource identity and replace provisional title");
                 reviews++;
             } else if (!decision.publishable()) {
-                createReviewItem(resourceId, candidate, decision.explanation(), verification, "Verify classification and free access before publication");
+                createReviewItem(persistedId, candidate, decision.explanation(), verification, "Verify classification and free access before publication");
                 reviews++;
             }
         }
-        log.info("Research observations persistence finished runId={} resourcesPersisted={} checksPersisted={} reviewItemsCreated={}", runId, resources, checks, reviews);
-        return new PersistedCounts(resources, checks, reviews);
+        PersistedCounts persisted = new PersistedCounts(resources, checks, reviews, changes, duplicates);
+        String reportStatus = result.activeCandidates() > 0 ? "SUCCESS" : "PERSISTED_NOT_PUBLISHED";
+        historyRepository.saveReport(runId, reportStatus, result, persisted);
+        log.info("Research observations persistence finished runId={} resourcesPersisted={} checksPersisted={} reviewItemsCreated={} changesDetected={} duplicatesDetected={}",
+                runId, resources, checks, reviews, changes, duplicates);
+        return persisted;
+    }
+
+    private static ResourceSnapshot snapshot(String title, VerificationResult verification, FreeStatus freeStatus) {
+        URI canonical = verification.canonicalUrl() != null ? verification.canonicalUrl()
+                : verification.finalUrl() != null ? verification.finalUrl() : verification.requestedUrl();
+        return new ResourceSnapshot(title, canonical, verification.accessStatus(), null, null, "other", freeStatus.name());
     }
 
     private UUID upsertResource(ResourceCandidate candidate, VerificationResult verification, String title,

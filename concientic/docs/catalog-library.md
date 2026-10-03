@@ -165,3 +165,34 @@ Los cursos estáticos se muestran incluso si el backend no está disponible. Los
 Para agregar un nuevo curso estático, añade una entrada a `staticCourses` usando los campos de la función `resource`: proveedor, competencia, título, descripción, nivel, duración, idioma, formato, Guardián y URL oficial.
 
 La Biblioteca aplica los mismos filtros a ambas fuentes. La paginación se calcula sobre la colección combinada. Los recursos dinámicos pueden reemplazar la necesidad de mantener manualmente nuevos cursos, pero el catálogo heredado se conserva como respaldo editorial.
+
+## Guardianes visuales de la Biblioteca
+
+Las tarjetas de `/servicios/contenidos` utilizan un conjunto visual separado del sistema oficial de Guardianes del ecosistema. Estos personajes solo representan categorías de la Biblioteca y no modifican `config/guardians.json` ni `src/content/guardians.ts`.
+
+El registro está en:
+
+```text
+src/content/library-guardians.ts
+```
+
+Los assets vectoriales están en:
+
+```text
+public/library-guardians/
+```
+
+Categorías disponibles:
+
+```text
+informacion       → informacion.svg
+comunicacion      → comunicacion.svg
+creacion          → creacion.svg
+seguridad         → seguridad.svg
+discernimiento    → discernimiento.svg
+ia                → ia-innovacion.svg
+bienestar         → bienestar.svg
+ciudadania        → ciudadania.svg
+```
+
+Cada tarjeta toma el color y la ilustración a partir de `primaryCompetency`. Los recursos estáticos y dinámicos usan el mismo mapeo visual. Si un recurso no tiene competencia, la tarjeta conserva un tratamiento neutro y no inventa una categoría.
