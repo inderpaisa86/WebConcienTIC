@@ -51,7 +51,7 @@ public class ResearchCycleService {
                     continue;
                 }
                 observations.add(new ResearchObservation(candidate, verification));
-                if (verification.isPublishableAccess()) {
+                if (verification.isAutomaticallyPublishable()) {
                     activeCandidates++;
                 } else {
                     reviewRequired++;

@@ -40,12 +40,12 @@ public class JdbcResourceRepository implements ResourceRepository {
 
     @Override
     public long countPublished() {
-        Long result = jdbc.queryForObject("SELECT COUNT(*) FROM resources WHERE status IN ('ACTIVE', 'UPDATED', 'VERIFIED') AND free_status NOT IN ('PAID', 'TRIAL')", new MapSqlParameterSource(), Long.class);
+        Long result = jdbc.queryForObject("SELECT COUNT(*) FROM resources WHERE status IN ('ACTIVE', 'UPDATED', 'VERIFIED', 'LINK_CHANGED') AND free_status IN ('FREE', 'FREE_CONTENT_PAID_CERTIFICATE', 'AUDIT_FREE', 'PARTIAL_FREE')", new MapSqlParameterSource(), Long.class);
         return result == null ? 0 : result;
     }
 
     private String whereClause(String query, String competency, String language, String level, String format) {
-        StringBuilder where = new StringBuilder("WHERE r.status IN ('ACTIVE', 'UPDATED', 'VERIFIED') AND r.free_status NOT IN ('PAID', 'TRIAL')");
+        StringBuilder where = new StringBuilder("WHERE r.status IN ('ACTIVE', 'UPDATED', 'VERIFIED', 'LINK_CHANGED') AND r.free_status IN ('FREE', 'FREE_CONTENT_PAID_CERTIFICATE', 'AUDIT_FREE', 'PARTIAL_FREE')");
         if (query != null && !query.isBlank()) where.append(" AND r.search_document @@ plainto_tsquery('simple', :query)");
         if (competency != null && !competency.isBlank()) where.append(" AND EXISTS (SELECT 1 FROM resource_competencies rc WHERE rc.resource_id = r.id AND rc.competency_id = :competency)");
         if (language != null && !language.isBlank()) where.append(" AND :language = ANY(r.languages)");

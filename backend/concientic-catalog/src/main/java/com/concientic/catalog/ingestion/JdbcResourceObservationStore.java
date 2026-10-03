@@ -40,13 +40,13 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
                         runId, candidate.sourceName(), title);
             }
 
-            UUID resourceId = upsertResource(candidate, verification, title);
+            ResourceStatus resourceStatus = titleMissing ? ResourceStatus.REVIEW_REQUIRED : mapStatus(verification.accessStatus());
+            FreeStatus freeStatus = inferFreeStatus(verification);
+            UUID resourceId = upsertResource(candidate, verification, title, resourceStatus, freeStatus);
             persistCheck(resourceId, runId, verification);
             resources++;
             checks++;
 
-            ResourceStatus resourceStatus = mapStatus(verification.accessStatus());
-            FreeStatus freeStatus = verification.requiresPayment() ? FreeStatus.PAID : FreeStatus.UNKNOWN;
             PublicationPolicy.Decision decision = PublicationPolicy.evaluate(resourceStatus, freeStatus, true);
             log.info("Resource upserted runId={} resourceId={} source={} accessStatus={} resourceStatus={} freeStatus={} publishable={} titleFallback={}",
                     runId, resourceId, candidate.sourceName(), verification.accessStatus(), resourceStatus, freeStatus, decision.publishable(), titleMissing);
@@ -62,17 +62,16 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
         return new PersistedCounts(resources, checks, reviews);
     }
 
-    private UUID upsertResource(ResourceCandidate candidate, VerificationResult verification, String title) {
+    private UUID upsertResource(ResourceCandidate candidate, VerificationResult verification, String title,
+                                 ResourceStatus status, FreeStatus freeStatus) {
         UUID stableId = UUID.nameUUIDFromBytes(candidate.sourceUrl().toString().getBytes(StandardCharsets.UTF_8));
-        ResourceStatus status = mapStatus(verification.accessStatus());
-        FreeStatus freeStatus = verification.requiresPayment() ? FreeStatus.PAID : FreeStatus.UNKNOWN;
         String description = verification.descriptionExcerpt() == null || verification.descriptionExcerpt().isBlank()
                 ? "[Sin descripción verificada]"
                 : verification.descriptionExcerpt();
         String verifiedUrl = verification.finalUrl() == null ? candidate.sourceUrl().toString() : verification.finalUrl().toString();
         String canonicalUrl = verification.canonicalUrl() == null ? verifiedUrl : verification.canonicalUrl().toString();
-        String reason = verification.isPublishableAccess()
-                ? "Acceso HTTP y semántica verificados; clasificación pendiente"
+        String reason = verification.isAutomaticallyPublishable()
+                ? "Acceso HTTP, título y semántica verificados; gratuidad inferida automáticamente"
                 : "Requiere revisión: " + verification.evidenceSummary();
 
         String sql = """
@@ -87,8 +86,16 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
                     :freeStatus, :freeExplanation, 'other', :verificationScore, :verificationScore,
                     :reason, :status, :lastVerifiedAt, :notes)
                 ON CONFLICT (source_url) DO UPDATE SET
-                    title = EXCLUDED.title,
-                    short_description = EXCLUDED.short_description,
+                    title = CASE WHEN EXISTS (
+                        SELECT 1 FROM resource_human_decisions hd
+                        WHERE hd.resource_id = resources.id
+                          AND hd.decision IN ('APPROVED', 'CORRECTED', 'REJECTED'))
+                        THEN resources.title ELSE EXCLUDED.title END,
+                    short_description = CASE WHEN EXISTS (
+                        SELECT 1 FROM resource_human_decisions hd
+                        WHERE hd.resource_id = resources.id
+                          AND hd.decision IN ('APPROVED', 'CORRECTED', 'REJECTED'))
+                        THEN resources.short_description ELSE EXCLUDED.short_description END,
                     provider = EXCLUDED.provider,
                     provider_type = EXCLUDED.provider_type,
                     canonical_url = EXCLUDED.canonical_url,
@@ -96,15 +103,35 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
                     url_status = EXCLUDED.url_status,
                     http_status = EXCLUDED.http_status,
                     last_verified_at = EXCLUDED.last_verified_at,
-                    free_status = EXCLUDED.free_status,
-                    free_explanation = EXCLUDED.free_explanation,
+                    free_status = CASE WHEN EXISTS (
+                        SELECT 1 FROM resource_human_decisions hd
+                        WHERE hd.resource_id = resources.id
+                          AND hd.decision IN ('APPROVED', 'CORRECTED', 'REJECTED'))
+                        THEN resources.free_status ELSE EXCLUDED.free_status END,
+                    free_explanation = CASE WHEN EXISTS (
+                        SELECT 1 FROM resource_human_decisions hd
+                        WHERE hd.resource_id = resources.id
+                          AND hd.decision IN ('APPROVED', 'CORRECTED', 'REJECTED'))
+                        THEN resources.free_explanation ELSE EXCLUDED.free_explanation END,
                     verification_score = EXCLUDED.verification_score,
                     overall_score = EXCLUDED.overall_score,
-                    reason_for_inclusion = EXCLUDED.reason_for_inclusion,
-                    status = EXCLUDED.status,
+                    reason_for_inclusion = CASE WHEN EXISTS (
+                        SELECT 1 FROM resource_human_decisions hd
+                        WHERE hd.resource_id = resources.id
+                          AND hd.decision IN ('APPROVED', 'CORRECTED', 'REJECTED'))
+                        THEN resources.reason_for_inclusion ELSE EXCLUDED.reason_for_inclusion END,
+                    status = CASE WHEN EXISTS (
+                        SELECT 1 FROM resource_human_decisions hd
+                        WHERE hd.resource_id = resources.id
+                          AND hd.decision IN ('APPROVED', 'CORRECTED', 'REJECTED'))
+                        THEN resources.status ELSE EXCLUDED.status END,
                     last_updated_at = CURRENT_TIMESTAMP,
                     source_last_checked = EXCLUDED.source_last_checked,
-                    notes = EXCLUDED.notes
+                    notes = CASE WHEN EXISTS (
+                        SELECT 1 FROM resource_human_decisions hd
+                        WHERE hd.resource_id = resources.id
+                          AND hd.decision IN ('APPROVED', 'CORRECTED', 'REJECTED'))
+                        THEN resources.notes ELSE EXCLUDED.notes END
                 RETURNING id
                 """;
         UUID persistedId = jdbc.queryForObject(sql, new MapSqlParameterSource()
@@ -160,7 +187,10 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
                 INSERT INTO review_queue (
                     id, resource_id, candidate_url, issue, evidence, agent_decision,
                     confidence_score, recommended_action)
-                VALUES (:id, :resourceId, :candidateUrl, :issue, :evidence, :decision, :confidence, :action)
+                SELECT :id, :resourceId, :candidateUrl, :issue, :evidence, :decision, :confidence, :action
+                WHERE :resourceId IS NULL OR NOT EXISTS (
+                    SELECT 1 FROM resource_human_decisions hd
+                    WHERE hd.resource_id = :resourceId)
                 """, new MapSqlParameterSource()
                 .addValue("id", UUID.randomUUID())
                 .addValue("resourceId", resourceId)
@@ -195,6 +225,12 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
             result.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1));
         }
         return result.toString();
+    }
+
+    private static FreeStatus inferFreeStatus(VerificationResult verification) {
+        if (verification.requiresPayment()) return FreeStatus.PAID;
+        if (verification.isAutomaticallyPublishable()) return FreeStatus.FREE;
+        return FreeStatus.UNKNOWN;
     }
 
     private static Timestamp timestamp(Instant value) {

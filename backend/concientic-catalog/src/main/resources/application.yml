@@ -32,6 +32,8 @@ concientic:
     token: ${INGESTION_TOKEN:}
     openlearn:
       urls: ${OPENLEARN_SEED_URLS:https://www.open.edu/openlearn/digital-computing/digital-skills-succeeding-digital-world,https://www.open.edu/openlearn/digital-computing/introduction-cyber-security-stay-safe-online}
+  review:
+    token: ${REVIEW_TOKEN:${INGESTION_TOKEN:}}
   timezone: ${TIMEZONE:America/Bogota}
   verification:
     timeout-seconds: ${VERIFICATION_TIMEOUT_SECONDS:15}

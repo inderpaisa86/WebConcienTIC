@@ -24,4 +24,10 @@ public record VerificationResult(
         return (accessStatus == AccessStatus.ACTIVE || accessStatus == AccessStatus.LINK_CHANGED)
                 && semanticMatch && !requiresPayment;
     }
+
+    public boolean isAutomaticallyPublishable() {
+        return isPublishableAccess()
+                && title != null && !title.isBlank()
+                && !requiresAccount;
+    }
 }

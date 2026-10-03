@@ -41,8 +41,13 @@ public class DailyRunOrchestrator {
             PersistedResearchRun persistedRun = ingestionRunService.execute();
             ResearchCycleResult result = persistedRun.cycle();
             List<String> warnings = new ArrayList<>(result.warnings());
-            warnings.add("Resultados persistidos en PostgreSQL; ningún recurso fue publicado automáticamente.");
-            return response(persistedRun.runId(), "PERSISTED_NOT_PUBLISHED", false, warnings, result.candidatesDiscovered(), result.candidatesVerified(), result.activeCandidates(), result.reviewRequired());
+            String status = result.activeCandidates() > 0 ? "SUCCESS" : "PERSISTED_NOT_PUBLISHED";
+            if (result.activeCandidates() > 0) {
+                warnings.add("Recursos verificables publicados automáticamente; los casos no verificables quedaron fuera del catálogo.");
+            } else {
+                warnings.add("Resultados persistidos en PostgreSQL; ningún recurso cumplió las condiciones de publicación automática.");
+            }
+            return response(persistedRun.runId(), status, false, warnings, result.candidatesDiscovered(), result.candidatesVerified(), result.activeCandidates(), result.reviewRequired());
         } catch (RuntimeException exception) {
             return response(UUID.randomUUID(), "FAILED", false, List.of("Research cycle failed: " + safeMessage(exception)), 0, 0, 0, 0);
         }
