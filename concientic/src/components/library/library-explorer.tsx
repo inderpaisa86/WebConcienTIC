@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 import { guardians } from "@/content/guardians";
+import { staticCourses } from "@/content/static-courses";
 import {
   buildCatalogQuery,
   competencyOptions,
@@ -38,11 +39,64 @@ function freeLabel(resource: CatalogResource) {
   return resource.freeExplanation || "Modalidad por confirmar";
 }
 
+const formatLabels: Record<string, string> = {
+  article: "Artículo",
+  course: "Curso",
+  framework: "Marco",
+  lesson: "Lección",
+  library: "Biblioteca",
+  module: "Módulo",
+  other: "Recurso",
+  route: "Ruta",
+};
+
+function formatLabel(format: string | null) {
+  return format ? (formatLabels[format.toLowerCase()] ?? format) : null;
+}
+
+function normalizedUrl(url: string) {
+  return url.replace(/\/$/, "").toLowerCase();
+}
+
+function matchesFilters(resource: CatalogResource, filters: CatalogFilters) {
+  const searchText = [resource.title, resource.shortDescription, resource.provider, resource.primaryCompetency]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+  const resourceFormat = resource.format?.toLowerCase() ?? "";
+  const queryMatches = !filters.q.trim() || searchText.includes(filters.q.trim().toLowerCase());
+  const competencyMatches = !filters.competency || resource.primaryCompetency === filters.competency;
+  const providerMatches = !filters.provider || resource.provider === filters.provider;
+  const levelMatches = !filters.level || resource.level === filters.level;
+  const formatMatches = !filters.format || resourceFormat === filters.format.toLowerCase();
+  return queryMatches && competencyMatches && providerMatches && levelMatches && formatMatches;
+}
+
+function mergeCatalogResources(dynamicResources: CatalogResource[]) {
+  const staticUrls = new Set(staticCourses.map((resource) => normalizedUrl(resource.sourceUrl)));
+  const dynamicUrls = new Set<string>();
+  const uniqueDynamic = dynamicResources.filter((resource) => {
+    const url = normalizedUrl(resource.sourceUrl);
+    if (staticUrls.has(url) || dynamicUrls.has(url)) return false;
+    dynamicUrls.add(url);
+    return true;
+  });
+  return [...staticCourses, ...uniqueDynamic];
+}
+
 export function LibraryExplorer() {
   const [filters, setFilters] = useState(initialFilters);
   const [catalog, setCatalog] = useState<CatalogPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const allResources = useMemo(() => {
+    const merged = mergeCatalogResources(catalog?.items ?? []);
+    return merged.filter((resource) => matchesFilters(resource, filters));
+  }, [catalog, filters]);
+  const pageSize = 12;
+  const totalPages = Math.max(1, Math.ceil(allResources.length / pageSize));
+  const visibleResources = allResources.slice(filters.page * pageSize, (filters.page + 1) * pageSize);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -70,9 +124,9 @@ export function LibraryExplorer() {
   }, [filters]);
 
   const availableProviders = useMemo(() => {
-    const dynamicProviders = catalog?.items.map((item) => item.provider) ?? [];
+    const dynamicProviders = allResources.map((item) => item.provider);
     return [...new Set([...providerOptions, ...dynamicProviders])].sort();
-  }, [catalog]);
+  }, [allResources]);
 
   function updateFilter(key: keyof CatalogFilters, value: string | number) {
     setFilters((current) => {
@@ -145,7 +199,10 @@ export function LibraryExplorer() {
                   <option value="">Todos los formatos</option>
                   <option value="course">Curso</option>
                   <option value="lesson">Lección</option>
-                  <option value="article">Artículo</option>
+                  <option value="route">Ruta</option>
+                  <option value="framework">Marco</option>
+                  <option value="library">Biblioteca</option>
+                  <option value="module">Módulo</option>
                   <option value="other">Recurso</option>
                 </select>
               </label>
@@ -174,25 +231,27 @@ export function LibraryExplorer() {
               <h2>Recursos para comenzar</h2>
             </div>
             <p aria-live="polite">
-              {loading ? "Buscando recursos..." : `${catalog?.total ?? 0} recursos disponibles`}
+              {loading ? "Buscando recursos..." : `${allResources.length} recursos disponibles`}
             </p>
           </div>
 
           {error ? (
             <div className="library-state library-state--error" role="alert">
-              <h3>La Biblioteca está tomando aire.</h3>
-              <p>{error}</p>
+              <h3>El motor no respondió, pero conservamos la Biblioteca.</h3>
+              <p>{error} Los cursos existentes siguen disponibles.</p>
               <button type="button" onClick={() => setFilters((current) => ({ ...current }))}>
                 Intentar de nuevo
               </button>
             </div>
-          ) : loading ? (
+          ) : null}
+
+          {loading ? (
             <div className="library-grid" aria-label="Cargando recursos">
               {[0, 1, 2].map((item) => <div className="library-skeleton" key={item} />)}
             </div>
-          ) : catalog?.items.length ? (
+          ) : visibleResources.length ? (
             <div className="library-grid">
-              {catalog.items.map((resource) => <ResourceCard key={resource.id} resource={resource} />)}
+              {visibleResources.map((resource) => <ResourceCard key={resource.id} resource={resource} />)}
             </div>
           ) : (
             <div className="library-state">
@@ -202,13 +261,13 @@ export function LibraryExplorer() {
             </div>
           )}
 
-          {catalog && catalog.totalPages > 1 ? (
+          {totalPages > 1 ? (
             <nav className="library-pagination" aria-label="Paginación de recursos">
-              <button type="button" disabled={catalog.page === 0} onClick={() => updateFilter("page", catalog.page - 1)}>
+              <button type="button" disabled={filters.page === 0} onClick={() => updateFilter("page", filters.page - 1)}>
                 Anterior
               </button>
-              <span>Página {catalog.page + 1} de {catalog.totalPages}</span>
-              <button type="button" disabled={catalog.page + 1 >= catalog.totalPages} onClick={() => updateFilter("page", catalog.page + 1)}>
+              <span>Página {filters.page + 1} de {totalPages}</span>
+              <button type="button" disabled={filters.page + 1 >= totalPages} onClick={() => updateFilter("page", filters.page + 1)}>
                 Siguiente
               </button>
             </nav>
@@ -232,7 +291,7 @@ export function LibraryExplorer() {
 function ResourceCard({ resource }: { resource: CatalogResource }) {
   const guardian = guardianFor(resource);
   const guardianColor = guardian?.color ?? "var(--ct-primary)";
-  const metadata = [resource.level, resource.duration, resource.format].filter(Boolean);
+  const metadata = [resource.level, resource.duration, resource.language[0], formatLabel(resource.format)].filter(Boolean);
 
   return (
     <article className="library-card" style={{ "--guardian-color": guardianColor } as React.CSSProperties}>

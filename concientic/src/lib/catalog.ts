@@ -57,16 +57,26 @@ export type CatalogFilters = {
 };
 
 export const providerOptions = [
-  "Microsoft Learn",
+  "Comisión Europea",
+  "Cisco",
+  "DQ Institute",
   "freeCodeCamp",
-  "Khan Academy",
+  "Google",
   "Google Applied Digital Skills",
+  "IBM",
   "IBM SkillsBuild",
+  "Khan Academy",
+  "Meta",
+  "Microsoft",
+  "Microsoft Learn",
+  "MinTIC",
   "OpenLearn",
+  "Santander",
+  "UNESCO",
 ] as const;
 
 export function buildCatalogQuery(filters: CatalogFilters): string {
-  const query = new URLSearchParams({ page: String(filters.page), size: "12" });
+  const query = new URLSearchParams({ page: "0", size: "100" });
   const values: Array<[string, string]> = [
     ["q", filters.q],
     ["competency", filters.competency],

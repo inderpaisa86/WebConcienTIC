@@ -152,3 +152,16 @@ WHERE status IN ('ACTIVE', 'UPDATED', 'VERIFIED', 'LINK_CHANGED')
 ## Regla de contenido
 
 La interfaz no inventa recursos ni modifica el catálogo. Solo presenta los recursos que el backend publica y enlaza a `verifiedUrl` o `sourceUrl` en una pestaña nueva.
+
+## Catálogo híbrido
+
+La Biblioteca combina dos fuentes:
+
+1. `src/content/static-courses.ts`: conserva los 30 cursos que existían originalmente en la página HTML estática.
+2. `/api/catalog/resources`: incorpora los recursos publicados por el motor de ConcienTIC.
+
+Los cursos estáticos se muestran incluso si el backend no está disponible. Los recursos dinámicos se agregan solo cuando su URL no está ya presente en el catálogo estático; de esta forma no se duplican cursos heredados.
+
+Para agregar un nuevo curso estático, añade una entrada a `staticCourses` usando los campos de la función `resource`: proveedor, competencia, título, descripción, nivel, duración, idioma, formato, Guardián y URL oficial.
+
+La Biblioteca aplica los mismos filtros a ambas fuentes. La paginación se calcula sobre la colección combinada. Los recursos dinámicos pueden reemplazar la necesidad de mantener manualmente nuevos cursos, pero el catálogo heredado se conserva como respaldo editorial.
