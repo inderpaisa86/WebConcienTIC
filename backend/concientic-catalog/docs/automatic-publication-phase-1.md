@@ -133,3 +133,53 @@ Eso indica que el motor funciona y protege el catálogo, pero la fuente no permi
 ## Límite de esta fase
 
 La inferencia de `FREE` es conservadora pero automática: se basa en que el contenido es accesible, no presenta señales de pago ni exige cuenta. No sustituye una validación contractual o legal de las condiciones de cada proveedor.
+
+## Source Registry del piloto
+
+El registro efectivo está en:
+
+```text
+backend/concientic-catalog/src/main/resources/source-pages.json
+```
+
+Cada entrada declara una página oficial concreta, no una página principal genérica. Incluye:
+
+- `sourceName` y `provider`;
+- `providerType`;
+- `url`;
+- `expectedTitle` como pista, nunca como evidencia verificada;
+- `expectedLanguages` como expectativa, no como idioma confirmado;
+- `freeStatusHint` como pista semilla;
+- `competencyHint` y `guardianHint` validados contra los catálogos oficiales.
+
+El adaptador `ConfiguredSourcePageAdapter` carga el registro y lo combina con `OpenLearnAdapter`. Las URLs configuradas no sustituyen la verificación: cada una pasa por el mismo verificador HTTP/semántico.
+
+La ruta puede cambiarse mediante:
+
+```text
+SOURCE_PAGES=classpath:source-pages.json
+```
+
+Para usar un archivo externo compatible con el entorno de ejecución, configura una ubicación `file:` y conserva el mismo esquema JSON.
+
+Las semillas actuales pertenecen a [Microsoft Learn](https://learn.microsoft.com/training/support/learn-content-types), [freeCodeCamp](https://www.freecodecamp.org/learn/scientific-computing-with-python), [Khan Academy](https://www.khanacademy.org/computing/computers-and-internet), [Google Applied Digital Skills](https://applieddigitalskills.withgoogle.com/c/middle-and-high-school/en/discover-ai-in-daily-life/overview.html) e [IBM SkillsBuild](https://skillsbuild.org/job-seekers). Se seleccionaron como páginas oficiales concretas para el piloto; su disponibilidad final debe confirmarse desde Render.
+
+## Logs esperados
+
+```text
+Source discovery completed source=ConfiguredSourcePages candidates=6
+```
+
+Para una página accesible y verificable:
+
+```text
+Resource upserted ... resourceStatus=VERIFIED freeStatus=FREE publishable=true
+```
+
+Para una página bloqueada o incompleta:
+
+```text
+Resource upserted ... resourceStatus=TEMPORARILY_UNAVAILABLE publishable=false
+```
+
+El motor conserva el recurso y su comprobación, pero no lo muestra en el catálogo público.

@@ -1,0 +1,72 @@
+{
+  "version": "1.0.0",
+  "policy": "Estas URLs son semillas oficiales para el piloto. Cada página debe superar la verificación HTTP y semántica antes de publicarse.",
+  "pages": [
+    {
+      "sourceName": "Microsoft Learn",
+      "provider": "Microsoft Learn",
+      "providerType": "platform",
+      "url": "https://learn.microsoft.com/training/support/learn-content-types",
+      "expectedTitle": "Microsoft Learn content and resource types",
+      "expectedLanguages": ["en"],
+      "freeStatusHint": "FREE",
+      "competencyHint": "informacion",
+      "guardianHint": "Byte"
+    },
+    {
+      "sourceName": "freeCodeCamp",
+      "provider": "freeCodeCamp",
+      "providerType": "platform",
+      "url": "https://www.freecodecamp.org/learn/scientific-computing-with-python",
+      "expectedTitle": "Scientific Computing with Python",
+      "expectedLanguages": ["en"],
+      "freeStatusHint": "FREE",
+      "competencyHint": "creacion",
+      "guardianHint": "Nova"
+    },
+    {
+      "sourceName": "Khan Academy",
+      "provider": "Khan Academy",
+      "providerType": "platform",
+      "url": "https://www.khanacademy.org/computing/computers-and-internet",
+      "expectedTitle": "Computers and the Internet",
+      "expectedLanguages": ["en"],
+      "freeStatusHint": "FREE",
+      "competencyHint": "informacion",
+      "guardianHint": "Byte"
+    },
+    {
+      "sourceName": "Google Applied Digital Skills",
+      "provider": "Google Applied Digital Skills",
+      "providerType": "company",
+      "url": "https://applieddigitalskills.withgoogle.com/c/middle-and-high-school/en/discover-ai-in-daily-life/overview.html",
+      "expectedTitle": "Discover AI in Daily Life",
+      "expectedLanguages": ["en"],
+      "freeStatusHint": "FREE",
+      "competencyHint": "ia",
+      "guardianHint": "Nova"
+    },
+    {
+      "sourceName": "Google Applied Digital Skills",
+      "provider": "Google Applied Digital Skills",
+      "providerType": "company",
+      "url": "https://applieddigitalskills.withgoogle.com/c/middle-and-high-school/en/understand-your-digital-footprint/overview.html",
+      "expectedTitle": "Understand Your Digital Footprint",
+      "expectedLanguages": ["en"],
+      "freeStatusHint": "FREE",
+      "competencyHint": "seguridad",
+      "guardianHint": "Locky"
+    },
+    {
+      "sourceName": "IBM SkillsBuild",
+      "provider": "IBM SkillsBuild",
+      "providerType": "company",
+      "url": "https://skillsbuild.org/job-seekers",
+      "expectedTitle": "Free Tech Skills for Adult Learners",
+      "expectedLanguages": ["en"],
+      "freeStatusHint": "FREE",
+      "competencyHint": "creacion",
+      "guardianHint": "Byte"
+    }
+  ]
+}

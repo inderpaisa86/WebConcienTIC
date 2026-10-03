@@ -11,7 +11,16 @@ public record ResourceCandidate(
         String provider,
         String providerType,
         String expectedTitle,
-        List<String> expectedLanguages) {
+        List<String> expectedLanguages,
+        String freeStatusHint,
+        String competencyHint,
+        String guardianHint) {
+
+    public ResourceCandidate(UUID candidateId, String sourceName, URI sourceUrl, String provider,
+                             String providerType, String expectedTitle, List<String> expectedLanguages) {
+        this(candidateId, sourceName, sourceUrl, provider, providerType, expectedTitle, expectedLanguages,
+                null, null, null);
+    }
 
     public ResourceCandidate {
         if (candidateId == null) {

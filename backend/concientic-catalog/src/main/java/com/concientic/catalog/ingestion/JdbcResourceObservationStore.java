@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Set;
 import java.util.UUID;
 
 @Repository
@@ -41,9 +42,10 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
             }
 
             ResourceStatus resourceStatus = titleMissing ? ResourceStatus.REVIEW_REQUIRED : mapStatus(verification.accessStatus());
-            FreeStatus freeStatus = inferFreeStatus(verification);
+            FreeStatus freeStatus = inferFreeStatus(candidate, verification);
             UUID resourceId = upsertResource(candidate, verification, title, resourceStatus, freeStatus);
             persistCheck(resourceId, runId, verification);
+            persistClassification(resourceId, candidate);
             resources++;
             checks++;
 
@@ -78,12 +80,14 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
                 INSERT INTO resources (
                     id, title, short_description, provider, provider_type, source_url,
                     canonical_url, verified_url, url_status, http_status, last_verified_at,
-                    free_status, free_explanation, format, verification_score, overall_score,
+                    free_status, free_explanation, format, primary_competency, guardian_primary,
+                    verification_score, overall_score,
                     reason_for_inclusion, status, source_last_checked, notes)
                 VALUES (
                     :id, :title, :description, :provider, :providerType, :sourceUrl,
                     :canonicalUrl, :verifiedUrl, :urlStatus, :httpStatus, :lastVerifiedAt,
-                    :freeStatus, :freeExplanation, 'other', :verificationScore, :verificationScore,
+                    :freeStatus, :freeExplanation, 'other', :competency, :guardian,
+                    :verificationScore, :verificationScore,
                     :reason, :status, :lastVerifiedAt, :notes)
                 ON CONFLICT (source_url) DO UPDATE SET
                     title = CASE WHEN EXISTS (
@@ -98,6 +102,8 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
                         THEN resources.short_description ELSE EXCLUDED.short_description END,
                     provider = EXCLUDED.provider,
                     provider_type = EXCLUDED.provider_type,
+                    primary_competency = EXCLUDED.primary_competency,
+                    guardian_primary = EXCLUDED.guardian_primary,
                     canonical_url = EXCLUDED.canonical_url,
                     verified_url = EXCLUDED.verified_url,
                     url_status = EXCLUDED.url_status,
@@ -140,6 +146,8 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
                 .addValue("description", description)
                 .addValue("provider", candidate.provider())
                 .addValue("providerType", candidate.providerType())
+                .addValue("competency", validCompetency(candidate.competencyHint()))
+                .addValue("guardian", validGuardian(candidate.guardianHint()))
                 .addValue("sourceUrl", candidate.sourceUrl().toString())
                 .addValue("canonicalUrl", canonicalUrl)
                 .addValue("verifiedUrl", verifiedUrl)
@@ -227,10 +235,65 @@ public class JdbcResourceObservationStore implements ResourceObservationStore {
         return result.toString();
     }
 
-    private static FreeStatus inferFreeStatus(VerificationResult verification) {
+    private void persistClassification(UUID resourceId, ResourceCandidate candidate) {
+        String competency = validCompetency(candidate.competencyHint());
+        if (competency != null) {
+            jdbc.update("""
+                    INSERT INTO resource_competencies (
+                        resource_id, competency_id, is_primary, assignment_source, confidence_score, explanation)
+                    VALUES (:resourceId, :competency, TRUE, 'SOURCE_PAGE_HINT', 0.70,
+                            'Clasificación inicial declarada por la configuración de la página semilla')
+                    ON CONFLICT (resource_id, competency_id) DO UPDATE SET
+                        is_primary = TRUE,
+                        assignment_source = EXCLUDED.assignment_source,
+                        confidence_score = EXCLUDED.confidence_score,
+                        explanation = EXCLUDED.explanation
+                    """, new MapSqlParameterSource()
+                    .addValue("resourceId", resourceId)
+                    .addValue("competency", competency));
+        }
+
+        String guardian = validGuardian(candidate.guardianHint());
+        if (guardian != null) {
+            jdbc.update("""
+                    INSERT INTO resource_guardians (
+                        resource_id, guardian_name, is_primary, assignment_source, confidence_score, explanation)
+                    VALUES (:resourceId, :guardian, TRUE, 'SOURCE_PAGE_HINT', 0.70,
+                            'Guardián inicial declarado por la configuración de la página semilla')
+                    ON CONFLICT (resource_id, guardian_name) DO UPDATE SET
+                        is_primary = TRUE,
+                        assignment_source = EXCLUDED.assignment_source,
+                        confidence_score = EXCLUDED.confidence_score,
+                        explanation = EXCLUDED.explanation
+                    """, new MapSqlParameterSource()
+                    .addValue("resourceId", resourceId)
+                    .addValue("guardian", guardian));
+        }
+    }
+
+    private static FreeStatus inferFreeStatus(ResourceCandidate candidate, VerificationResult verification) {
         if (verification.requiresPayment()) return FreeStatus.PAID;
-        if (verification.isAutomaticallyPublishable()) return FreeStatus.FREE;
-        return FreeStatus.UNKNOWN;
+        if (!verification.isAutomaticallyPublishable()) return FreeStatus.UNKNOWN;
+        if (candidate.freeStatusHint() != null && !candidate.freeStatusHint().isBlank()) {
+            try {
+                FreeStatus hinted = FreeStatus.valueOf(candidate.freeStatusHint().trim().toUpperCase());
+                if (hinted != FreeStatus.PAID && hinted != FreeStatus.TRIAL && hinted != FreeStatus.UNKNOWN) return hinted;
+            } catch (IllegalArgumentException ignored) {
+                // Invalid seed hints remain UNKNOWN rather than becoming publication evidence.
+            }
+        }
+        return FreeStatus.FREE;
+    }
+
+    private static String validCompetency(String value) {
+        return value != null && Set.of("informacion", "comunicacion", "creacion", "seguridad",
+                "discernimiento", "ia", "bienestar", "ciudadania").contains(value.trim().toLowerCase())
+                ? value.trim().toLowerCase() : null;
+    }
+
+    private static String validGuardian(String value) {
+        return value != null && Set.of("Emi", "Locky", "Lex", "Byte", "Detective DQ", "Nexo", "Nova").contains(value.trim())
+                ? value.trim() : null;
     }
 
     private static Timestamp timestamp(Instant value) {

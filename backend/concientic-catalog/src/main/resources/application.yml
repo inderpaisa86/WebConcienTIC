@@ -29,6 +29,7 @@ management:
 
 concientic:
   ingestion:
+    source-pages: ${SOURCE_PAGES:classpath:source-pages.json}
     token: ${INGESTION_TOKEN:}
     openlearn:
       urls: ${OPENLEARN_SEED_URLS:https://www.open.edu/openlearn/digital-computing/digital-skills-succeeding-digital-world,https://www.open.edu/openlearn/digital-computing/introduction-cyber-security-stay-safe-online}
