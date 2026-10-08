@@ -1,0 +1,70 @@
+{
+  "verdict": "CHANGES_REQUESTED",
+  "findings": [
+    {
+      "id": "PLD-001",
+      "severity": "HIGH",
+      "title": "providers.json omite campos obligatorios y mezcla dominio con URL",
+      "location": "Contratos de datos; ejemplo conceptual de data/providers.json y criterio de aceptación 1",
+      "problem": "El esquema define canonical_name y official_domain, pero no name, officialDomain, logo, brandColor, verifiedAt ni status. official_domain aparece además unas veces como host y otras como URL completa.",
+      "fix": "Fijar el esquema con los campos exactos exigidos, definir logo como ruta local o null, brandColor como dato no usado para tematizar la tarjeta y verifiedAt como ISO UTC o null; elegir host o URL para cada campo y documentar el mapeo snake_case/camelCase."
+    },
+    {
+      "id": "PLD-002",
+      "severity": "HIGH",
+      "title": "El modelo de identidades y alias no tiene destinos inequívocos",
+      "location": "ResourceIdentity, ejemplo de providers.json y Resolución de identidades y compatibilidad",
+      "problem": "ResourceIdentity omite resourceId; solo se ejemplifica brands; no se definen programs/products; y aliases son strings, por lo que OpenLearn puede coincidir como provider y brand sin una relación dirigida.",
+      "fix": "Añadir resourceId y esquemas para brands/programs/products. Representar cada alias con label y providerId/brandId/programId/productId explícitos, y hacer que el resolver devuelva el tuple completo sin inferir niveles por título."
+    },
+    {
+      "id": "PLD-003",
+      "severity": "HIGH",
+      "title": "La resolución por nombre puede publicar logos sin evidencia por recurso",
+      "location": "Requisitos funcionales 6 y 10; Resolución de identidades y compatibilidad",
+      "problem": "El diseño permite resolver resource.provider heredado por alias aunque admite que el nombre no es prueba suficiente de identidad legal o de quién publica la URL. Eso puede seleccionar un logo verified sin asignación revisada del recurso.",
+      "fix": "Separar identityMatch de logoEligibility. Exigir providerId explícito validado o una asignación versionada por resourceId/URL con evidencia; para recursos solo textuales devolver REVIEW_REQUIRED y fallback textual aunque el alias sea inequívoco."
+    },
+    {
+      "id": "PLD-004",
+      "severity": "MEDIUM",
+      "title": "Los estados no tienen semántica ni transición operativa completa",
+      "location": "Supuestos y ambigüedades explícitos y sección del validador",
+      "problem": "No se define cuándo usar not_available frente a REVIEW_REQUIRED ni qué evidencia o revisión autoriza pasar a verified.",
+      "fix": "Definir verified como evidencia completa y asset local con hash; not_available como identidad verificada sin asset utilizable/licenciable tras búsqueda documentada; REVIEW_REQUIRED como identidad/evidencia/licencia ambigua o incompleta. Solo una revisión manual con evidencia completa puede cambiar a verified."
+    },
+    {
+      "id": "PLD-005",
+      "severity": "MEDIUM",
+      "title": "El validador no exige el conjunto mínimo de proveedores y relaciones",
+      "location": "Requisito funcional 7 y criterios de aceptación 1 y 9",
+      "problem": "La lista mínima está en prosa, pero las reglas descritas solo comprueban estructura y unicidad. Un registro estructuralmente válido podría omitir providers o relaciones obligatorias como OpenLearn/Open University, JRC, IBM SkillsBuild, Microsoft Learn, Google Applied Digital Skills y Santander Open Academy.",
+      "fix": "Declarar REQUIRED_PROVIDER_IDS y un mapa de relaciones obligatorias en el validador; hacer fatal la ausencia de cualquier identidad mínima o relación, sin exigir que el logo esté verified."
+    },
+    {
+      "id": "PLD-006",
+      "severity": "MEDIUM",
+      "title": "El payload externo del catálogo no tiene validación runtime definida",
+      "location": "Compatibilidad, criterio 13 y contraste con route.ts/library-explorer.tsx",
+      "problem": "La ruta reenvía el body opaco y el cliente hace response.json() as CatalogPage. Ampliar el tipo TypeScript no valida provider, IDs, arrays ni URLs frente a entradas externas malformadas.",
+      "fix": "Definir parseCatalogPage(value: unknown) con zod ya disponible o validación manual; exigir provider string no vacío de máximo 160 y slugs opcionales para todos los IDs, con una regla explícita de descarte o fallback para elementos inválidos."
+    },
+    {
+      "id": "PLD-007",
+      "severity": "HIGH",
+      "title": "La validación SVG segura no es implementable con las restricciones fijadas",
+      "location": "Requisitos de seguridad y Validación scripts/validate-provider-logos",
+      "problem": "Se exige validar XML, namespaces, viewBox, scripts, foreignObject y referencias externas, pero se prohíbe una dependencia de parser y no se define algoritmo. Regex no garantiza detectar todas las formas de XML ejecutable o externo.",
+      "fix": "Elegir antes de implementar un parser XML seguro con dependencia fijada y allowlist estricta, o retirar SVG del conjunto aceptable y aceptar solo PNG/JPG firmados. No dejar la inspección XML crítica como requisito abierto."
+    },
+    {
+      "id": "PLD-008",
+      "severity": "MEDIUM",
+      "title": "El literal del CTA es contradictorio",
+      "location": "Requisito funcional 1, criterio 5, integración de tarjeta y código actual",
+      "problem": "El diseño exige Explorar recurso oficial → pero también conserva el CTA actual. El código actual muestra Explorar recurso y una flecha decorativa, sin oficial.",
+      "fix": "Elegir un único literal y repetirlo en requisitos, implementación y test. Si se adopta el requisito nuevo, usar exactamente Explorar recurso oficial y mantener la flecha con aria-hidden=true; si se conserva el actual, corregir el requisito."
+    }
+  ],
+  "reviewDoc": "C:\\Jose\\RepoSiginex\\WebConcienTIC\\.agents\\tasks\\provider-logo-design-review.md"
+}

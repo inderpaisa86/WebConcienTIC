@@ -245,13 +245,13 @@ export function LibraryExplorer() {
             </div>
           ) : null}
 
-          {loading ? (
-            <div className="library-grid" aria-label="Cargando recursos">
-              {[0, 1, 2].map((item) => <div className="library-skeleton" key={item} />)}
-            </div>
-          ) : visibleResources.length ? (
+          {visibleResources.length ? (
             <div className="library-grid">
               {visibleResources.map((resource) => <ResourceCard key={resource.id} resource={resource} />)}
+            </div>
+          ) : loading ? (
+            <div className="library-grid" aria-label="Cargando recursos">
+              {[0, 1, 2].map((item) => <div className="library-skeleton" key={item} />)}
             </div>
           ) : (
             <div className="library-state">
