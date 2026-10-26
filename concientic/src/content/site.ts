@@ -1,6 +1,6 @@
 export const site = {
   name: "CONCIENTIC",
-  domain: "https://concientic.com",
+  domain: "https://www.concientic.com",
   contactEmail: "hola@concientic.com",
   tagline: "Inteligencia Digital con conciencia",
   description:
@@ -11,22 +11,175 @@ export const site = {
 } as const;
 
 export const navLinks = [
-  { label: "DQUILIBRIO", href: "#dquilibrio" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "El desafío", href: "#desafio" },
+  { label: "Ecosistema", href: "#ecosistema" },
+  { label: "Guardianes", href: "#guardianes" },
+  { label: "Aprende", href: "#recursos" },
   { label: "Metodología", href: "#metodologia" },
-  { label: "Evidencia", href: "#evidencia" },
-  { label: "Equipo", href: "#equipo" },
-  { label: "Referentes", href: "#referentes" },
+  { label: "DQUILIBRIO", href: "#dquilibrio" },
 ] as const;
 
 export const hero = {
-  eyebrow: "Sistema de Inteligencia Digital",
-  title: "Aprender tecnología. Sin perder humanidad.",
+  eyebrow: "Aprende con intención. Aplica con criterio.",
+  title: "La inteligencia digital empieza contigo.",
   subtitle:
-    "ConcienTIC desarrolla Inteligencia Digital mientras ayuda a personas y organizaciones a construir una relación consciente, autónoma y equilibrada con la tecnología.",
-  primaryCta: { label: "Conocer DQUILIBRIO", href: "#dquilibrio" },
-  secondaryCta: { label: "Ver servicios", href: "#servicios" },
+    "No necesitas consumir más contenido. Necesitas reconocer lo que importa, desarrollar las competencias adecuadas y llevarlas a tu vida con propósito y equilibrio.",
+  primaryCta: { label: "Descubre tu siguiente paso ↗", href: "#experiencia" },
+  secondaryCta: { label: "Conoce nuestra metodología", href: "#metodologia" },
+  closing: "Menos ruido. Más criterio. Aprendizaje que se convierte en acción.",
+} as const;
+
+export const ecosistema = {
+  id: "ecosistema",
+  eyebrow: "El ecosistema ConcienTIC",
+  title: "Tres territorios. Un propósito compartido.",
+  intro:
+    "Conectamos diagnóstico, acompañamiento inteligente y soluciones especializadas. Cada componente cumple una función concreta dentro de una visión común.",
+  items: [
+    {
+      number: "01 · Diagnóstico y orientación",
+      name: "DQnexus",
+      description:
+        "Reconoce fortalezas y oportunidades en tus competencias digitales para orientar próximos pasos relevantes.",
+      cta: { label: "Explorar el diagnóstico ↗", href: "#experiencia", pending: false },
+    },
+    {
+      number: "02 · Aprendizaje inteligente",
+      name: "TutorIA",
+      description:
+        "Un acompañante para comprender conceptos, practicar, resolver dudas y avanzar con mayor autonomía.",
+      cta: { label: "Conocer la experiencia ↗", href: "#experiencia", pending: false },
+    },
+    {
+      number: "03 · Experimentación y aplicación",
+      name: "Laboratorios IA",
+      description:
+        "Espacios para diseñar, probar y aplicar soluciones con inteligencia artificial a retos concretos. SIGINEX es una de las aplicaciones especializadas del ecosistema.",
+      // §14.4 fija SOLO el destino (#contacto) para esta tarjeta, NO la etiqueta
+      // literal del CTA. "Conversemos ↗" es provisional (reutiliza la etiqueta de
+      // §14.9 para el mismo destino) y se marca pending → PENDIENTE DE CONFIRMACIÓN de Jeimy.
+      cta: { label: "Conversemos ↗", href: "#contacto", pending: true },
+    },
+  ],
+  honesty:
+    "La disponibilidad y el alcance de cada producto deben describirse según su estado real de desarrollo. Esta propuesta no presupone funcionalidades ya publicadas.",
+} as const;
+
+export const guardianes = {
+  id: "guardianes",
+  eyebrow: "Los Guardianes",
+  title: "Inteligencia con propósito.",
+  lead: "La IA tiene un papel. La persona conserva el protagonismo.",
+  body: "Los Guardianes se integran donde pueden aportar orientación, protección, comprensión o creatividad. Cada intervención debe tener una razón clara y un límite definido.",
+  groupAlt:
+    "Los siete Guardianes de ConcienTIC: Emi, Locky, Lex, Byte, Detective DQ, Nexo y Nova, con sus colores y capacidades digitales.",
+  images: [
+    "/guardians/emi.png",
+    "/guardians/locky.png",
+    "/guardians/lex.png",
+    "/guardians/byte.png",
+    "/guardians/detective-dq.png",
+    "/guardians/nexo.png",
+    "/guardians/nova.png",
+  ],
+  competencias: [
+    "Empatía Digital",
+    "Seguridad Digital",
+    "Derechos Digitales",
+    "Alfabetización Digital",
+    "Pensamiento Crítico",
+    "Colaboración Digital",
+    "Innovación Digital",
+  ],
+  closing: "La mejor tecnología no decide por ti: te ayuda a decidir mejor.",
+} as const;
+
+export const recursos = {
+  id: "recursos",
+  eyebrow: "Aprender con intención",
+  title: "Contenido que orienta. Experiencias que transforman.",
+  intro:
+    "El contenido gratuito sigue siendo una puerta de entrada. Lo conectamos con rutas, práctica y acompañamiento opcional para que cada persona encuentre el nivel de apoyo que necesita.",
+  items: [
+    {
+      number: "01/EXPLORAR",
+      title: "Referentes y recursos abiertos",
+      description:
+        "Contenido curado, fuentes confiables y herramientas para comprender un tema sin perderse entre miles de enlaces.",
+      cta: {
+        label: "Ver contenidos gratuitos ↗",
+        href: "https://www.concientic.com/servicios/contenidos",
+        external: true,
+        pending: false,
+      },
+    },
+    {
+      number: "02/APRENDER Y PROFUNDIZAR",
+      title: "Academia ConcienTIC",
+      description:
+        "Formación y programas de aprendizaje disponibles a través de nuestra academia en Hotmart, conectados con rutas y objetivos prácticos.",
+      // URL genérica del archivo de referencia v7 → PENDIENTE DE CONFIRMACIÓN de Jeimy
+      // (la URL real del curso en Hotmart no existe en el paquete; no se inventa).
+      cta: {
+        label: "Explorar Academia ↗",
+        href: "https://hotmart.com/",
+        external: true,
+        pending: true,
+      },
+    },
+    {
+      number: "03/PROFUNDIZAR",
+      title: "Programas y acompañamiento",
+      description:
+        "Talleres, cohortes o apoyo experto para desafíos que requieren interacción y retroalimentación.",
+      cta: null,
+    },
+  ],
+} as const;
+
+export const experiencia = {
+  id: "experiencia",
+  eyebrow: "Empieza por ti",
+  title: "Tu siguiente paso no tiene que ser aprenderlo todo.",
+  notice:
+    "Este pequeño ejemplo muestra cómo ConcienTIC podría orientar el primer paso. No es el diagnóstico oficial DQnexus ni guarda respuestas. En la experiencia real, las recomendaciones deberán apoyarse en criterios transparentes, recursos confiables y una ruta relacionada con tu objetivo.",
+  demoLabel: "Experiencia demostrativa · 1 pregunta",
+  question: "¿Qué te gustaría mejorar primero?",
+  options: [
+    {
+      id: "ia",
+      label: "Usar la IA con más criterio y seguridad.",
+      recommendation: {
+        title: "Empieza por una tarea real",
+        body: "Elige una tarea que hagas con frecuencia. Practica cómo dar contexto a una IA, contrasta sus respuestas con fuentes fiables y revisa qué información no debes compartir.",
+      },
+    },
+    {
+      id: "info",
+      label: "Evaluar información y reconocer la desinformación.",
+      recommendation: {
+        title: "Practica la verificación",
+        body: "Toma una afirmación que hayas visto en línea. Busca la fuente original, compara evidencias independientes y distingue hechos, opiniones e incertidumbre.",
+      },
+    },
+    {
+      id: "product",
+      label: "Ahorrar tiempo con herramientas digitales.",
+      recommendation: {
+        title: "Detecta una fricción cotidiana",
+        body: "Elige una tarea repetitiva. Documenta cómo la haces hoy y explora una herramienta que simplifique un paso sin añadir complejidad innecesaria.",
+      },
+    },
+    {
+      id: "balance",
+      label: "Recuperar equilibrio y atención en mi vida digital.",
+      recommendation: {
+        title: "Observa antes de cambiar",
+        body: "Identifica un momento del día en que la tecnología interrumpe tu atención. Prueba un límite pequeño y deliberado y evalúa cómo te sientes.",
+      },
+    },
+  ],
+  submitLabel: "Ver una orientación inicial ↗",
+  emptyMessage: "Elige una opción para ver una orientación.",
 } as const;
 
 export const principleBand = {
@@ -45,25 +198,25 @@ export const dquilibrio = {
       number: "01 · Atención",
       title: "Recuperar presencia",
       description: "Reconocer que la atención es limitada y diseñar experiencias que la respeten.",
-      href: "/dquilibrio/atencion.html",
+      href: "https://www.concientic.com/dquilibrio/atencion.html",
     },
     {
       number: "02 · Información",
       title: "Reducir saturación",
       description: "Pasar de acumular información a seleccionar, contextualizar y comprender.",
-      href: "/dquilibrio/informacion.html",
+      href: "https://www.concientic.com/dquilibrio/informacion.html",
     },
     {
       number: "03 · Criterio",
       title: "Decidir con criterio",
       description: "Distinguir evidencia, interpretación y opinión antes de actuar.",
-      href: "/dquilibrio/discernimiento.html",
+      href: "https://www.concientic.com/dquilibrio/discernimiento.html",
     },
     {
       number: "04 · Autonomía",
       title: "Elegir conscientemente",
       description: "Usar la tecnología por decisión propia, no por inercia.",
-      href: "/dquilibrio/autonomia.html",
+      href: "https://www.concientic.com/dquilibrio/autonomia.html",
     },
   ],
 } as const;
@@ -328,27 +481,23 @@ export const manifesto = {
 
 export const contact = {
   id: "contacto",
-  eyebrow: "Contacto",
-  title: "Hablemos de cómo habitar mejor la tecnología.",
+  // Encabezado §14.9: "El siguiente paso empieza aquí — Haz que la tecnología
+  // tenga sentido para ti." → eyebrow + " — " + title reproduce la cadena literal.
+  eyebrow: "El siguiente paso empieza aquí",
+  title: "Haz que la tecnología tenga sentido para ti.",
   subtitle:
-    "Cuéntanos qué reto estás viviendo en tu organización, equipo o comunidad. Podemos explorar una ruta de competencias digitales, IA, transformación o DQUILIBRIO.",
-  closing: "No prometemos más tiempo conectado.",
-  closingEmphasis: "Prometemos una conversación con intención.",
+    "Cuéntanos qué quieres comprender, mejorar o transformar. Podemos ayudarte a identificar un punto de partida.",
+  cta: "Conversemos ↗",
 } as const;
 
 export const footer = {
   tagline: "Conciencia Digital para un mundo mejor.",
   links: [
-    { label: "DQUILIBRIO", href: "#dquilibrio" },
-    { label: "Servicios", href: "#servicios" },
-    { label: "El desafío", href: "#desafio" },
-    { label: "Desinfoxicación", href: "#desinfoxicacion" },
+    { label: "Ecosistema", href: "#ecosistema" },
+    { label: "Guardianes", href: "#guardianes" },
+    { label: "Aprende", href: "#recursos" },
     { label: "Metodología", href: "#metodologia" },
-    { label: "Evidencia", href: "#evidencia" },
-    { label: "Equipo", href: "#equipo" },
-    { label: "Casos", href: "#casos" },
-    { label: "Referentes", href: "#referentes" },
-    { label: "Contacto", href: "#contacto" },
+    { label: "DQUILIBRIO", href: "#dquilibrio" },
   ],
 } as const;
 

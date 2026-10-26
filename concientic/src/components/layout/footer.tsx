@@ -23,6 +23,7 @@ export function Footer() {
             </a>
           ))}
         </nav>
+        <p className="footer-copyright">© ConcienTIC</p>
       </div>
     </footer>
   );

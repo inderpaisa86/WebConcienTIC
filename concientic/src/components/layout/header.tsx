@@ -34,8 +34,8 @@ export function Header() {
         </nav>
 
         <div className="header-actions">
-          <a className="ct-button ct-button--dark" href="#contacto">
-            Hablemos
+          <a className="ct-button ct-button--dark" href="#experiencia">
+            Encuentra tu ruta ↗
           </a>
           <button
             className="mobile-menu-button"
@@ -61,8 +61,8 @@ export function Header() {
               </li>
             ))}
             <li>
-              <a href="#contacto" onClick={() => setOpen(false)}>
-                Hablemos
+              <a href="#experiencia" onClick={() => setOpen(false)}>
+                Encuentra tu ruta ↗
               </a>
             </li>
           </ul>

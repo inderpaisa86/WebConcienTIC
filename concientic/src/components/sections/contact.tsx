@@ -10,9 +10,9 @@ export function Contact() {
           <SectionHeader eyebrow={contact.eyebrow} title={contact.title} />
           <p>{contact.subtitle}</p>
           <p>
-            <strong>{contact.closing}</strong>
-            <br />
-            {contact.closingEmphasis}
+            <a className="ct-button ct-button--primary" href={`#${contact.id}`}>
+              {contact.cta}
+            </a>
           </p>
         </div>
         <div className="contact-form-shell">

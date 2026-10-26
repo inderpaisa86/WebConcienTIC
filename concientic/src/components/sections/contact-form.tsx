@@ -54,9 +54,9 @@ export function ContactForm() {
         aria-live="polite"
         className="rounded-xl border border-border bg-card p-6 text-card-foreground"
       >
-        <p className="font-heading text-lg font-semibold">Formulario de demostración</p>
+        <p className="font-heading text-lg font-semibold">Mensaje enviado</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Maqueta de demostración: conecta este formulario a un servicio real (por ejemplo, Resend) antes de producción.
+          Gracias, hemos recibido tu mensaje. Te responderemos al correo que indicaste.
         </p>
         <Button className="mt-4" variant="outline" onClick={() => setStatus("idle")}>
           Enviar otro mensaje

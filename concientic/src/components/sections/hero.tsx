@@ -8,9 +8,7 @@ export function Hero() {
       <div className="ct-container hero-grid">
         <div className="hero-copy">
           <p className="ct-eyebrow">{hero.eyebrow}</p>
-          <h1>
-            Aprender tecnología. <span>Sin perder humanidad.</span>
-          </h1>
+          <h1>{hero.title}</h1>
           <p>{hero.subtitle}</p>
           <div className="hero-actions">
             <a className="ct-button ct-button--primary" href={hero.primaryCta.href}>
@@ -20,6 +18,7 @@ export function Hero() {
               {hero.secondaryCta.label}
             </a>
           </div>
+          <p className="hero-closing">{hero.closing}</p>
         </div>
 
         <div className="hero-visual">

@@ -1797,3 +1797,220 @@ a.info-card:focus-visible::after {
 .library-card__body .library-card__cta:focus-visible {
   color: var(--ct-dark);
 }
+
+/* ── Rediseño v13: Hero closing ── */
+.hero-closing {
+  margin: 24px 0 0;
+  max-width: 540px;
+  color: var(--ct-muted);
+  font-weight: 500;
+}
+
+/* ── Rediseño v13: CTA de tarjeta (Ecosistema / Recursos) ── */
+.info-card__cta {
+  position: relative;
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--ct-primary);
+  font-weight: 600;
+  background-image: linear-gradient(var(--ct-primary), var(--ct-primary));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 240ms ease;
+}
+
+.info-card__cta:hover,
+.info-card__cta:focus-visible {
+  background-size: 100% 1px;
+}
+
+.info-card__pending {
+  display: inline-block;
+  margin-top: 12px;
+  border-radius: 999px;
+  padding: 4px 12px;
+  background: var(--ct-soft);
+  color: var(--ct-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* ── Rediseño v13: nota de honestidad de Ecosistema ── */
+.ecosistema-honesty {
+  max-width: 760px;
+  margin: 40px 0 0;
+  color: var(--ct-muted);
+  font-size: 0.95rem;
+}
+
+/* ── Rediseño v13: franja de Guardianes ── */
+.guardianes-lead {
+  margin: 0 0 12px;
+  max-width: 640px;
+  color: var(--ct-white);
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.guardianes-body {
+  margin: 0 0 40px;
+  max-width: 680px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.guardianes-group {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 44px;
+}
+
+.guardianes-group__item {
+  display: flex;
+  justify-content: center;
+}
+
+.guardianes-group__item img {
+  height: auto;
+  width: 100%;
+  max-width: 160px;
+}
+
+.guardianes-competencias {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 0 0 40px;
+  padding: 0;
+  list-style: none;
+}
+
+.guardianes-competencias__item {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--ct-radius-sm);
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--ct-white);
+  font-weight: 500;
+}
+
+.guardianes-closing {
+  margin: 0;
+  max-width: 640px;
+  color: var(--ct-white);
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+/* ── Rediseño v13: Experiencia demostrativa ── */
+.experiencia-notice {
+  max-width: 760px;
+  margin: 0 0 32px;
+  border-left: 3px solid var(--ct-primary);
+  padding-left: 18px;
+  color: var(--ct-muted);
+  font-size: 0.95rem;
+}
+
+.experiencia-demo {
+  max-width: 720px;
+  border: 1px solid var(--ct-line);
+  border-radius: var(--ct-radius-lg);
+  padding: 32px;
+  background: var(--ct-white);
+  box-shadow: var(--ct-shadow-sm);
+}
+
+.experiencia-demo__label {
+  margin: 0 0 20px;
+  color: var(--ct-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.experiencia-fieldset {
+  margin: 0 0 24px;
+  border: 0;
+  padding: 0;
+}
+
+.experiencia-question {
+  margin-bottom: 16px;
+  padding: 0;
+  color: var(--ct-dark);
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.experiencia-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  border: 1px solid var(--ct-line);
+  border-radius: var(--ct-radius-sm);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color 160ms ease;
+}
+
+.experiencia-option:hover,
+.experiencia-option:focus-within {
+  border-color: var(--ct-primary);
+}
+
+.experiencia-option input {
+  margin-top: 4px;
+}
+
+.experiencia-result:empty {
+  display: none;
+}
+
+.experiencia-result {
+  margin-top: 24px;
+  border-radius: var(--ct-radius-md);
+  padding: 20px 22px;
+  background: var(--ct-soft);
+}
+
+.experiencia-result strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ct-dark);
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-size: 1.1rem;
+}
+
+.experiencia-result p {
+  margin: 0;
+  color: var(--ct-text);
+}
+
+/* ── Rediseño v13: © del footer ── */
+.footer-copyright {
+  margin: 0;
+  color: var(--ct-muted);
+  font-size: 0.86rem;
+}
+
+@media (max-width: 768px) {
+  .guardianes-group {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .guardianes-competencias {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .experiencia-demo {
+    padding: 24px;
+  }
+}
