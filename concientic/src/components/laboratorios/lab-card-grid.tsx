@@ -74,6 +74,12 @@ export function LabCardGrid() {
     event: React.MouseEvent<HTMLAnchorElement>,
     name: string,
   ) {
+    // Si el enlace apunta a una ruta interna del sitio (p. ej. /laboratorios),
+    // dejar que navegue con normalidad.
+    const href = event.currentTarget.getAttribute("href") ?? "";
+    if (href.startsWith("/")) {
+      return;
+    }
     // Si en el futuro se configura una URL real, dejar que el enlace navegue.
     if (ARTIFACT_URLS[name]) {
       return;

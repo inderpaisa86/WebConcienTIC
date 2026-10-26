@@ -51,7 +51,8 @@ export const laboratorios = {
         cardNumber: "LABORATORIO 02",
         linkLabel: "Entrar al laboratorio",
         dataLab: "EmprendeCreativo",
-        href: "#configurar-emprendecreativo",
+        // EmprendeCreativo enruta a la propia página /laboratorios (decisión del usuario).
+        href: "/laboratorios",
       },
       {
         key: "DQ-Nexus",
