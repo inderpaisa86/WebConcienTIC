@@ -119,6 +119,8 @@ export function LabCardGrid() {
                 className="card-link artifact-link"
                 data-lab={card.dataLab}
                 href={card.href}
+                target={"newTab" in card && card.newTab ? "_blank" : undefined}
+                rel={"newTab" in card && card.newTab ? "noopener noreferrer" : undefined}
                 onClick={(event) => handleArtifactClick(event, card.dataLab)}
               >
                 {card.linkLabel} <span aria-hidden="true">↗</span>

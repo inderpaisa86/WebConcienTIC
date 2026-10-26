@@ -40,6 +40,8 @@ export const laboratorios = {
         dataLab: "SIGINEX",
         // Enruta a la app de Siginex servida bajo /siginex mediante rewrite (ver next.config.ts).
         href: "/siginex",
+        // Abre SIGINEX en una pestaña nueva.
+        newTab: true,
       },
       {
         key: "EmprendeCreativo",
