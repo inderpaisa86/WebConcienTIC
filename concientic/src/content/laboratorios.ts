@@ -38,7 +38,8 @@ export const laboratorios = {
         cardNumber: "LABORATORIO 01",
         linkLabel: "Explorar SIGINEX",
         dataLab: "SIGINEX",
-        href: "#configurar-siginex",
+        // Enruta a la app de Siginex servida bajo /siginex mediante rewrite (ver next.config.ts).
+        href: "/siginex",
       },
       {
         key: "EmprendeCreativo",

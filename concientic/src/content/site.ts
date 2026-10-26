@@ -10,12 +10,15 @@ export const site = {
   },
 } as const;
 
+// Anclas de secciones de la home. Se prefijan con "/" para que el menú
+// global funcione desde cualquier página: desde otra ruta navega a la home
+// y hace scroll a la sección; desde la propia home se comporta igual.
 export const navLinks = [
-  { label: "Ecosistema", href: "#ecosistema" },
-  { label: "Guardianes", href: "#guardianes" },
-  { label: "Aprende", href: "#recursos" },
-  { label: "Metodología", href: "#metodologia" },
-  { label: "DQUILIBRIO", href: "#dquilibrio" },
+  { label: "Ecosistema", href: "/#ecosistema" },
+  { label: "Guardianes", href: "/#guardianes" },
+  { label: "Aprende", href: "/#recursos" },
+  { label: "Metodología", href: "/#metodologia" },
+  { label: "DQUILIBRIO", href: "/#dquilibrio" },
 ] as const;
 
 export const hero = {
@@ -544,12 +547,14 @@ export const contact = {
 
 export const footer = {
   tagline: "Conciencia Digital para un mundo mejor.",
+  // Anclas de secciones de la home, prefijadas con "/" para que el footer
+  // global funcione desde cualquier página (navega a la home y hace scroll).
   links: [
-    { label: "Ecosistema", href: "#ecosistema" },
-    { label: "Guardianes", href: "#guardianes" },
-    { label: "Aprende", href: "#recursos" },
-    { label: "Metodología", href: "#metodologia" },
-    { label: "DQUILIBRIO", href: "#dquilibrio" },
+    { label: "Ecosistema", href: "/#ecosistema" },
+    { label: "Guardianes", href: "/#guardianes" },
+    { label: "Aprende", href: "/#recursos" },
+    { label: "Metodología", href: "/#metodologia" },
+    { label: "DQUILIBRIO", href: "/#dquilibrio" },
   ],
 } as const;
 

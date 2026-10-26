@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer className="site-footer">
       <div className="ct-container footer-grid">
-        <a className="footer-brand brand" href="#inicio" aria-label={`${site.name}, inicio`}>
+        <a className="footer-brand brand" href="/" aria-label={`${site.name}, inicio`}>
           <span className="brand-wordmark">
             concienTIC
             <small>INTELIGENCIA DIGITAL CONSCIENTE</small>

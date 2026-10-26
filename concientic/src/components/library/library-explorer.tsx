@@ -141,24 +141,6 @@ export function LibraryExplorer() {
 
   return (
     <div className="library-page">
-      <section className="library-hero">
-        <div className="ct-container library-hero__inner">
-          <div>
-            <p className="ct-eyebrow">Servicios · Competencias Digitales · Biblioteca abierta</p>
-            <h1>Aprender también es elegir con criterio.</h1>
-            <p className="library-hero__lead">
-              Una selección de recursos gratuitos o claramente identificados, verificados por el motor
-              de inteligencia de contenidos de ConcienTIC.
-            </p>
-          </div>
-          <div className="library-hero__statement" aria-label="Principio de la Biblioteca">
-            <span>Menos ruido.</span>
-            <strong>Más criterio.</strong>
-            <span>Más autonomía.</span>
-          </div>
-        </div>
-      </section>
-
       <main className="ct-section ct-section--soft" id="biblioteca">
         <div className="ct-container">
           <div className="library-toolbar" aria-label="Filtros de la Biblioteca">
