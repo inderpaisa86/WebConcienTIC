@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import { hero } from "@/content/site";
 
 export function Hero() {
@@ -7,9 +5,13 @@ export function Hero() {
     <section id="inicio" className="hero-section">
       <div className="ct-container hero-grid">
         <div className="hero-copy">
-          <p className="ct-eyebrow">{hero.eyebrow}</p>
-          <h1>{hero.title}</h1>
-          <p>{hero.subtitle}</p>
+          <span className="pill">
+            <span className="dot" aria-hidden="true" /> {hero.eyebrow}
+          </span>
+          <h1>
+            {hero.titleLead} <em>{hero.titleEmphasis}</em>
+          </h1>
+          <p className="hero-lead">{hero.subtitle}</p>
           <div className="hero-actions">
             <a className="ct-button ct-button--primary" href={hero.primaryCta.href}>
               {hero.primaryCta.label}
@@ -18,18 +20,7 @@ export function Hero() {
               {hero.secondaryCta.label}
             </a>
           </div>
-          <p className="hero-closing">{hero.closing}</p>
-        </div>
-
-        <div className="hero-visual">
-          <Image
-            src="/diagrams/equilibrio-concientic-mejorado.png"
-            alt="DQUILIBRIO: atención, IA y tecnología, criterio, autonomía y humanidad en equilibrio"
-            width={600}
-            height={600}
-            priority
-            sizes="(max-width: 700px) 100vw, (max-width: 1100px) 80vw, 600px"
-          />
+          <p className="hero-note">{hero.closing}</p>
         </div>
       </div>
     </section>

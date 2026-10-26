@@ -1,35 +1,55 @@
-import Image from "next/image";
+import type { CSSProperties } from "react";
 
 import { methodology } from "@/content/site";
 
 export function Methodology() {
   return (
-    <section id={methodology.id} className="ct-section">
+    <section id={methodology.id} className="ink-section">
       <div className="ct-container">
-        <div className="methodology-grid">
-          <div className="methodology-copy">
-            <p className="ct-eyebrow">{methodology.eyebrow}</p>
-            <h2>{methodology.title}</h2>
-            <p className="methodology-lead">{methodology.subtitle}</p>
-            <ol className="methodology-list">
+        <div className="method-cycle">
+          <div className="method-cycle-copy">
+            <span className="eyebrow eyebrow--green-dark">{methodology.eyebrow}</span>
+            <h3>{methodology.title}</h3>
+            <p>{methodology.subtitle}</p>
+            <div className="method-steps">
               {methodology.steps.map((step) => (
-                <li className="methodology-item" key={step.step}>
+                <div
+                  className="method-step"
+                  key={step.step}
+                  style={{ "--step-color": step.color } as CSSProperties}
+                >
                   <b>
                     {step.step} · {step.title}
                   </b>
-                  <p>{step.description}</p>
-                </li>
+                  <span>{step.description}</span>
+                </div>
               ))}
-            </ol>
+            </div>
           </div>
-          <div className="cycle">
-            <Image
-              src="/diagrams/ciclo-dquilibrio-mejorado.png"
-              alt="Ciclo DQUILIBRIO: Detener, Observar, Discernir, Elegir, Equilibrar y vuelta a elegir"
-              width={610}
-              height={610}
-              sizes="(max-width: 700px) 100vw, (max-width: 1100px) 80vw, 610px"
-            />
+          <div
+            className="dq-diagram"
+            role="img"
+            aria-label="Ciclo DQUILIBRIO con cinco etapas: detener, observar, discernir, elegir y equilibrar"
+          >
+            <div className="dq-orbit">
+              <div className="dq-core">
+                DQUILIBRIO
+                <small>
+                  tecnología
+                  <br />
+                  con conciencia
+                </small>
+              </div>
+              {methodology.diagramNodes.map((node) => (
+                <span
+                  className={`dq-node ${node.position}`}
+                  key={node.position}
+                  style={{ "--node-color": node.color } as CSSProperties}
+                >
+                  {node.label}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>

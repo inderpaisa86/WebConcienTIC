@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import { experiencia } from "@/content/site";
-import { SectionHeader } from "@/components/ui/section-header";
 
 export function Experiencia() {
   const [selected, setSelected] = useState<string | null>(null);
@@ -18,31 +17,32 @@ export function Experiencia() {
   const emptyWarning = shown && !selected;
 
   return (
-    <section id={experiencia.id} className="ct-section ct-section--soft experiencia-section">
-      <div className="ct-container">
-        <SectionHeader eyebrow={experiencia.eyebrow} title={experiencia.title} />
+    <section id={experiencia.id} className="experience">
+      <div className="ct-container experience-grid">
+        <div className="experience-copy">
+          <span className="eyebrow eyebrow--green-dark">{experiencia.eyebrow}</span>
+          <h2>{experiencia.title}</h2>
+          {experiencia.paragraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
 
-        {/* Aviso SIEMPRE visible, sin condicionar al estado ni ocultarlo. */}
-        <p className="experiencia-notice">{experiencia.notice}</p>
+        <div className="demo">
+          <p className="demo-label">{experiencia.demoLabel}</p>
+          <h3>{experiencia.question}</h3>
 
-        <div className="experiencia-demo">
-          <p className="experiencia-demo__label">{experiencia.demoLabel}</p>
-
-          <fieldset className="experiencia-fieldset">
-            <legend className="experiencia-question">{experiencia.question}</legend>
-            {experiencia.options.map((option) => (
-              <label className="experiencia-option" key={option.id}>
-                <input
-                  type="radio"
-                  name="experiencia"
-                  value={option.id}
-                  checked={selected === option.id}
-                  onChange={() => setSelected(option.id)}
-                />
-                <span>{option.label}</span>
-              </label>
-            ))}
-          </fieldset>
+          {experiencia.options.map((option) => (
+            <label className="choice" key={option.id}>
+              <input
+                type="radio"
+                name="need"
+                value={option.id}
+                checked={selected === option.id}
+                onChange={() => setSelected(option.id)}
+              />
+              <span>{option.label}</span>
+            </label>
+          ))}
 
           <button
             type="button"
@@ -52,7 +52,7 @@ export function Experiencia() {
             {experiencia.submitLabel}
           </button>
 
-          <div role="status" aria-live="polite" className="experiencia-result">
+          <div role="status" aria-live="polite" className="demo-result demo-result--live">
             {emptyWarning ? <p>{experiencia.emptyMessage}</p> : null}
             {result ? (
               <>

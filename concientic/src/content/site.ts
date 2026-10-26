@@ -21,6 +21,8 @@ export const navLinks = [
 export const hero = {
   eyebrow: "Aprende con intención. Aplica con criterio.",
   title: "La inteligencia digital empieza contigo.",
+  titleLead: "La inteligencia digital empieza",
+  titleEmphasis: "contigo.",
   subtitle:
     "No necesitas consumir más contenido. Necesitas reconocer lo que importa, desarrollar las competencias adecuadas y llevarlas a tu vida con propósito y equilibrio.",
   primaryCta: { label: "Descubre tu siguiente paso ↗", href: "#experiencia" },
@@ -36,28 +38,29 @@ export const ecosistema = {
     "Conectamos diagnóstico, acompañamiento inteligente y soluciones especializadas. Cada componente cumple una función concreta dentro de una visión común.",
   items: [
     {
+      variant: "",
       number: "01 · Diagnóstico y orientación",
       name: "DQnexus",
       description:
         "Reconoce fortalezas y oportunidades en tus competencias digitales para orientar próximos pasos relevantes.",
-      cta: { label: "Explorar el diagnóstico ↗", href: "#experiencia", pending: false },
+      cta: { label: "Explorar el diagnóstico ↗", href: "#experiencia" },
     },
     {
+      variant: "purple",
       number: "02 · Aprendizaje inteligente",
       name: "TutorIA",
       description:
         "Un acompañante para comprender conceptos, practicar, resolver dudas y avanzar con mayor autonomía.",
-      cta: { label: "Conocer la experiencia ↗", href: "#experiencia", pending: false },
+      cta: { label: "Conocer la experiencia ↗", href: "#experiencia" },
     },
     {
+      variant: "lab-card",
       number: "03 · Experimentación y aplicación",
       name: "Laboratorios IA",
       description:
         "Espacios para diseñar, probar y aplicar soluciones con inteligencia artificial a retos concretos. SIGINEX es una de las aplicaciones especializadas del ecosistema.",
-      // §14.4 fija SOLO el destino (#contacto) para esta tarjeta, NO la etiqueta
-      // literal del CTA. "Conversemos ↗" es provisional (reutiliza la etiqueta de
-      // §14.9 para el mismo destino) y se marca pending → PENDIENTE DE CONFIRMACIÓN de Jeimy.
-      cta: { label: "Conversemos ↗", href: "#contacto", pending: true },
+      // La tarjeta de Laboratorios IA enlaza a la nueva ruta interna /laboratorios.
+      cta: { label: "Explorar laboratorios ↗", href: "/laboratorios" },
     },
   ],
   honesty:
@@ -103,36 +106,37 @@ export const recursos = {
     "El contenido gratuito sigue siendo una puerta de entrada. Lo conectamos con rutas, práctica y acompañamiento opcional para que cada persona encuentre el nivel de apoyo que necesita.",
   items: [
     {
-      number: "01/EXPLORAR",
+      number: "01 / EXPLORAR",
       title: "Referentes y recursos abiertos",
       description:
         "Contenido curado, fuentes confiables y herramientas para comprender un tema sin perderse entre miles de enlaces.",
+      featured: false,
       cta: {
         label: "Ver contenidos gratuitos ↗",
         href: "https://www.concientic.com/servicios/contenidos",
-        external: true,
-        pending: false,
+        ariaLabel: "Ver contenidos gratuitos de ConcienTIC",
+        external: false,
       },
     },
     {
-      number: "02/APRENDER Y PROFUNDIZAR",
+      number: "02 / APRENDER Y PROFUNDIZAR",
       title: "Academia ConcienTIC",
       description:
         "Formación y programas de aprendizaje disponibles a través de nuestra academia en Hotmart, conectados con rutas y objetivos prácticos.",
-      // URL genérica del archivo de referencia v7 → PENDIENTE DE CONFIRMACIÓN de Jeimy
-      // (la URL real del curso en Hotmart no existe en el paquete; no se inventa).
+      featured: true,
       cta: {
         label: "Explorar Academia ↗",
         href: "https://hotmart.com/",
+        ariaLabel: null,
         external: true,
-        pending: true,
       },
     },
     {
-      number: "03/PROFUNDIZAR",
+      number: "03 / PROFUNDIZAR",
       title: "Programas y acompañamiento",
       description:
         "Talleres, cohortes o apoyo experto para desafíos que requieren interacción y retroalimentación.",
+      featured: false,
       cta: null,
     },
   ],
@@ -142,8 +146,10 @@ export const experiencia = {
   id: "experiencia",
   eyebrow: "Empieza por ti",
   title: "Tu siguiente paso no tiene que ser aprenderlo todo.",
-  notice:
-    "Este pequeño ejemplo muestra cómo ConcienTIC podría orientar el primer paso. No es el diagnóstico oficial DQnexus ni guarda respuestas. En la experiencia real, las recomendaciones deberán apoyarse en criterios transparentes, recursos confiables y una ruta relacionada con tu objetivo.",
+  paragraphs: [
+    "Comienza identificando qué necesitas resolver. Este pequeño ejemplo muestra cómo ConcienTIC podría orientar el primer paso. No es el diagnóstico oficial DQnexus ni guarda respuestas.",
+    "En la experiencia real, las recomendaciones deberán apoyarse en criterios transparentes, recursos confiables y una ruta relacionada con tu objetivo.",
+  ],
   demoLabel: "Experiencia demostrativa · 1 pregunta",
   question: "¿Qué te gustaría mejorar primero?",
   options: [
@@ -191,33 +197,41 @@ export const principleBand = {
 
 export const dquilibrio = {
   id: "dquilibrio",
-  eyebrow: "DQUILIBRIO",
+  eyebrow: "La filosofía que nos guía · DQUILIBRIO",
   title: "La tecnología no es el enemigo. La falta de elección sí puede serlo.",
   description:
     "DQUILIBRIO es la filosofía transversal de ConcienTIC: aumentar nuestra capacidad de elegir cómo, cuándo, por qué y para qué usamos la tecnología.",
   items: [
     {
-      number: "01 · Atención",
+      number: "01 · ATENCIÓN",
       title: "Recuperar presencia",
       description: "Reconocer que la atención es limitada y diseñar experiencias que la respeten.",
+      cta: "Explorar Atención ↗",
+      accent: "#00C49A",
       href: "https://www.concientic.com/dquilibrio/atencion.html",
     },
     {
-      number: "02 · Información",
+      number: "02 · INFORMACIÓN",
       title: "Reducir saturación",
-      description: "Pasar de acumular información a seleccionar, contextualizar y comprender.",
+      description: "Pasar de acumular información a seleccionar, contextualizar y sintetizar.",
+      cta: "Explorar Información ↗",
+      accent: "#0077FF",
       href: "https://www.concientic.com/dquilibrio/informacion.html",
     },
     {
-      number: "03 · Criterio",
+      number: "03 · DISCERNIMIENTO",
       title: "Decidir con criterio",
-      description: "Distinguir evidencia, interpretación y opinión antes de actuar.",
+      description: "Verificar fuentes, reconocer sesgos y diferenciar evidencia de apariencia.",
+      cta: "Explorar Discernimiento ↗",
+      accent: "#6C63FF",
       href: "https://www.concientic.com/dquilibrio/discernimiento.html",
     },
     {
-      number: "04 · Autonomía",
+      number: "04 · AUTONOMÍA",
       title: "Elegir conscientemente",
-      description: "Usar la tecnología por decisión propia, no por inercia.",
+      description: "Usar IA y tecnología como herramientas al servicio de objetivos humanos.",
+      cta: "Explorar Autonomía ↗",
+      accent: "#FF7A00",
       href: "https://www.concientic.com/dquilibrio/autonomia.html",
     },
   ],
@@ -337,16 +351,49 @@ export const services = {
 
 export const methodology = {
   id: "metodologia",
-  eyebrow: "Metodología",
+  eyebrow: "Nuestra metodología",
   title: "Un ciclo, no una carrera.",
   subtitle:
-    "La metodología ConcienTIC traduce la filosofía DQUILIBRIO en una práctica de aprendizaje y transformación. No es una escala clínica ni un instrumento científico validado.",
+    "La metodología ConcienTIC traduce la filosofía DQUILIBRIO en una práctica de aprendizaje y transformación. No es una escalera rígida ni un instrumento clínico: es una invitación a detenerse, mirar el contexto, decidir con intención y volver a ajustar.",
   steps: [
-    { step: "01", title: "DETENER", description: "Interrumpir el piloto automático." },
-    { step: "02", title: "OBSERVAR", description: "Hacer visible contexto y hábitos." },
-    { step: "03", title: "DISCERNIR", description: "Contrastar información y riesgos." },
-    { step: "04", title: "ELEGIR", description: "Decidir con intención." },
-    { step: "05", title: "EQUILIBRAR", description: "Transferir, ajustar y volver a elegir." },
+    {
+      step: "01",
+      title: "DETENER",
+      description: "Interrumpir el piloto automático.",
+      color: "var(--ct-primary)",
+    },
+    {
+      step: "02",
+      title: "OBSERVAR",
+      description: "Hacer visible el contexto y los hábitos.",
+      color: "var(--ct-cyan)",
+    },
+    {
+      step: "03",
+      title: "DISCERNIR",
+      description: "Contrastar información y riesgos.",
+      color: "var(--ct-secondary)",
+    },
+    {
+      step: "04",
+      title: "ELEGIR",
+      description: "Decidir con intención.",
+      color: "var(--ct-orange)",
+    },
+    {
+      step: "05",
+      title: "EQUILIBRAR",
+      description: "Transferir, ajustar y volver a elegir.",
+      color: "var(--ct-pink)",
+    },
+  ],
+  // Nodos del diagrama DQUILIBRIO (orden/posición/colores = reference).
+  diagramNodes: [
+    { position: "n-att", label: "01 · DETENER", color: "var(--ct-primary)" },
+    { position: "n-hum", label: "02 · OBSERVAR", color: "var(--ct-pink)" },
+    { position: "n-ai", label: "03 · DISCERNIR", color: "var(--ct-secondary)" },
+    { position: "n-auto", label: "04 · ELEGIR", color: "var(--ct-orange)" },
+    { position: "n-crit", label: "05 · EQUILIBRAR", color: "var(--ct-yellow)" },
   ],
 } as const;
 
@@ -490,6 +537,9 @@ export const contact = {
   subtitle:
     "Cuéntanos qué quieres comprender, mejorar o transformar. Podemos ayudarte a identificar un punto de partida.",
   cta: "Conversemos ↗",
+  // La referencia enlaza a https://concientic.com/#contacto; usamos el ancla
+  // interna para navegación dentro del sitio (decisión documentada en el informe).
+  ctaHref: "#contacto",
 } as const;
 
 export const footer = {

@@ -1,23 +1,17 @@
-import { ContactForm } from "@/components/sections/contact-form";
-import { SectionHeader } from "@/components/ui/section-header";
 import { contact } from "@/content/site";
 
 export function Contact() {
   return (
-    <section id={contact.id} className="ct-section">
-      <div className="ct-container contact-grid">
-        <div className="contact-copy">
-          <SectionHeader eyebrow={contact.eyebrow} title={contact.title} />
+    <section id={contact.id} className="final-cta">
+      <div className="ct-container final-inner">
+        <div className="final-copy">
+          <span className="eyebrow eyebrow--green">{contact.eyebrow}</span>
+          <h2>{contact.title}</h2>
           <p>{contact.subtitle}</p>
-          <p>
-            <a className="ct-button ct-button--primary" href={`#${contact.id}`}>
-              {contact.cta}
-            </a>
-          </p>
         </div>
-        <div className="contact-form-shell">
-          <ContactForm />
-        </div>
+        <a className="ct-button ct-button--primary" href={contact.ctaHref}>
+          {contact.cta}
+        </a>
       </div>
     </section>
   );

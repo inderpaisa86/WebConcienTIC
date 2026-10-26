@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
@@ -13,15 +12,10 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="ct-container header-inner">
-        <Link className="brand-link" href="/" aria-label={`${site.name}, inicio`}>
-          <span className="brand-mark">
-            <Image
-              src="/brand/concientic-nexus-wordmark-transparente-fondo-claro.png"
-              alt="ConcienTIC Nexus — Conciencia Digital para un mundo mejor"
-              fill
-              priority
-              sizes="320px"
-            />
+        <Link className="brand-link brand" href="/" aria-label={`${site.name}, inicio`}>
+          <span className="brand-wordmark">
+            concienTIC
+            <small>INTELIGENCIA DIGITAL CONSCIENTE</small>
           </span>
         </Link>
 

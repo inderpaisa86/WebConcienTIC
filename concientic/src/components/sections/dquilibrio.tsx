@@ -1,30 +1,33 @@
+import type { CSSProperties } from "react";
+
 import { dquilibrio } from "@/content/site";
-import { SectionHeader } from "@/components/ui/section-header";
 
 export function Dquilibrio() {
   return (
-    <section id={dquilibrio.id} className="ct-section">
-      <div className="ct-container">
-        <SectionHeader
-          eyebrow={dquilibrio.eyebrow}
-          title={dquilibrio.title}
-          description={dquilibrio.description}
-        />
-        <div className="card-grid card-grid--four">
-          {dquilibrio.items.map((item) => (
-            <a
-              className="info-card"
-              key={item.number}
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Abrir la experiencia ${item.title} en una pestaña nueva`}
-            >
-              <span className="info-card__number">{item.number}</span>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </a>
-          ))}
+    <section id={dquilibrio.id} className="philosophy-section">
+      <div className="ct-container philosophy-wrap">
+        <div className="philosophy-panel">
+          <div className="section-head">
+            <span className="eyebrow eyebrow--green-dark">{dquilibrio.eyebrow}</span>
+            <h2>{dquilibrio.title}</h2>
+            <p>{dquilibrio.description}</p>
+          </div>
+          <div className="philosophy-cards">
+            {dquilibrio.items.map((item) => (
+              <article
+                className="philosophy-card"
+                key={item.number}
+                style={{ "--accent": item.accent } as CSSProperties}
+              >
+                <span className="num">{item.number}</span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <a className="card-cta" href={item.href}>
+                  {item.cta}
+                </a>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
