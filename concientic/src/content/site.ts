@@ -66,10 +66,10 @@ export const ecosistema = {
 
 export const guardianes = {
   id: "guardianes",
-  eyebrow: "Los Guardianes",
-  title: "Inteligencia con propósito.",
-  lead: "La IA tiene un papel. La persona conserva el protagonismo.",
-  body: "Los Guardianes se integran donde pueden aportar orientación, protección, comprensión o creatividad. Cada intervención debe tener una razón clara y un límite definido.",
+  eyebrows: ["Los Guardianes", "Inteligencia con propósito"],
+  title: "La IA tiene un papel. La persona conserva el protagonismo.",
+  intro:
+    "Los Guardianes se integran donde pueden aportar orientación, protección, comprensión o creatividad. Cada intervención debe tener una razón clara y un límite definido.",
   groupAlt:
     "Los siete Guardianes de ConcienTIC: Emi, Locky, Lex, Byte, Detective DQ, Nexo y Nova, con sus colores y capacidades digitales.",
   images: [
@@ -81,15 +81,16 @@ export const guardianes = {
     "/guardians/nexo.png",
     "/guardians/nova.png",
   ],
-  competencias: [
-    "Empatía Digital",
-    "Seguridad Digital",
-    "Derechos Digitales",
-    "Alfabetización Digital",
-    "Pensamiento Crítico",
-    "Colaboración Digital",
-    "Innovación Digital",
+  capabilities: [
+    { color: "#FF2F7D", icon: "♥", name: "Empatía Digital" },
+    { color: "#0077FF", icon: "▣", name: "Seguridad Digital" },
+    { color: "#FFB000", icon: "⚖", name: "Derechos Digitales" },
+    { color: "#22A600", icon: "▤", name: "Alfabetización Digital" },
+    { color: "#6C2BFF", icon: "✥", name: "Pensamiento Crítico" },
+    { color: "#00A9B7", icon: "♧", name: "Colaboración Digital" },
+    { color: "#FF5B00", icon: "➤", name: "Innovación Digital" },
   ],
+  closingIcon: "✦",
   closing: "La mejor tecnología no decide por ti: te ayuda a decidir mejor.",
 } as const;
 
