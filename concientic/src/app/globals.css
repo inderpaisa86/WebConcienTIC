@@ -1896,29 +1896,72 @@ a.info-card:focus-visible::after {
 .guardian-image-wrap {
   width: 100%;
   margin: 0;
-  overflow: hidden;
-  border-radius: 18px;
-  background: transparent;
-  line-height: 0;
+  border-radius: 24px;
+  border: 1px solid #e0e9e2;
+  background: linear-gradient(145deg, #fbfdfb, #edf7f3);
+  line-height: normal;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 16px;
+  gap: 14px;
   align-items: end;
   justify-items: center;
-  padding: 10px 0;
+  padding: 28px 22px;
 }
 
 .guardian-image__item {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
   width: 100%;
+  margin: 0;
 }
 
-.guardian-image__item img {
+/* Halo circular con el color del Guardián detrás del personaje */
+.guardian-image__art {
+  position: relative;
+  display: flex;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.guardian-image__art::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 90%;
+  aspect-ratio: 1 / 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--guardian-color) 24%, transparent);
+}
+
+.guardian-image__art img {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: auto;
   max-width: 160px;
   object-fit: contain;
+}
+
+.guardian-image__name {
+  display: inline-block;
+  min-width: 72px;
+  border-radius: 999px;
+  padding: 7px 16px;
+  background: var(--guardian-color);
+  color: var(--ct-white);
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .guardian-capabilities {
@@ -2016,6 +2059,13 @@ a.info-card:focus-visible::after {
   .guardian-image-wrap {
     border-radius: 12px;
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  .guardian-image__name {
+    min-width: 0;
+    padding: 6px 10px;
+    font-size: 0.72rem;
+    white-space: normal;
   }
 
   .guardian-capabilities {

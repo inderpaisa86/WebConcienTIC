@@ -72,14 +72,15 @@ export const guardianes = {
     "Los Guardianes se integran donde pueden aportar orientación, protección, comprensión o creatividad. Cada intervención debe tener una razón clara y un límite definido.",
   groupAlt:
     "Los siete Guardianes de ConcienTIC: Emi, Locky, Lex, Byte, Detective DQ, Nexo y Nova, con sus colores y capacidades digitales.",
+  // Cada Guardián con su color oficial del Manual de Marca (para la píldora de nombre).
   images: [
-    "/guardians/emi.png",
-    "/guardians/locky.png",
-    "/guardians/lex.png",
-    "/guardians/byte.png",
-    "/guardians/detective-dq.png",
-    "/guardians/nexo.png",
-    "/guardians/nova.png",
+    { src: "/guardians/emi.png", name: "Emi", color: "#FF6EB6" },
+    { src: "/guardians/locky.png", name: "Locky", color: "#0077FF" },
+    { src: "/guardians/lex.png", name: "Lex", color: "#FFC857" },
+    { src: "/guardians/byte.png", name: "Byte", color: "#00C49A" },
+    { src: "/guardians/detective-dq.png", name: "Detective DQ", color: "#6C63FF" },
+    { src: "/guardians/nexo.png", name: "Nexo", color: "#00B4D8" },
+    { src: "/guardians/nova.png", name: "Nova", color: "#FF7A00" },
   ],
   capabilities: [
     { color: "#FF2F7D", icon: "♥", name: "Empatía Digital" },

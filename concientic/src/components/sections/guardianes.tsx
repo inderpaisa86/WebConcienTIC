@@ -22,21 +22,29 @@ export function Guardianes() {
           No existe un asset único de grupo en el paquete v7 (public/guardians/
           solo trae los 7 PNG individuales) y §14.5 prohíbe incrustar base64 o
           sustituir assets de marca por aproximaciones. Por eso la imagen de
-          grupo se compone con los 7 PNG individuales: el contenedor lleva el
-          alt-text oficial como role="img" y cada PNG individual es decorativo
-          (alt="").
+          grupo se compone con los 7 PNG individuales, cada uno rotulado con su
+          nombre en una píldora del color oficial del Guardián (Manual de Marca).
+          El contenedor lleva el alt-text oficial como role="group" y cada PNG es
+          decorativo (alt="").
         */}
-        <div className="guardian-image-wrap" role="img" aria-label={guardianes.groupAlt}>
-          {guardianes.images.map((src) => (
-            <span className="guardian-image__item" key={src}>
-              <Image
-                src={src}
-                alt=""
-                width={160}
-                height={160}
-                sizes="(max-width: 700px) 30vw, 160px"
-              />
-            </span>
+        <div className="guardian-image-wrap" role="group" aria-label={guardianes.groupAlt}>
+          {guardianes.images.map((guardian) => (
+            <figure
+              className="guardian-image__item"
+              key={guardian.src}
+              style={{ "--guardian-color": guardian.color } as CSSProperties}
+            >
+              <span className="guardian-image__art">
+                <Image
+                  src={guardian.src}
+                  alt=""
+                  width={160}
+                  height={160}
+                  sizes="(max-width: 700px) 30vw, 160px"
+                />
+              </span>
+              <figcaption className="guardian-image__name">{guardian.name}</figcaption>
+            </figure>
           ))}
         </div>
 
