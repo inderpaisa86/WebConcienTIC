@@ -36,21 +36,22 @@
   --ct-secondary: #6c63ff;
   --ct-blue: #0077ff;
   --ct-cyan: #00b4d8;
-  --ct-dark: #0d1b2a;
+  --ct-dark: #0d182a;
   --ct-orange: #ff7a00;
   --ct-yellow: #ffc857;
-  --ct-pink: #ff6eb6;
+  --ct-pink: #ff68b4;
   --ct-white: #ffffff;
-  --ct-soft: #f5f7f9;
-  --ct-muted: #64748b;
-  --ct-text: #1e293b;
-  --ct-line: rgba(13, 27, 42, 0.12);
+  --ct-soft: #f5f7f3;
+  --ct-muted: #75847a;
+  --ct-text: #17231e;
+  --ct-line: #dce3dd;
   --ct-shadow-sm: 0 8px 24px rgba(13, 27, 42, 0.07);
   --ct-shadow-md: 0 16px 50px rgba(13, 27, 42, 0.08);
   --ct-radius-sm: 12px;
   --ct-radius-md: 18px;
   --ct-radius-lg: 24px;
   --ct-radius-xl: 34px;
+  --ct-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --background: var(--ct-white);
   --foreground: var(--ct-text);
   --card: var(--ct-white);
@@ -194,73 +195,72 @@ h4 {
   min-height: 48px;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 9px;
   overflow: hidden;
   isolation: isolate;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: 999px;
-  padding: 0 24px;
+  padding: 13px 18px;
   font-size: 0.92rem;
   font-weight: 800;
+  cursor: pointer;
   transition:
-    color 300ms ease,
-    border-color 300ms ease,
-    transform 150ms ease;
-}
-
-.ct-button::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  content: "";
-  background: var(--ct-dark);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    transform 0.24s var(--ct-ease-out),
+    box-shadow 0.24s ease,
+    background 0.24s ease;
 }
 
 .ct-button:active {
   transform: translateY(1px);
 }
 
-.ct-button--primary {
-  background: var(--ct-primary);
+.ct-button--primary,
+.ct-button--dark {
+  background: var(--ct-cyan);
   color: var(--ct-dark);
+}
+
+.ct-button--primary::before,
+.ct-button--dark::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.38) 48%,
+    transparent 72%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.6s var(--ct-ease-out);
+}
+
+.ct-button--primary:hover::before,
+.ct-button--primary:focus-visible::before,
+.ct-button--dark:hover::before,
+.ct-button--dark:focus-visible::before {
+  transform: translateX(130%);
+}
+
+.ct-button--primary:hover,
+.ct-button--primary:focus-visible,
+.ct-button--dark:hover,
+.ct-button--dark:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 24px rgba(0, 180, 216, 0.2);
 }
 
 .ct-button--secondary {
-  border-color: var(--ct-line);
-  background: var(--ct-white);
-  color: var(--ct-dark);
-}
-
-.ct-button--dark {
-  background: var(--ct-dark);
-  color: var(--ct-white);
-}
-
-.ct-button:hover,
-.ct-button:focus-visible {
-  color: var(--ct-white);
-}
-
-.ct-button:hover::before,
-.ct-button:focus-visible::before {
-  transform: scaleX(1);
+  background: transparent;
+  color: inherit;
+  border: 1px solid currentColor;
 }
 
 .ct-button--secondary:hover,
 .ct-button--secondary:focus-visible {
-  border-color: var(--ct-dark);
-}
-
-.ct-button--dark::before {
-  background: var(--ct-primary);
-}
-
-.ct-button--dark:hover,
-.ct-button--dark:focus-visible {
-  color: var(--ct-dark);
+  background: rgba(0, 196, 154, 0.07);
+  box-shadow: 0 7px 20px rgba(23, 35, 30, 0.06);
 }
 
 .site-header {
@@ -384,8 +384,9 @@ h4 {
 
 .hero-section {
   overflow: hidden;
-  padding: 88px 0 78px;
-  background: linear-gradient(180deg, #fff 0%, #f7fffc 100%);
+  padding: 82px 0 88px;
+  background: #f4f7f2;
+  color: var(--ct-text);
 }
 
 .hero-grid {
@@ -1082,10 +1083,10 @@ a.info-card:focus-visible::after {
 }
 
 .site-footer {
-  border-top: 1px solid var(--ct-line);
-  background: var(--ct-white);
+  border-top: 1px solid #d8e1d9;
+  background: #e7eee8;
   padding: 32px 0;
-  color: var(--ct-muted);
+  color: #4e5d53;
   font-size: 0.78rem;
 }
 
@@ -1847,10 +1848,15 @@ a.info-card:focus-visible::after {
 }
 
 /* ── Rediseño v13: franja de Guardianes ── */
+.guardianes-band {
+  background: #f4f7f2;
+  color: var(--ct-text);
+}
+
 .guardianes-lead {
   margin: 0 0 12px;
   max-width: 640px;
-  color: var(--ct-white);
+  color: var(--ct-text);
   font-size: 1.3rem;
   font-weight: 500;
 }
@@ -1858,7 +1864,7 @@ a.info-card:focus-visible::after {
 .guardianes-body {
   margin: 0 0 40px;
   max-width: 680px;
-  color: rgba(255, 255, 255, 0.72);
+  color: #5c6960;
 }
 
 .guardianes-group {
@@ -1890,23 +1896,34 @@ a.info-card:focus-visible::after {
 }
 
 .guardianes-competencias__item {
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid #d7e1d9;
   border-radius: var(--ct-radius-sm);
   padding: 16px 18px;
-  background: rgba(255, 255, 255, 0.035);
-  color: var(--ct-white);
+  background: #fff;
+  color: #34443a;
   font-weight: 500;
 }
 
 .guardianes-closing {
   margin: 0;
   max-width: 640px;
-  color: var(--ct-white);
+  border-left: 4px solid var(--ct-primary);
+  border-radius: 0 12px 12px 0;
+  padding: 17px 20px;
+  background: #e8f8f2;
+  color: #23372d;
   font-size: 1.15rem;
-  font-weight: 500;
+  font-weight: 800;
+  line-height: 1.5;
 }
 
 /* ── Rediseño v13: Experiencia demostrativa ── */
+.experiencia-section {
+  background: #eaf7f8;
+  border-top: 3px solid var(--ct-cyan);
+  border-bottom: 1px solid #d8e8ea;
+}
+
 .experiencia-notice {
   max-width: 760px;
   margin: 0 0 32px;

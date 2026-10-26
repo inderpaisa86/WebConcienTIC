@@ -5,9 +5,9 @@ import { SectionHeader } from "@/components/ui/section-header";
 
 export function Guardianes() {
   return (
-    <section id={guardianes.id} className="ct-section ct-section--dark guardianes-band">
+    <section id={guardianes.id} className="ct-section guardianes-band">
       <div className="ct-container">
-        <SectionHeader eyebrow={guardianes.eyebrow} title={guardianes.title} dark />
+        <SectionHeader eyebrow={guardianes.eyebrow} title={guardianes.title} />
         <p className="guardianes-lead">{guardianes.lead}</p>
         <p className="guardianes-body">{guardianes.body}</p>
 
