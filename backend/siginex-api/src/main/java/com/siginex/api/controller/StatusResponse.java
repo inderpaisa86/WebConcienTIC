@@ -1,4 +1,4 @@
-package com.siginex.api.api;
+package com.siginex.api.controller;
 
 /**
  * Minimal read-only status DTO for the Fase 0 skeleton.

@@ -1,4 +1,4 @@
-package com.siginex.api.api;
+package com.siginex.api.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;

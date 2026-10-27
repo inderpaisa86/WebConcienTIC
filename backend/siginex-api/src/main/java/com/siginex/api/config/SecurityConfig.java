@@ -1,32 +1,44 @@
 package com.siginex.api.config;
 
+import com.siginex.api.security.SessionAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 /**
- * PROVISIONAL minimal security chain for the Fase 0 skeleton.
+ * Fase 1 security chain.
  *
- * <p>{@code spring-boot-starter-security} secures every endpoint by default and
- * returns 401 (with a generated HTTP Basic / login form) on
- * {@code /actuator/health}, which would break the healthcheck that is the whole
- * point of Fase 0. This chain opens only the healthcheck, the actuator info
- * endpoint and the read-only status endpoint, and leaves everything else
- * authenticated.
+ * <p>Public: the Fase 0 healthcheck/info/status endpoints and
+ * {@code POST /auth/login} (session bootstrap). Everything else requires an
+ * authenticated session, which is established by
+ * {@link SessionAuthenticationFilter} from the opaque session cookie.
  *
- * <p>It defines NO users, NO password encoder and NO login endpoints. Real
- * authentication and authorization rules are introduced in Fase 1, which
- * replaces this class.
+ * <p>CSRF is enabled with a cookie token readable by the front
+ * ({@code CookieCsrfTokenRepository.withHttpOnlyFalse()}) and ignored only for
+ * {@code POST /auth/login}, which has no session yet and is protected by
+ * SameSite + enumeration resistance + lockout. Sessions are stateless from
+ * Spring's point of view: the authentication comes from our cookie, not an
+ * {@code HttpSession}. Form login and HTTP Basic are disabled.
  */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   SessionAuthenticationFilter sessionAuthenticationFilter) throws Exception {
         http
+                .csrf(csrf -> csrf
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .ignoringRequestMatchers(PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.POST, "/auth/login")))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/actuator/health",
@@ -34,9 +46,10 @@ public class SecurityConfig {
                                 "/actuator/info",
                                 "/api/v1/status")
                         .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .anyRequest().authenticated())
-                .httpBasic(basic -> {
-                })
+                .addFilterBefore(sessionAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .httpBasic(basic -> basic.disable())
                 .formLogin(form -> form.disable());
         return http.build();
     }

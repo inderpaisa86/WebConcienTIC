@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
@@ -36,6 +37,11 @@ class ApplicationContextWiringTest {
         @Bean
         NamedParameterJdbcTemplate namedParameterJdbcTemplate() {
             return new NamedParameterJdbcTemplate(mock(JdbcOperations.class));
+        }
+
+        @Bean
+        PlatformTransactionManager transactionManager() {
+            return mock(PlatformTransactionManager.class);
         }
     }
 }
