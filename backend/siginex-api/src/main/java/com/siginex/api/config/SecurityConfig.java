@@ -1,6 +1,6 @@
 package com.siginex.api.config;
 
-import com.siginex.api.security.SessionAuthenticationFilter;
+import com.siginex.api.config.SessionAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

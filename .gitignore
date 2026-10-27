@@ -1,2 +1,9 @@
 # Artefactos de trabajo de agentes/workflows (planes, reportes, verificaciones)
 .agents/
+# IDE (IntelliJ IDEA)
+.idea/
+*.iml
+
+# Build / herramientas de Gradle (Java)
+.gradle/
+build/

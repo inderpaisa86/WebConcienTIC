@@ -1,7 +1,7 @@
 package com.siginex.api.config;
 
-import com.siginex.api.auth.AuthException;
-import com.siginex.api.usuario.UsuarioException;
+import com.siginex.api.exception.AuthException;
+import com.siginex.api.exception.UsuarioException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
