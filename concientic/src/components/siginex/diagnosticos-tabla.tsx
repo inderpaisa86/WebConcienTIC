@@ -1,11 +1,14 @@
+import Link from "next/link";
+
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import type { DiagnosticoResumen } from "@/lib/siginex";
 
 /**
  * Tabla de diagnósticos (presentacional, server component). Usa `<table>`
  * nativo con `<th scope="col">` (RNF5) y solo tokens/componentes de concientic.
- * El detalle NO navega a una ruta funcional en 3b: se muestra como texto
- * deshabilitado "Detalle (próximamente)" para no producir un 404.
+ * Desde la 3c, el diagnóstico enlaza a su cuestionario
+ * (`/siginex/diagnosticos/{id}/cuestionario`) para responder por módulo.
  */
 
 /** Mapeo de nivel SGI → nombre, portado de la referencia (Siginex). */
@@ -89,12 +92,17 @@ export function DiagnosticosTabla({
                 {formatearScore(d.scoreSgi, d.nivelSgi)}
               </td>
               <td className="px-4 py-3 text-right">
-                <span
-                  aria-disabled="true"
-                  className="text-sm text-muted-foreground"
+                <Button
+                  variant="outline"
+                  size="sm"
+                  render={
+                    <Link
+                      href={`/siginex/diagnosticos/${d.id}/cuestionario`}
+                    />
+                  }
                 >
-                  Detalle (próximamente)
-                </span>
+                  Responder
+                </Button>
               </td>
             </tr>
           ))}

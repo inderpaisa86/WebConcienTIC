@@ -28,10 +28,10 @@ export interface ForwardOptions {
   /** Ruta en la API Java, con barra inicial (p. ej. `/auth/login`). */
   path: string;
   /** Método HTTP a usar contra la API Java. */
-  method: "GET" | "POST";
+  method: "GET" | "POST" | "PUT";
   /**
    * Si `true`, propaga el header CSRF `X-XSRF-TOKEN` entrante hacia Java.
-   * Solo `logout` lo requiere; `login` y `me` no.
+   * Solo lo requieren los métodos que mutan estado (`POST`/`PUT`); `GET` no.
    */
   forwardCsrf?: boolean;
 }
@@ -80,7 +80,7 @@ export async function forwardToSiginex(
   const url = `${SIGINEX_API_URL}${options.path}`;
   const headers = buildOutgoingHeaders(request, options);
 
-  // GET/HEAD no llevan cuerpo; POST reenvía el cuerpo crudo del navegador.
+  // GET/HEAD no llevan cuerpo; POST/PUT reenvían el cuerpo crudo del navegador.
   const body =
     options.method === "GET" ? undefined : await request.arrayBuffer();
 

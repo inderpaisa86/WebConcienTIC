@@ -112,3 +112,76 @@ export interface DiagnosticoDetalle {
 export interface CrearDiagnosticoRequest {
   organizacionId: string;
 }
+
+/* ------------------------------------------------------------------ *
+ * Sub-fase 3c: tipos del contrato del cuestionario (KB + respuestas).
+ * Reflejan los DTO del backend Java:
+ * - `KbModuloResponse`       { String id, String nombre, @JsonProperty("short")
+ *                              String short, String weight, String escala }
+ * - `KbPreguntaResponse`     { String id, String pregunta, String norma,
+ *                              String articulo, String requisito, String criterio,
+ *                              String peso, Map<String,String> recomendacion }
+ * - `GuardarRespuestasRequest` { @NotEmpty List<RespuestaItem> respuestas }
+ * - `RespuestaItem`          { @NotBlank String preguntaId,
+ *                              @Pattern(0|1|2|si|no|na|sin_dato) String valor }
+ * - `GET  .../respuestas`    → Map<String,String> (preguntaId → valor)
+ * - `PUT  .../respuestas`    → 204 No Content
+ *
+ * Nota: el banco KB es GLOBAL (sin tenant/RLS) pero los endpoints exigen sesión
+ * válida (caen bajo `anyRequest().authenticated()`). El `short`/`weight`/`escala`
+ * del módulo y `articulo`/`requisito`/`criterio`/`peso`/`recomendacion` de la
+ * pregunta se tipan abiertos/opcionales porque la UI del cuestionario solo usa
+ * un subconjunto (id, nombre, short / id, pregunta, norma).
+ * ------------------------------------------------------------------ */
+
+/**
+ * Módulo del banco KB (`KbModuloResponse`). El backend emite la clave JSON
+ * `short` (fiel a la forma original del banco); aquí se nombra `short` igual.
+ */
+export interface KbModulo {
+  id: string;
+  nombre: string;
+  short: string;
+  weight: string | null;
+  escala: string | null;
+}
+
+/**
+ * Pregunta del banco KB (`KbPreguntaResponse`). `recomendacion` es el mapa
+ * `{"0":..,"1":..,"2":..}` de textos de recomendación por respuesta.
+ */
+export interface KbPregunta {
+  id: string;
+  pregunta: string;
+  norma: string | null;
+  articulo: string | null;
+  requisito: string | null;
+  criterio: string | null;
+  peso: string | null;
+  recomendacion: Record<string, string> | null;
+}
+
+/**
+ * Valor de respuesta aceptado por el backend en la ENTRADA (`RespuestaItem`,
+ * validado con `@Pattern`). Unión cerrada completa del contrato Java. La UI del
+ * cuestionario (3c) solo expone el subconjunto `0 | 1 | 2 | na`.
+ */
+export type ValorRespuesta = "0" | "1" | "2" | "si" | "no" | "na" | "sin_dato";
+
+/** Un item del lote de guardado (`RespuestaItem`). */
+export interface RespuestaItem {
+  preguntaId: string;
+  valor: ValorRespuesta;
+}
+
+/** Body de `PUT /api/v1/diagnosticos/{id}/respuestas` (`GuardarRespuestasRequest`). */
+export interface GuardarRespuestasRequest {
+  respuestas: RespuestaItem[];
+}
+
+/**
+ * Respuestas ya guardadas de un diagnóstico (`GET .../respuestas`): mapa
+ * `preguntaId → valor`. Los valores vienen como string libre del backend; la UI
+ * los usa tal cual para precargar el estado del cuestionario.
+ */
+export type RespuestasGuardadas = Record<string, string>;

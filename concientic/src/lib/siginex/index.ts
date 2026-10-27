@@ -14,6 +14,8 @@ export {
   crearDiagnostico,
   obtenerDiagnostico,
 } from "./diagnosticos";
+export { listarModulos, listarPreguntas } from "./kb";
+export { obtenerRespuestas, guardarRespuestas } from "./respuestas";
 export { SiginexAuthError, isSiginexAuthError } from "./errors";
 export { SiginexDataError, isSiginexDataError } from "./errors";
 export type { SiginexAuthErrorKind, SiginexDataErrorKind } from "./errors";
@@ -25,4 +27,10 @@ export type {
   DiagnosticoResumen,
   DiagnosticoDetalle,
   CrearDiagnosticoRequest,
+  KbModulo,
+  KbPregunta,
+  ValorRespuesta,
+  RespuestaItem,
+  GuardarRespuestasRequest,
+  RespuestasGuardadas,
 } from "./types";
