@@ -1,6 +1,7 @@
 spring:
   application:
     name: siginex-api
+    version: 1.0.0
   datasource:
     # In production DATABASE_URL is the Neon (PostgreSQL) POOLER JDBC connection
     # string, e.g.

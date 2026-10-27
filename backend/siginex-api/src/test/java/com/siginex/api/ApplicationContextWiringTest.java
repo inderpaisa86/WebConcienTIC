@@ -1,6 +1,5 @@
 package com.siginex.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -50,11 +49,8 @@ class ApplicationContextWiringTest {
         }
 
         // The KB layers (JdbcKbRepository, KbSeedService) depend on the shared
-        // ObjectMapper. Jackson's auto-configuration is not active in this NONE
-        // web environment, so provide a real one for the wiring check.
-        @Bean
-        ObjectMapper objectMapper() {
-            return new ObjectMapper();
-        }
+        // ObjectMapper. It is provided by PersistenceConfig in production code
+        // (Spring Boot 4 only auto-configures a Jackson 3 JsonMapper, not a
+        // Jackson 2 ObjectMapper), so it is wired here from the real config.
     }
 }
