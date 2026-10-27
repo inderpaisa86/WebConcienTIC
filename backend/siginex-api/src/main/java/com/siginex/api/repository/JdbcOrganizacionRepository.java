@@ -32,17 +32,17 @@ public class JdbcOrganizacionRepository implements OrganizacionRepository {
     private static final String INSERT_ORGANIZACION = """
             INSERT INTO siginex.organizacion (tenant_id, nombre, sector, tamano, aplicabilidad)
             VALUES (:tenantId, :nombre, :sector, CAST(:tamano AS siginex.tamano_empresa), CAST('{}' AS jsonb))
-            RETURNING id, tenant_id, nombre, sector, tamano, creado_en
+            RETURNING id, tenant_id, nombre, sector, tamano, aplicabilidad, creado_en
             """;
 
     private static final String LISTAR = """
-            SELECT id, tenant_id, nombre, sector, tamano, creado_en
+            SELECT id, tenant_id, nombre, sector, tamano, aplicabilidad, creado_en
             FROM siginex.organizacion
             ORDER BY creado_en DESC
             """;
 
     private static final String FIND_BY_ID = """
-            SELECT id, tenant_id, nombre, sector, tamano, creado_en
+            SELECT id, tenant_id, nombre, sector, tamano, aplicabilidad, creado_en
             FROM siginex.organizacion
             WHERE id = :id
             """;
@@ -82,6 +82,7 @@ public class JdbcOrganizacionRepository implements OrganizacionRepository {
                 .nombre(rs.getString("nombre"))
                 .sector(rs.getString("sector"))
                 .tamano(rs.getString("tamano"))
+                .aplicabilidad(rs.getString("aplicabilidad"))
                 .creadoEn(instant(rs, "creado_en"))
                 .build();
     }

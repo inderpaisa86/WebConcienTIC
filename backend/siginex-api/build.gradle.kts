@@ -38,6 +38,15 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    // Spring Boot 4.0 split the MVC test slice into its own starter; it brings
+    // @WebMvcTest / @AutoConfigureMockMvc (package
+    // org.springframework.boot.webmvc.test.autoconfigure) for the controller
+    // web-slice tests. Version managed by the Spring Boot 4.0 BOM.
+    testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+    // MockMvc security slice helpers (authentication()/csrf() request
+    // post-processors) for the controller web-slice tests. Version managed by
+    // the Spring Boot 4.0 BOM.
+    testImplementation("org.springframework.security:spring-security-test")
     testCompileOnly("org.projectlombok:lombok")
     testAnnotationProcessor("org.projectlombok:lombok")
     // Real-PostgreSQL integration tests (RLS tenant isolation). Versions are
