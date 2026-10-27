@@ -16,6 +16,13 @@ export {
 } from "./diagnosticos";
 export { listarModulos, listarPreguntas } from "./kb";
 export { obtenerRespuestas, guardarRespuestas } from "./respuestas";
+export {
+  calcularDiagnostico,
+  obtenerResultado,
+  obtenerPlanMejora,
+  obtenerBenchmark,
+  registrarBenchmark,
+} from "./calculo";
 export { SiginexAuthError, isSiginexAuthError } from "./errors";
 export { SiginexDataError, isSiginexDataError } from "./errors";
 export type { SiginexAuthErrorKind, SiginexDataErrorKind } from "./errors";
@@ -33,4 +40,10 @@ export type {
   RespuestaItem,
   GuardarRespuestasRequest,
   RespuestasGuardadas,
+  PilarResultado,
+  RecomendacionResultado,
+  Resultado,
+  TareaPlan,
+  Benchmark,
+  RegistrarBenchmarkRequest,
 } from "./types";

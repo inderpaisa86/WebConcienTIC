@@ -92,17 +92,32 @@ export function DiagnosticosTabla({
                 {formatearScore(d.scoreSgi, d.nivelSgi)}
               </td>
               <td className="px-4 py-3 text-right">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  render={
-                    <Link
-                      href={`/siginex/diagnosticos/${d.id}/cuestionario`}
-                    />
-                  }
-                >
-                  Responder
-                </Button>
+                <div className="flex justify-end gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    render={
+                      <Link
+                        href={`/siginex/diagnosticos/${d.id}/cuestionario`}
+                      />
+                    }
+                  >
+                    Responder
+                  </Button>
+                  {d.estado === "calculado" ? (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      render={
+                        <Link
+                          href={`/siginex/diagnosticos/${d.id}/resultado`}
+                        />
+                      }
+                    >
+                      Ver resultados
+                    </Button>
+                  ) : null}
+                </div>
               </td>
             </tr>
           ))}

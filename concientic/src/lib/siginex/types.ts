@@ -185,3 +185,93 @@ export interface GuardarRespuestasRequest {
  * los usa tal cual para precargar el estado del cuestionario.
  */
 export type RespuestasGuardadas = Record<string, string>;
+
+/* ------------------------------------------------------------------ *
+ * Sub-fase 3d: tipos del contrato de cálculo (resultado, plan de mejora,
+ * benchmark). Reflejan los DTO del backend Java (`dto/calculo/*`):
+ * - `ResultadoResponse`  { BigDecimal score, Integer nivelSgi,
+ *                          BigDecimal cumplimientoGlobal, String organizacionNombre,
+ *                          List<PilarResponse> pilares,
+ *                          List<RecomendacionResponse> recomendaciones }
+ * - `PilarResponse`      { String skillId, BigDecimal cumplimientoPct,
+ *                          Integer nivel, String banda }
+ * - `RecomendacionResponse` { String skillId, String prioridad, String texto }
+ * - `TareaPlanResponse`  { String skillId, String preguntaId, String brecha,
+ *                          String accion, String normaRef, String prioridad,
+ *                          String responsable, Integer plazoDias, Integer fase,
+ *                          String criterioCierre }
+ * - `BenchmarkResponse`  (snake_case) { int nivel_empresa, double promedio_mercado,
+ *                          int[] rango_mercado, int herramientas_por_encima,
+ *                          int brecha_al_lider, String recomendacion }
+ * - `RegistrarBenchmarkRequest` { @Min(1)@Max(5) int nivel }
+ *
+ * Criterios de tipado:
+ * - Los `BigDecimal` (`score`, `cumplimientoGlobal`, `cumplimientoPct`) se
+ *   representan como `string` (como `scoreSgi` en 3b: no se castean a number en
+ *   el contrato; la UI hace `Number(...)` solo para pintar). Nullable: el
+ *   backend puede emitirlos `null` si el diagnóstico aún no se calculó.
+ * - El benchmark conserva las claves snake_case del JSON Java (fiel al
+ *   `Benchmark.tsx` original); no se renombra a camelCase.
+ * ------------------------------------------------------------------ */
+
+/** Pilar (módulo) de un resultado (`PilarResponse`). */
+export interface PilarResultado {
+  skillId: string;
+  cumplimientoPct: string | null;
+  nivel: number | null;
+  banda: string | null;
+}
+
+/** Recomendación de prioridad alta de un resultado (`RecomendacionResponse`). */
+export interface RecomendacionResultado {
+  skillId: string;
+  prioridad: string | null;
+  texto: string;
+}
+
+/**
+ * Resultado consolidado de un diagnóstico (`ResultadoResponse`), devuelto por
+ * `POST .../calcular` y `GET .../resultado`. `score`/`cumplimientoGlobal` como
+ * string nullable; `pilares`/`recomendaciones` siempre son listas (el backend
+ * emite `[]`, nunca `null`).
+ */
+export interface Resultado {
+  score: string | null;
+  nivelSgi: number | null;
+  cumplimientoGlobal: string | null;
+  organizacionNombre: string | null;
+  pilares: PilarResultado[];
+  recomendaciones: RecomendacionResultado[];
+}
+
+/** Tarea del plan de mejora (`TareaPlanResponse`). */
+export interface TareaPlan {
+  skillId: string;
+  preguntaId: string | null;
+  brecha: string | null;
+  accion: string | null;
+  normaRef: string | null;
+  prioridad: string | null;
+  responsable: string | null;
+  plazoDias: number | null;
+  fase: number | null;
+  criterioCierre: string | null;
+}
+
+/**
+ * Benchmark de mercado (`BenchmarkResponse`), en snake_case (fiel al contrato
+ * Java vía `@JsonProperty`). `rango_mercado` es `[min, max]`.
+ */
+export interface Benchmark {
+  nivel_empresa: number;
+  promedio_mercado: number;
+  rango_mercado: number[];
+  herramientas_por_encima: number;
+  brecha_al_lider: number;
+  recomendacion: string;
+}
+
+/** Body de `POST /api/v1/diagnosticos/{id}/benchmark` (`RegistrarBenchmarkRequest`). */
+export interface RegistrarBenchmarkRequest {
+  nivel: number;
+}
