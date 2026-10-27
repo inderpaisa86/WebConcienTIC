@@ -14,8 +14,8 @@ import {
   type SiginexLoginInput,
 } from "@/lib/validations/siginex-login";
 
-/** Ruta placeholder a la que se redirige tras el login (el panel real es 3b). */
-const PANEL_ROUTE = "/siginex/panel";
+/** Ruta a la que se redirige tras un login correcto: la home de SIGINEX. */
+const PANEL_ROUTE = "/siginex";
 
 export function LoginForm() {
   const router = useRouter();

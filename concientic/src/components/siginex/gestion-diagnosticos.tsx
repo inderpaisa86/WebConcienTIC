@@ -91,7 +91,7 @@ export function GestionDiagnosticos() {
             Crea organizaciones e inicia sus diagnósticos del SGI.
           </p>
         </div>
-        <Button variant="outline" size="lg" render={<Link href="/siginex/panel" />}>
+        <Button variant="outline" size="lg" render={<Link href="/siginex" />}>
           Volver al panel
         </Button>
       </header>

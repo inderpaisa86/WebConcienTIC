@@ -38,7 +38,8 @@ export const laboratorios = {
         cardNumber: "LABORATORIO 01",
         linkLabel: "Explorar SIGINEX",
         dataLab: "SIGINEX",
-        // Enruta a la app de Siginex servida bajo /siginex mediante rewrite (ver next.config.ts).
+        // Ruta nativa de concientic: la home de SIGINEX vive en /siginex
+        // (el proxy/rewrite /siginex se retiró en la Fase 3e).
         href: "/siginex",
         // Abre SIGINEX en una pestaña nueva.
         newTab: true,

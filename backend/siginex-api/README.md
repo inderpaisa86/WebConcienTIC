@@ -139,6 +139,37 @@ PORT=8080
 CORS_ALLOWED_ORIGINS=https://concientic.com,http://localhost:3000
 ```
 
+## Despliegue en producción (Render)
+
+El backend corre como **Web Service de Render** (runtime Docker, usa el
+`Dockerfile` del repo) en:
+
+```text
+https://siginex-api.onrender.com
+```
+
+Comprobación rápida (ambos deben responder 200):
+
+```text
+GET https://siginex-api.onrender.com/api/v1/status      -> {"status":"ok","application":"siginex-api"}
+GET https://siginex-api.onrender.com/actuator/health    -> {"status":"UP"}
+```
+
+Esta es la URL que el frontend de concientic (en Vercel) usa en la variable
+server-only `SIGINEX_API_URL` para el BFF same-origin (`/siginex/api/*`).
+
+> La base de datos de Neon es **compartida** con `concientic-catalog`. Por eso
+> Flyway de siginex aísla TODO su historial y objetos en el esquema `siginex`
+> (`spring.flyway.default-schema/schemas/create-schemas` en `application.yml`);
+> el catalog usa `public`. Sin ese aislamiento, los `V1` de ambos chocan con
+> "Migration checksum mismatch for migration version 1".
+
+> **Gotcha Spring Boot 4 (Jackson 3).** Boot 4 autoconfigura un `JsonMapper`
+> (Jackson 3), NO un `com.fasterxml.jackson.databind.ObjectMapper` (Jackson 2).
+> Como todo este código usa el `ObjectMapper` de Jackson 2, el bean se declara
+> explícitamente en `config/PersistenceConfig`. Sin él, el arranque falla con
+> "No qualifying bean of type ...ObjectMapper available".
+
 ## Base de datos en producción (Neon / PostgreSQL)
 
 En producción la base de datos es **Neon (PostgreSQL)**, alcanzada por JDBC
