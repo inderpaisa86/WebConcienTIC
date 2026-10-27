@@ -77,6 +77,41 @@ POST /api/v1/usuarios/{id}/desactivar
   403 si el actor no es admin. 404 si el usuario no existe en el tenant del admin.
 ```
 
+## Endpoints de Fase 2b
+
+Todas estas rutas exigen una sesión autenticada (no son públicas). El
+`tenant_id` se resuelve siempre en el servidor a partir de la sesión; el cliente
+nunca lo envía. El aislamiento entre tenants lo garantiza RLS. No requieren rol
+`admin`: cualquier sesión válida del tenant puede operar.
+
+### Organizaciones
+
+```text
+GET /api/v1/organizaciones
+  Requiere sesión. 200: lista las organizaciones del tenant (más recientes primero).
+
+POST /api/v1/organizaciones
+  body: { "nombre": "...", "sector": "..."?, "tamano": "micro|pequena|mediana|grande"? }
+  Requiere sesión. 201: devuelve OrganizacionResponse de la organización creada.
+```
+
+### Diagnósticos
+
+```text
+GET /api/v1/diagnosticos
+  Requiere sesión. 200: lista los diagnósticos del tenant (más recientes primero),
+  con el nombre de la organización resuelto por JOIN.
+
+POST /api/v1/diagnosticos
+  body: { "organizacionId": "<uuid>" }
+  Requiere sesión. 201: devuelve DiagnosticoDetalleResponse (cabecera) del creado.
+  404 si la organización no existe o no pertenece al tenant de la sesión.
+
+GET /api/v1/diagnosticos/{id}
+  Requiere sesión. 200: devuelve DiagnosticoDetalleResponse (cabecera) del diagnóstico.
+  404 si el diagnóstico no existe en el tenant de la sesión.
+```
+
 ## Modelo de sesión y cookie
 
 La sesión es un token opaco revocable. Solo se guarda su hash SHA-256 (nunca el

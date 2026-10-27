@@ -1,5 +1,6 @@
 package com.siginex.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -17,7 +18,11 @@ import static org.mockito.Mockito.mock;
         webEnvironment = SpringBootTest.WebEnvironment.NONE,
         properties = {
                 "spring.flyway.enabled=false",
-                "spring.datasource.url=jdbc:postgresql://localhost:5432/disabled-for-wiring-test"
+                "spring.datasource.url=jdbc:postgresql://localhost:5432/disabled-for-wiring-test",
+                // KbSeedRunner would hit the mocked DataSource at startup; turn it
+                // off so the context boots without a live database (coherent with
+                // spring.flyway.enabled=false).
+                "siginex.kb.seed.enabled=false"
         })
 class ApplicationContextWiringTest {
 
@@ -42,6 +47,14 @@ class ApplicationContextWiringTest {
         @Bean
         PlatformTransactionManager transactionManager() {
             return mock(PlatformTransactionManager.class);
+        }
+
+        // The KB layers (JdbcKbRepository, KbSeedService) depend on the shared
+        // ObjectMapper. Jackson's auto-configuration is not active in this NONE
+        // web environment, so provide a real one for the wiring check.
+        @Bean
+        ObjectMapper objectMapper() {
+            return new ObjectMapper();
         }
     }
 }

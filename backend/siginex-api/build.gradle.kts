@@ -31,7 +31,20 @@ dependencies {
     implementation("org.flywaydb:flyway-database-postgresql")
     runtimeOnly("org.postgresql:postgresql")
 
+    // Lombok: used by all new code (getters, builders, @RequiredArgsConstructor
+    // for constructor injection, @Slf4j, ...). Version managed by the Spring
+    // Boot 4.0 BOM; compatible with Java 25.
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testCompileOnly("org.projectlombok:lombok")
+    testAnnotationProcessor("org.projectlombok:lombok")
+    // Real-PostgreSQL integration tests (RLS tenant isolation). Versions are
+    // pinned by the Spring Boot 4.0.0 BOM (Testcontainers 2.0.x), which renamed
+    // the module artifacts with a `testcontainers-` prefix.
+    testImplementation("org.testcontainers:testcontainers-postgresql")
+    testImplementation("org.testcontainers:testcontainers-junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
