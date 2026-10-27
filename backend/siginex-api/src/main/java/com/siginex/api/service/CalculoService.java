@@ -1,6 +1,7 @@
 package com.siginex.api.service;
 
 import com.siginex.api.domain.calculo.Benchmark;
+import com.siginex.api.domain.calculo.ContextoCalculo;
 import com.siginex.api.domain.calculo.ResultadoConsolidado;
 import com.siginex.api.domain.calculo.ResultadoLectura;
 import com.siginex.api.domain.calculo.TareaPlanLectura;
@@ -10,74 +11,69 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Orquestación de alto nivel del cálculo del diagnóstico SIGINEX. Port de
- * {@code diagnostico-service.ts::calcularDiagnostico}. Implementado por
+ * Acceso a datos del cálculo del diagnóstico SIGINEX: ESTRICTAMENTE lecturas y
+ * escrituras a base de datos. No contiene validaciones de negocio ni ejecuta el
+ * motor de cálculo: esa orquestación/validación vive en
+ * {@link com.siginex.api.delegate.CalculoDelegate}. Implementado por
  * {@link com.siginex.api.service.CalculoServiceImpl}.
  */
 public interface CalculoService {
 
     /**
-     * Recalcula el diagnóstico y reescribe idempotentemente sus resultados
-     * dentro de una única transacción por tenant ({@code runInTenant}): lee
-     * respuestas + KB + aplicabilidad, corre el motor puro, valida el contrato
-     * ANTES de tocar tablas, reescribe pilares/recomendaciones/tareas/rutas,
-     * actualiza la cabecera ({@code estado='calculado'}, score/nivel/
-     * cumplimiento/completado_en) y registra el evento de auditoría
-     * {@code 'diagnostico.calculado'} con actor {@code 'api'}.
+     * LECTURA. Carga el contexto de entrada del cálculo de un diagnóstico dentro
+     * de {@code runInTenant}: cabecera del diagnóstico (RLS exige pertenencia al
+     * tenant), organización dueña, respuestas normalizadas al tipo del motor, y
+     * el KB de cálculo (global). Si la cabecera o la organización no existen en
+     * el tenant → {@link com.siginex.api.exception.DominioException} 404.
      *
      * @param tenantId      tenant del actor (RLS); nunca del cliente.
-     * @param diagnosticoId id del diagnóstico a calcular.
-     * @return el resultado consolidado recién calculado.
+     * @param diagnosticoId id del diagnóstico.
+     * @return el contexto (empresa + KB + respuestas) listo para el motor.
      */
-    ResultadoConsolidado calcular(UUID tenantId, UUID diagnosticoId);
+    ContextoCalculo cargarContextoCalculo(UUID tenantId, UUID diagnosticoId);
 
     /**
-     * Lee el resultado consolidado de un diagnóstico ya calculado. Port de
-     * {@code diagnostico-service.ts::obtenerResultado}. Corre dentro de
-     * {@code runInTenant}: los pilares salen en el orden canónico de módulo y
-     * las recomendaciones de prioridad alta con orden determinista (diseño §9.8).
-     * Si la cabecera no existe en el tenant → {@link DominioException} 404.
+     * ESCRITURA ATÓMICA. Reescribe idempotentemente los resultados ya calculados
+     * de un diagnóstico dentro de una ÚNICA transacción por tenant
+     * ({@code runInTenant}): borra pilares/recomendaciones/tareas/rutas previos,
+     * reinserta los nuevos, actualiza la cabecera ({@code estado='calculado'},
+     * score/nivel/cumplimiento/completado_en) y registra el evento de auditoría
+     * {@code 'diagnostico.calculado'} (actor {@code 'api'}). No valida ni calcula:
+     * recibe el {@link ResultadoConsolidado} ya producido y validado por el
+     * Delegate. La atomicidad garantiza que un fallo no deje resultados a medias.
      *
      * @param tenantId      tenant del actor (RLS).
      * @param diagnosticoId id del diagnóstico.
-     * @return el resultado leído.
+     * @param resultado     resultado consolidado ya calculado y con contrato válido.
+     */
+    void persistirResultado(UUID tenantId, UUID diagnosticoId, ResultadoConsolidado resultado);
+
+    /**
+     * LECTURA. Lee el resultado consolidado de un diagnóstico ya calculado dentro
+     * de {@code runInTenant}: pilares en orden canónico de módulo y
+     * recomendaciones de prioridad alta con orden determinista (diseño §9.8). Si
+     * la cabecera no existe en el tenant → {@link com.siginex.api.exception.DominioException} 404.
      */
     ResultadoLectura obtenerResultado(UUID tenantId, UUID diagnosticoId);
 
     /**
-     * Lee las tareas del plan de mejora de un diagnóstico, ordenadas por
-     * prioridad ({@code alta} primero) y {@code skill_id}. Port de
-     * {@code diagnostico-service.ts::obtenerPlanMejora} (paridad estricta de
-     * orden). Corre dentro de {@code runInTenant}.
-     *
-     * @param tenantId      tenant del actor (RLS).
-     * @param diagnosticoId id del diagnóstico.
-     * @return las tareas priorizadas (vacía si no hay).
+     * LECTURA. Lee las tareas del plan de mejora de un diagnóstico, ordenadas por
+     * prioridad ({@code alta} primero) y {@code skill_id}. Corre dentro de
+     * {@code runInTenant}.
      */
     List<TareaPlanLectura> obtenerPlanMejora(UUID tenantId, UUID diagnosticoId);
 
     /**
-     * Registra el nivel tecnológico de la empresa (1..5) en el diagnóstico y
-     * devuelve el benchmark de mercado. Port de
-     * {@code diagnostico-service.ts::registrarBenchmark}. Idempotente: sobrescribe
-     * el nivel. Valida {@code 1 <= nivel <= 5} y corre dentro de {@code runInTenant}.
-     *
-     * @param tenantId      tenant del actor (RLS).
-     * @param diagnosticoId id del diagnóstico.
-     * @param nivel         nivel tecnológico {@code 1..5}.
-     * @return el benchmark para el nivel registrado.
+     * ESCRITURA. Persiste el nivel tecnológico ({@code 1..5}) del diagnóstico
+     * (idempotente: sobrescribe) dentro de {@code runInTenant}. NO valida el
+     * rango: esa validación de negocio la hace el Delegate antes de llamar aquí.
      */
-    Benchmark registrarBenchmark(UUID tenantId, UUID diagnosticoId, int nivel);
+    void guardarNivelTecnologico(UUID tenantId, UUID diagnosticoId, int nivel);
 
     /**
-     * Devuelve el benchmark de mercado si el diagnóstico ya tiene
-     * {@code nivel_tecnologico} declarado. Port de
-     * {@code diagnostico-service.ts::obtenerBenchmark}: {@link Optional#empty()}
-     * si no hay nivel. Corre dentro de {@code runInTenant}.
-     *
-     * @param tenantId      tenant del actor (RLS).
-     * @param diagnosticoId id del diagnóstico.
-     * @return el benchmark, o vacío si no hay nivel declarado.
+     * LECTURA. Devuelve el {@code nivel_tecnologico} declarado del diagnóstico, o
+     * {@link Optional#empty()} si no hay (o si la RLS no ve el diagnóstico). Corre
+     * dentro de {@code runInTenant}.
      */
-    Optional<Benchmark> obtenerBenchmark(UUID tenantId, UUID diagnosticoId);
+    Optional<Integer> obtenerNivelTecnologico(UUID tenantId, UUID diagnosticoId);
 }

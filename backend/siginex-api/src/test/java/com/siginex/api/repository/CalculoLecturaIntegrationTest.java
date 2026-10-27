@@ -8,8 +8,12 @@ import com.siginex.api.domain.calculo.ResultadoLectura;
 import com.siginex.api.domain.calculo.TareaPlanLectura;
 import com.siginex.api.service.AuditoriaService;
 import com.siginex.api.service.AuditoriaServiceImpl;
+import com.siginex.api.delegate.CalculoDelegate;
+import com.siginex.api.delegate.CalculoDelegateImpl;
+import com.siginex.api.domain.SiginexPrincipal;
 import com.siginex.api.service.CalculoService;
 import com.siginex.api.service.CalculoServiceImpl;
+import com.siginex.api.service.DiagnosticoServiceImpl;
 import com.siginex.api.service.calculo.MotorCalculo;
 import com.siginex.api.service.kb.KbSeedService;
 import com.zaxxer.hikari.HikariDataSource;
@@ -85,6 +89,7 @@ class CalculoLecturaIntegrationTest {
     private static JdbcTemplate appJdbc;
     private static TenantTransactionTemplate tenantTemplate;
     private static CalculoService calculoService;
+    private static CalculoDelegate calculoDelegate;
 
     @BeforeAll
     static void setUpDatabase() {
@@ -125,9 +130,18 @@ class CalculoLecturaIntegrationTest {
         var auditoriaRepository = new JdbcAuditoriaRepository(namedAppJdbc);
         AuditoriaService auditoriaService = new AuditoriaServiceImpl(auditoriaRepository);
         MotorCalculo motorCalculo = new MotorCalculo();
+        // CalculoService queda como acceso a datos; la orquestación/validación del
+        // cálculo vive en CalculoDelegate (Delegate orquesta, Service solo BD).
         calculoService = new CalculoServiceImpl(tenantTemplate, diagnosticoRepository,
                 organizacionRepository, respuestaRepository, kbRepository, resultadoRepository,
-                motorCalculo, auditoriaService, objectMapper);
+                auditoriaService, objectMapper);
+        var diagnosticoService = new DiagnosticoServiceImpl(diagnosticoRepository, tenantTemplate);
+        calculoDelegate = new CalculoDelegateImpl(diagnosticoService, calculoService, motorCalculo);
+    }
+
+    /** Principal de prueba para un tenant (solo el tenantId importa para el cálculo). */
+    private static SiginexPrincipal actor(UUID tenantId) {
+        return new SiginexPrincipal(UUID.randomUUID(), tenantId, "actor@siginex.test", "miembro");
     }
 
     @AfterAll
@@ -157,9 +171,9 @@ class CalculoLecturaIntegrationTest {
         guardarRespuestas(tenantA, diagA, List.of(
                 RespuestaEntrada.builder().preguntaId("sst-1.1.1").valor("0").build(),
                 RespuestaEntrada.builder().preguntaId("dat-001").valor("0").build()));
-        calculoService.calcular(tenantA, diagA);
+        calculoDelegate.calcular(actor(tenantA), diagA);
 
-        ResultadoLectura resultado = calculoService.obtenerResultado(tenantA, diagA);
+        ResultadoLectura resultado = calculoDelegate.obtenerResultado(actor(tenantA), diagA);
 
         // Cabecera leída de BD.
         assertThat(resultado.getOrganizacionNombre()).isEqualTo("Org A");
@@ -190,9 +204,9 @@ class CalculoLecturaIntegrationTest {
         guardarRespuestas(tenantA, diagA, List.of(
                 RespuestaEntrada.builder().preguntaId("sst-1.1.1").valor("0").build(),
                 RespuestaEntrada.builder().preguntaId("dat-001").valor("0").build()));
-        calculoService.calcular(tenantA, diagA);
+        calculoDelegate.calcular(actor(tenantA), diagA);
 
-        List<TareaPlanLectura> plan = calculoService.obtenerPlanMejora(tenantA, diagA);
+        List<TareaPlanLectura> plan = calculoDelegate.obtenerPlanMejora(actor(tenantA), diagA);
 
         assertThat(plan).isNotEmpty();
         // Orden estable por (prioridad, skill_id): el enum prioridad_reco ordena
@@ -221,10 +235,10 @@ class CalculoLecturaIntegrationTest {
         // Diagnóstico SIN nivel tecnológico: obtenerBenchmark -> empty.
         UUID diagA = insertDiagnosticoSinNivel(tenantA, insertOrganizacion(tenantA, "Org A"));
 
-        assertThat(calculoService.obtenerBenchmark(tenantA, diagA)).isEmpty();
+        assertThat(calculoDelegate.obtenerBenchmark(actor(tenantA), diagA)).isEmpty();
 
         // Registrar nivel 2: persiste y devuelve el benchmark correcto.
-        Benchmark benchmark = calculoService.registrarBenchmark(tenantA, diagA, 2);
+        Benchmark benchmark = calculoDelegate.registrarBenchmark(actor(tenantA), diagA, 2);
         assertThat(benchmark.getNivelEmpresa()).isEqualTo(2);
         assertThat(benchmark.getHerramientasPorEncima()).isEqualTo(7);
         assertThat(benchmark.getPromedioMercado()).isEqualTo(3.6);
@@ -238,7 +252,7 @@ class CalculoLecturaIntegrationTest {
         assertThat(nivelPersistido).isEqualTo("2");
 
         // obtenerBenchmark tras registrar devuelve el mismo benchmark.
-        Optional<Benchmark> leido = calculoService.obtenerBenchmark(tenantA, diagA);
+        Optional<Benchmark> leido = calculoDelegate.obtenerBenchmark(actor(tenantA), diagA);
         assertThat(leido).isPresent();
         assertThat(leido.get().getNivelEmpresa()).isEqualTo(2);
         assertThat(leido.get().getHerramientasPorEncima()).isEqualTo(7);

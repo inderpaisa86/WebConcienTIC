@@ -2,13 +2,17 @@ package com.siginex.api.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.siginex.api.config.TenantTransactionTemplate;
+import com.siginex.api.delegate.CalculoDelegate;
+import com.siginex.api.delegate.CalculoDelegateImpl;
 import com.siginex.api.domain.RespuestaEntrada;
-import com.siginex.api.domain.calculo.ResultadoConsolidado;
+import com.siginex.api.domain.SiginexPrincipal;
+import com.siginex.api.domain.calculo.ResultadoLectura;
 import com.siginex.api.exception.DominioException;
 import com.siginex.api.service.AuditoriaService;
 import com.siginex.api.service.AuditoriaServiceImpl;
 import com.siginex.api.service.CalculoService;
 import com.siginex.api.service.CalculoServiceImpl;
+import com.siginex.api.service.DiagnosticoServiceImpl;
 import com.siginex.api.service.calculo.MotorCalculo;
 import com.siginex.api.service.kb.KbSeedService;
 import com.zaxxer.hikari.HikariDataSource;
@@ -79,6 +83,7 @@ class CalculoRlsIntegrationTest {
     private static JdbcTemplate adminJdbc;
     private static TenantTransactionTemplate tenantTemplate;
     private static CalculoService calculoService;
+    private static CalculoDelegate calculoDelegate;
 
     @BeforeAll
     static void setUpDatabase() {
@@ -120,9 +125,18 @@ class CalculoRlsIntegrationTest {
         var auditoriaRepository = new JdbcAuditoriaRepository(namedAppJdbc);
         AuditoriaService auditoriaService = new AuditoriaServiceImpl(auditoriaRepository);
         MotorCalculo motorCalculo = new MotorCalculo();
+        // CalculoService queda como acceso a datos; la orquestación/validación del
+        // cálculo vive en CalculoDelegate (Delegate orquesta, Service solo BD).
         calculoService = new CalculoServiceImpl(tenantTemplate, diagnosticoRepository,
                 organizacionRepository, respuestaRepository, kbRepository, resultadoRepository,
-                motorCalculo, auditoriaService, objectMapper);
+                auditoriaService, objectMapper);
+        var diagnosticoService = new DiagnosticoServiceImpl(diagnosticoRepository, tenantTemplate);
+        calculoDelegate = new CalculoDelegateImpl(diagnosticoService, calculoService, motorCalculo);
+    }
+
+    /** Principal de prueba para un tenant (solo el tenantId importa para el cálculo). */
+    private static SiginexPrincipal actor(UUID tenantId) {
+        return new SiginexPrincipal(UUID.randomUUID(), tenantId, "actor@siginex.test", "miembro");
     }
 
     @AfterAll
@@ -153,11 +167,12 @@ class CalculoRlsIntegrationTest {
                 RespuestaEntrada.builder().preguntaId("sst-1.1.1").valor("0").build(),
                 RespuestaEntrada.builder().preguntaId("sst-1.1.2").valor("2").build()));
 
-        ResultadoConsolidado resultado = calculoService.calcular(tenantA, diagA);
+        ResultadoLectura resultado = calculoDelegate.calcular(actor(tenantA), diagA);
 
-        // El motor produce exactamente 9 pilares y al menos una brecha (la respuesta 0).
-        assertThat(resultado.getPorModulo()).hasSize(9);
-        assertThat(resultado.getBrechas()).isNotEmpty();
+        // La lectura devuelve exactamente 9 pilares (uno por módulo del KB) y la
+        // cabecera con score calculado. Las recomendaciones alta reflejan la brecha.
+        assertThat(resultado.getPilares()).hasSize(9);
+        assertThat(resultado.getScoreSgi()).isNotNull();
 
         // 9 pilares persistidos (uno por módulo del KB).
         assertThat(contar(tenantA, "resultado_pilar", diagA)).isEqualTo(9L);
@@ -199,13 +214,13 @@ class CalculoRlsIntegrationTest {
                 RespuestaEntrada.builder().preguntaId("sst-1.1.1").valor("0").build(),
                 RespuestaEntrada.builder().preguntaId("sst-1.1.2").valor("1").build()));
 
-        ResultadoConsolidado primero = calculoService.calcular(tenantA, diagA);
+        ResultadoLectura primero = calculoDelegate.calcular(actor(tenantA), diagA);
         long pilares1 = contar(tenantA, "resultado_pilar", diagA);
         long recos1 = contar(tenantA, "recomendacion", diagA);
         long tareas1 = contar(tenantA, "tarea_mejora", diagA);
         long rutas1 = contar(tenantA, "ruta_aprendizaje", diagA);
 
-        ResultadoConsolidado segundo = calculoService.calcular(tenantA, diagA);
+        ResultadoLectura segundo = calculoDelegate.calcular(actor(tenantA), diagA);
 
         // Mismos conteos tras recalcular: borrar+insertar no duplica.
         assertThat(contar(tenantA, "resultado_pilar", diagA)).isEqualTo(pilares1);
@@ -213,9 +228,9 @@ class CalculoRlsIntegrationTest {
         assertThat(contar(tenantA, "tarea_mejora", diagA)).isEqualTo(tareas1);
         assertThat(contar(tenantA, "ruta_aprendizaje", diagA)).isEqualTo(rutas1);
 
-        // Mismos valores globales (determinismo del motor).
-        assertThat(segundo.getScoreSgi()).isEqualTo(primero.getScoreSgi());
-        assertThat(segundo.getBrechas()).hasSameSizeAs(primero.getBrechas());
+        // Mismos valores globales (determinismo del motor), leídos de BD.
+        assertThat(segundo.getScoreSgi()).isEqualByComparingTo(primero.getScoreSgi());
+        assertThat(segundo.getRecomendaciones()).hasSameSizeAs(primero.getRecomendaciones());
 
         // Un único evento de auditoría por recálculo (2 ejecuciones -> 2 eventos).
         Integer eventos = tenantTemplate.runInTenant(tenantA, () -> appJdbc.queryForObject(
@@ -233,9 +248,10 @@ class CalculoRlsIntegrationTest {
         guardarRespuestas(tenantA, diagA, List.of(
                 RespuestaEntrada.builder().preguntaId("sst-1.1.1").valor("0").build()));
 
-        // Calcular el diagnóstico de A fijando el tenant de B: la RLS esconde la
-        // cabecera y el service lanza 404. La transacción revierte sin filas.
-        assertThatThrownBy(() -> calculoService.calcular(tenantB, diagA))
+        // Calcular el diagnóstico de A con el actor del tenant B: el Delegate
+        // verifica la pertenencia y, como la RLS esconde la cabecera de A para B,
+        // lanza 404 ANTES de calcular o persistir. No se deja ninguna fila.
+        assertThatThrownBy(() -> calculoDelegate.calcular(actor(tenantB), diagA))
                 .isInstanceOf(DominioException.class)
                 .satisfies(ex -> assertThat(((DominioException) ex).status()).isEqualTo(HttpStatus.NOT_FOUND));
 
@@ -244,8 +260,8 @@ class CalculoRlsIntegrationTest {
         assertThat(contar(tenantA, "recomendacion", diagA)).isZero();
 
         // Y el cálculo legítimo de A sigue funcionando después del intento fallido.
-        ResultadoConsolidado resultado = calculoService.calcular(tenantA, diagA);
-        assertThat(resultado.getPorModulo()).hasSize(9);
+        ResultadoLectura resultado = calculoDelegate.calcular(actor(tenantA), diagA);
+        assertThat(resultado.getPilares()).hasSize(9);
         assertThat(contar(tenantA, "resultado_pilar", diagA)).isEqualTo(9L);
     }
 
