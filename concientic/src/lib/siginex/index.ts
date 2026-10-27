@@ -8,6 +8,21 @@
  */
 
 export { login, logout, me } from "./client";
+export { listarOrganizaciones, crearOrganizacion } from "./organizaciones";
+export {
+  listarDiagnosticos,
+  crearDiagnostico,
+  obtenerDiagnostico,
+} from "./diagnosticos";
 export { SiginexAuthError, isSiginexAuthError } from "./errors";
-export type { SiginexAuthErrorKind } from "./errors";
+export { SiginexDataError, isSiginexDataError } from "./errors";
+export type { SiginexAuthErrorKind, SiginexDataErrorKind } from "./errors";
 export type { LoginRequest, Me, MeResponsePayload, Rol } from "./types";
+export type {
+  Organizacion,
+  OrganizacionTamano,
+  CrearOrganizacionRequest,
+  DiagnosticoResumen,
+  DiagnosticoDetalle,
+  CrearDiagnosticoRequest,
+} from "./types";

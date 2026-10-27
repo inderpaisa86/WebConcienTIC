@@ -17,6 +17,7 @@
  *     (El BFF propaga ese header hacia Java.)
  */
 
+import { readCookie, XSRF_COOKIE_NAME } from "./csrf";
 import { SiginexAuthError } from "./errors";
 import type { Me, MeResponsePayload } from "./types";
 
@@ -24,19 +25,6 @@ import type { Me, MeResponsePayload } from "./types";
 const LOGIN_PATH = "/siginex/api/auth/login";
 const LOGOUT_PATH = "/siginex/api/auth/logout";
 const ME_PATH = "/siginex/api/auth/me";
-
-const XSRF_COOKIE_NAME = "XSRF-TOKEN";
-
-/** Lee una cookie no-HttpOnly del documento (solo en navegador). */
-function readCookie(name: string): string | null {
-  if (typeof document === "undefined") {
-    return null;
-  }
-  const match = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith(`${name}=`));
-  return match ? decodeURIComponent(match.slice(name.length + 1)) : null;
-}
 
 /**
  * Inicia sesión. Éxito = 204 (sin cuerpo).
