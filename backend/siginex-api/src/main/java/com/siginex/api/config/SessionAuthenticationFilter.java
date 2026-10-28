@@ -2,7 +2,7 @@ package com.siginex.api.config;
 
 
 import com.siginex.api.domain.SiginexPrincipal;
-import com.siginex.api.service.AuthService;
+import com.siginex.api.delegate.AuthDelegate;
 import com.siginex.api.config.TenantContext;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -35,11 +35,11 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String SESSION_COOKIE = "__Host-siginex_session";
 
-    private final AuthService authService;
+    private final AuthDelegate authDelegate;
     private final TokenHasher tokenHasher;
 
-    public SessionAuthenticationFilter(AuthService authService, TokenHasher tokenHasher) {
-        this.authService = authService;
+    public SessionAuthenticationFilter(AuthDelegate authDelegate, TokenHasher tokenHasher) {
+        this.authDelegate = authDelegate;
         this.tokenHasher = tokenHasher;
     }
 
@@ -49,7 +49,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
         try {
             readSessionCookie(request)
                     .map(tokenHasher::hash)
-                    .flatMap(authService::validarSesion)
+                    .flatMap(authDelegate::validarSesion)
                     .ifPresent(this::authenticate);
             chain.doFilter(request, response);
         } finally {

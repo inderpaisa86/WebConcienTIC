@@ -4,12 +4,12 @@ import com.siginex.api.config.SecurityConfig;
 import com.siginex.api.config.SessionAuthenticationFilter;
 import com.siginex.api.config.TokenHasher;
 import com.siginex.api.delegate.CalculoDelegate;
+import com.siginex.api.delegate.AuthDelegate;
 import com.siginex.api.domain.SiginexPrincipal;
 import com.siginex.api.domain.calculo.Benchmark;
 import com.siginex.api.domain.calculo.ResultadoLectura;
 import com.siginex.api.domain.calculo.TareaPlanLectura;
 import com.siginex.api.exception.DominioException;
-import com.siginex.api.service.AuthService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * con el {@link CalculoDelegate} mockeado. Importa la cadena real
  * {@link SecurityConfig} para probar que las rutas exigen sesión; el
  * {@link SessionAuthenticationFilter} se neutraliza mockeando sus colaboradores
- * ({@link AuthService}/{@link TokenHasher}), de modo que la autenticación se
+ * ({@link AuthDelegate}/{@link TokenHasher}), de modo que la autenticación se
  * inyecta en el test con el post-processor {@code authentication(...)} de
  * Spring Security Test (el tenant sale del principal, nunca del cliente).
  */
@@ -58,7 +58,7 @@ class CalculoControllerTest {
     // Colaboradores del SessionAuthenticationFilter (es @Component, entra en el
     // slice); mockeados para que el filtro no autentique por sí mismo.
     @MockitoBean
-    private AuthService authService;
+    private AuthDelegate authDelegate;
 
     @MockitoBean
     private TokenHasher tokenHasher;

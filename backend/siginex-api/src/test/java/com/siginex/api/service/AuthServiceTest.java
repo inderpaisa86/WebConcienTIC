@@ -1,44 +1,38 @@
 package com.siginex.api.service;
 
-
-import com.siginex.api.domain.AuthUser;
-import com.siginex.api.domain.SesionInfo;
-import com.siginex.api.exception.AuthException;
-import com.siginex.api.repository.AuthRepository;
-import com.siginex.api.service.AuthService;
-import com.siginex.api.service.AuditoriaService;
-import com.siginex.api.domain.SiginexPrincipal;
-import com.siginex.api.config.TokenHasher;
 import com.siginex.api.config.TenantTransactionTemplate;
+import com.siginex.api.domain.AuthUser;
+import com.siginex.api.repository.AuthRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Instant;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * Pruebas del {@link AuthServiceImpl} tras el refactor de capas: ahora es SOLO
+ * acceso a datos (sin reglas de negocio). Verifica que cada método delega en el
+ * {@link AuthRepository}/{@link AuditoriaService} correcto y que la búsqueda por
+ * email corre FUERA de un tenant fijado ({@code runWithoutTenant}, decisión D4).
+ * La lógica de negocio se prueba en {@code AuthDelegateTest}.
+ */
 class AuthServiceTest {
 
     private AuthRepository authRepository;
     private AuditoriaService auditoriaService;
     private TenantTransactionTemplate tenantTx;
-    private PasswordEncoder passwordEncoder;
-    private TokenHasher tokenHasher;
     private AuthService service;
 
     private final UUID usuarioId = UUID.randomUUID();
@@ -50,142 +44,62 @@ class AuthServiceTest {
         authRepository = mock(AuthRepository.class);
         auditoriaService = mock(AuditoriaService.class);
         tenantTx = mock(TenantTransactionTemplate.class);
-        passwordEncoder = mock(PasswordEncoder.class);
-        tokenHasher = mock(TokenHasher.class);
-
-        // The constructor precomputes a dummy hash; return a stable value.
-        when(passwordEncoder.encode(anyString())).thenReturn("dummy-hash");
-        when(tokenHasher.hash(anyString())).thenReturn("token-hash");
-        // runWithoutTenant must execute the supplier, as a real transaction would.
+        // runWithoutTenant debe ejecutar el supplier, como una transacción real.
         when(tenantTx.runWithoutTenant(any())).thenAnswer(inv -> ((Supplier<?>) inv.getArgument(0)).get());
-
-        service = new AuthServiceImpl(authRepository, auditoriaService, tenantTx, passwordEncoder, tokenHasher);
-    }
-
-    private AuthUser activeUser(short fallos, Instant bloqueadoHasta) {
-        return new AuthUser(usuarioId, tenantId, "real-hash", true, "admin", fallos, bloqueadoHasta);
+        service = new AuthServiceImpl(authRepository, auditoriaService, tenantTx);
     }
 
     @Test
-    void successfulLoginCreatesSessionAndResetsFailures() {
-        when(authRepository.findAuthByEmail("a@x.com")).thenReturn(Optional.of(activeUser((short) 0, null)));
-        when(passwordEncoder.matches("secret", "real-hash")).thenReturn(true);
+    void buscarAuthPorEmailRunsWithoutTenantAndDelegatesToRepository() {
+        AuthUser user = new AuthUser(usuarioId, tenantId, "hash", true, "admin", (short) 0, null);
+        when(authRepository.findAuthByEmail("a@x.com")).thenReturn(Optional.of(user));
 
-        AuthService.IssuedSession issued = service.autenticar("a@x.com", "secret", "agent", "1.2.3.4");
+        Optional<AuthUser> result = service.buscarAuthPorEmail("a@x.com");
 
-        assertThat(issued.token()).isNotBlank();
-        assertThat(issued.expiraEn()).isAfter(Instant.now());
+        assertThat(result).containsSame(user);
+        // Corre dentro de runWithoutTenant (no fija tenant).
+        verify(tenantTx).runWithoutTenant(any());
+        verify(authRepository).findAuthByEmail("a@x.com");
+    }
+
+    @Test
+    void crearSesionDelegatesToRepository() {
+        Instant expira = Instant.now().plusSeconds(3600);
+        service.crearSesion(usuarioId, tenantId, "token-hash", expira, "agent", "1.2.3.4");
+        verify(authRepository).crearSesion(usuarioId, tenantId, "token-hash", expira, "agent", "1.2.3.4");
+    }
+
+    @Test
+    void buscarSesionPorHashDelegatesToRepository() {
+        when(authRepository.buscarSesionPorHash("h")).thenReturn(Optional.empty());
+        assertThat(service.buscarSesionPorHash("h")).isEmpty();
+        verify(authRepository).buscarSesionPorHash("h");
+    }
+
+    @Test
+    void revocarSesionDelegatesToRepository() {
+        service.revocarSesion("h");
+        verify(authRepository).revocarSesion("h");
+    }
+
+    @Test
+    void incrementarFallosDelegatesToRepository() {
+        Instant lock = Instant.now().plusSeconds(60);
+        service.incrementarFallos(usuarioId, lock);
+        verify(authRepository).incrementarFallos(usuarioId, lock);
+    }
+
+    @Test
+    void resetearFallosYLoginDelegatesToRepository() {
+        service.resetearFallosYLogin(usuarioId);
         verify(authRepository).resetearFallosYLogin(usuarioId);
-        verify(authRepository).crearSesion(eq(usuarioId), eq(tenantId), eq("token-hash"), any(), eq("agent"), eq("1.2.3.4"));
-        verify(auditoriaService).registrar(eq(tenantId), eq("a@x.com"), eq("login_exitoso"), anyString(), anyString(), any());
     }
 
     @Test
-    void wrongPasswordThrowsGenericErrorAndIncrementsFailures() {
-        when(authRepository.findAuthByEmail("a@x.com")).thenReturn(Optional.of(activeUser((short) 0, null)));
-        when(passwordEncoder.matches("bad", "real-hash")).thenReturn(false);
-
-        assertThatThrownBy(() -> service.autenticar("a@x.com", "bad", null, null))
-                .isInstanceOf(AuthException.class)
-                .hasMessage("credenciales invalidas");
-
-        verify(authRepository).incrementarFallos(eq(usuarioId), isNull());
-        verify(authRepository, never()).crearSesion(any(), any(), any(), any(), any(), any());
-    }
-
-    @Test
-    void fifthFailureSetsLockUntil() {
-        when(authRepository.findAuthByEmail("a@x.com")).thenReturn(Optional.of(activeUser((short) 4, null)));
-        when(passwordEncoder.matches("bad", "real-hash")).thenReturn(false);
-
-        assertThatThrownBy(() -> service.autenticar("a@x.com", "bad", null, null))
-                .isInstanceOf(AuthException.class);
-
-        var lockUntil = ArgumentCaptor.forClass(Instant.class);
-        verify(authRepository).incrementarFallos(eq(usuarioId), lockUntil.capture());
-        assertThat(lockUntil.getValue()).isNotNull();
-        assertThat(lockUntil.getValue()).isAfter(Instant.now());
-    }
-
-    @Test
-    void lockedAccountDoesNotAuthenticateEvenWithCorrectPassword() {
-        when(authRepository.findAuthByEmail("a@x.com"))
-                .thenReturn(Optional.of(activeUser((short) 5, Instant.now().plusSeconds(60))));
-        when(passwordEncoder.matches("secret", "real-hash")).thenReturn(true);
-
-        assertThatThrownBy(() -> service.autenticar("a@x.com", "secret", null, null))
-                .isInstanceOf(AuthException.class);
-
-        verify(authRepository, never()).crearSesion(any(), any(), any(), any(), any(), any());
-        verify(authRepository, never()).resetearFallosYLogin(any());
-        // Hash still verified to keep timing uniform.
-        verify(passwordEncoder, atLeastOnce()).matches(eq("secret"), eq("real-hash"));
-    }
-
-    @Test
-    void unknownEmailThrowsSameErrorAndRunsDummyHashVerification() {
-        when(authRepository.findAuthByEmail("missing@x.com")).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> service.autenticar("missing@x.com", "whatever", null, null))
-                .isInstanceOf(AuthException.class)
-                .hasMessage("credenciales invalidas");
-
-        // A hash verification runs against the precomputed dummy hash.
-        verify(passwordEncoder).matches("whatever", "dummy-hash");
-        verify(authRepository, never()).crearSesion(any(), any(), any(), any(), any(), any());
-    }
-
-    @Test
-    void inactiveUserDoesNotAuthenticate() {
-        AuthUser inactive = new AuthUser(usuarioId, tenantId, "real-hash", false, "miembro", (short) 0, null);
-        when(authRepository.findAuthByEmail("a@x.com")).thenReturn(Optional.of(inactive));
-        when(passwordEncoder.matches("secret", "real-hash")).thenReturn(true);
-
-        assertThatThrownBy(() -> service.autenticar("a@x.com", "secret", null, null))
-                .isInstanceOf(AuthException.class);
-
-        verify(authRepository, never()).crearSesion(any(), any(), any(), any(), any(), any());
-    }
-
-    @Test
-    void validarSesionReturnsPrincipalForValidSession() {
-        SesionInfo sesion = new SesionInfo(UUID.randomUUID(), usuarioId, tenantId, "a@x.com", "admin",
-                true, false, Instant.now().plusSeconds(3600));
-        when(authRepository.buscarSesionPorHash("h")).thenReturn(Optional.of(sesion));
-
-        Optional<SiginexPrincipal> principal = service.validarSesion("h");
-
-        assertThat(principal).isPresent();
-        assertThat(principal.get().usuarioId()).isEqualTo(usuarioId);
-        assertThat(principal.get().tenantId()).isEqualTo(tenantId);
-        assertThat(principal.get().rol()).isEqualTo("admin");
-    }
-
-    @Test
-    void validarSesionRejectsRevokedSession() {
-        SesionInfo revoked = new SesionInfo(UUID.randomUUID(), usuarioId, tenantId, "a@x.com", "admin",
-                true, true, Instant.now().plusSeconds(3600));
-        when(authRepository.buscarSesionPorHash("h")).thenReturn(Optional.of(revoked));
-
-        assertThat(service.validarSesion("h")).isEmpty();
-    }
-
-    @Test
-    void validarSesionRejectsExpiredSession() {
-        SesionInfo expired = new SesionInfo(UUID.randomUUID(), usuarioId, tenantId, "a@x.com", "admin",
-                true, false, Instant.now().minusSeconds(1));
-        when(authRepository.buscarSesionPorHash("h")).thenReturn(Optional.of(expired));
-
-        assertThat(service.validarSesion("h")).isEmpty();
-    }
-
-    @Test
-    void revocarMarksSessionRevokedAndAudits() {
-        SiginexPrincipal principal = new SiginexPrincipal(usuarioId, tenantId, "a@x.com", "admin");
-
-        service.revocar("token-hash", principal);
-
-        verify(authRepository).revocarSesion("token-hash");
-        verify(auditoriaService).registrar(eq(tenantId), eq("a@x.com"), eq("logout"), anyString(), anyString(), any());
+    void registrarEventoDelegatesToAuditoria() {
+        service.registrarEvento(tenantId, "a@x.com", "login_exitoso", "usuario", usuarioId.toString(),
+                Map.of("email", "a@x.com"));
+        verify(auditoriaService).registrar(eq(tenantId), eq("a@x.com"), eq("login_exitoso"),
+                eq("usuario"), anyString(), any());
     }
 }

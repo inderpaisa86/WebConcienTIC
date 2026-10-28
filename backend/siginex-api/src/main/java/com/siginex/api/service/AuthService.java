@@ -1,37 +1,52 @@
 package com.siginex.api.service;
 
-import com.siginex.api.domain.SiginexPrincipal;
+import com.siginex.api.domain.AuthUser;
+import com.siginex.api.domain.SesionInfo;
 
 import java.time.Instant;
+import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
- * Authentication use cases: coordinates password verification, lockout, session
- * issuing/validation/revocation and auditing. Implemented by
- * {@link AuthServiceImpl}.
+ * Acceso a datos de autenticación y sesiones: ESTRICTAMENTE lecturas y
+ * escrituras a base de datos. No contiene reglas de negocio ni decisiones
+ * (bloqueo, enumeración, expiración/revocación, emisión de token): esa
+ * orquestación/validación vive en {@link com.siginex.api.delegate.AuthDelegate}.
+ * Implementado por {@link AuthServiceImpl}.
+ *
+ * <p>La búsqueda por email ocurre FUERA de RLS (decisión D4): se realiza antes
+ * de conocer el tenant. Aquí eso es solo acceso a datos; la decisión de usarla
+ * para autenticar es del Delegate.
  */
 public interface AuthService {
 
     /**
-     * Authenticates by email + password and, on success, issues an opaque
-     * session token.
-     *
-     * @return the plaintext opaque token and its absolute expiry.
-     * @throws com.siginex.api.exception.AuthException with a generic message on any failure.
+     * LECTURA. Busca el usuario de autenticación por email, fuera de un tenant
+     * fijado ({@code runWithoutTenant}). Devuelve el hash y el estado necesarios
+     * para que el Delegate decida; no valida nada.
      */
-    IssuedSession autenticar(String email, String password, String userAgent, String ip);
+    Optional<AuthUser> buscarAuthPorEmail(String email);
+
+    /** ESCRITURA. Crea una sesión con el hash del token y su expiración. */
+    void crearSesion(UUID usuarioId, UUID tenantId, String tokenHash, Instant expiraEn, String userAgent, String ip);
+
+    /** LECTURA. Busca una sesión (unida a su usuario) por el hash del token. */
+    Optional<SesionInfo> buscarSesionPorHash(String tokenHash);
+
+    /** ESCRITURA. Revoca la sesión identificada por el hash del token. */
+    void revocarSesion(String tokenHash);
+
+    /** ESCRITURA. Incrementa el contador de fallos y fija el bloqueo (puede ser null). */
+    void incrementarFallos(UUID usuarioId, Instant bloqueadoHasta);
+
+    /** ESCRITURA. Resetea fallos y fija {@code ultimo_login = now()}. */
+    void resetearFallosYLogin(UUID usuarioId);
 
     /**
-     * Validates a session by the SHA-256 hash of its opaque token. Returns the
-     * principal only when the session exists, is not revoked, has not expired
-     * and the user is active.
+     * ESCRITURA. Registra un evento de auditoría. El Delegate decide qué y
+     * cuándo auditar; este método solo persiste (el payload no debe contener
+     * secretos; el servicio de auditoría los rechaza por diseño).
      */
-    Optional<SiginexPrincipal> validarSesion(String tokenHash);
-
-    /** Revokes the session identified by the token hash and audits the logout. */
-    void revocar(String tokenHash, SiginexPrincipal principal);
-
-    /** Opaque token (plaintext, for the cookie) plus its absolute expiry. */
-    record IssuedSession(String token, Instant expiraEn) {
-    }
+    void registrarEvento(UUID tenantId, String actor, String accion, String entidad, String entidadId, Map<String, ?> payload);
 }

@@ -1,9 +1,14 @@
 import { KB_VERSION } from "@/lib/siginex/modulos-sgi";
+import { LogoutButton } from "@/components/siginex/logout-button";
 
 /**
  * Topbar de la home `/siginex`, clon visual del Topbar del repo de referencia
  * (Siginex). Usa colores HEX literales para preservar la paleta navy + dorado
  * (los tokens de concientic resuelven a otros colores).
+ *
+ * Incluye el botón de cierre de sesión (`LogoutButton`) a la derecha, para que
+ * el "Cerrar sesión" esté disponible en todas las pantallas de `/siginex` que
+ * usan este shell.
  */
 export function HomeTopbar({ titulo }: { titulo: string }) {
   return (
@@ -23,6 +28,7 @@ export function HomeTopbar({ titulo }: { titulo: string }) {
         <span className="rounded-[7px] border border-[#F3E7CC] bg-[#FFF7E6] px-2.5 py-1 font-mono text-[11px] font-semibold text-[#a9781f]">
           KB {KB_VERSION}
         </span>
+        <LogoutButton />
       </div>
     </header>
   );

@@ -4,3 +4,7 @@ build/
 *.iml
 .env
 .env.*
+
+# Salidas temporales de build redirigidas a archivo (ej. ".\gradlew ... > bf.txt")
+bf.txt
+*.build.log

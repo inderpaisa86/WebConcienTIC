@@ -2,7 +2,6 @@ package com.siginex.api.controller;
 
 
 import com.siginex.api.delegate.AuthDelegate;
-import com.siginex.api.service.AuthService;
 import com.siginex.api.dto.auth.LoginRequest;
 import com.siginex.api.dto.auth.MeResponse;
 import com.siginex.api.domain.SiginexPrincipal;
@@ -49,7 +48,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Void> login(@Valid @RequestBody LoginRequest request, HttpServletRequest httpRequest) {
-        AuthService.IssuedSession session = authDelegate.login(
+        AuthDelegate.IssuedSession session = authDelegate.login(
                 request.email(), request.password(), httpRequest.getHeader("User-Agent"), httpRequest.getRemoteAddr());
         ResponseCookie cookie = sessionCookie(session.token(),
                 Duration.between(Instant.now(), session.expiraEn()));
