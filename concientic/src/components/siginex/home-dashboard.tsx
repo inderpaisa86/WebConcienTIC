@@ -91,7 +91,7 @@ export function HomeDashboard() {
           {MODULOS_SGI.map((m) => (
             <Link
               key={m.id}
-              href="/siginex/diagnosticos"
+              href={`/siginex/diagnosticos?modulo=${encodeURIComponent(m.id)}`}
               className="group rounded-[14px] border border-[#E1E7F0] bg-[#ffffff] p-5 transition-colors hover:border-[#C08A2E]/50"
               style={{ boxShadow: SHADOW_CARD }}
             >

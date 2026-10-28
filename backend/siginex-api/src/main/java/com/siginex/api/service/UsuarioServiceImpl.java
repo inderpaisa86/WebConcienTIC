@@ -5,6 +5,7 @@ import com.siginex.api.repository.UsuarioRepository;
 import com.siginex.api.config.TenantTransactionTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,6 +29,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario crear(UUID tenantId, Usuario usuario) {
         return tenantTx.runInTenant(tenantId, () -> usuarioRepository.insertar(usuario));
+    }
+
+    @Override
+    public List<Usuario> listar(UUID tenantId) {
+        return tenantTx.runInTenant(tenantId, usuarioRepository::listar);
     }
 
     @Override

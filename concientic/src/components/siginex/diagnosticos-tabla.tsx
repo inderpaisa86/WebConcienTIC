@@ -9,6 +9,10 @@ import type { DiagnosticoResumen } from "@/lib/siginex";
  * nativo con `<th scope="col">` (RNF5) y solo tokens/componentes de concientic.
  * Desde la 3c, el diagnóstico enlaza a su cuestionario
  * (`/siginex/diagnosticos/{id}/cuestionario`) para responder por módulo.
+ *
+ * Fase 4 (navegación por módulos): si se pasa `moduloSeleccionado` (id de módulo
+ * del KB), el enlace "Responder" añade `?modulo=<id>` para que el cuestionario
+ * abra directamente esa sección.
  */
 
 /** Mapeo de nivel SGI → nombre, portado de la referencia (Siginex). */
@@ -35,9 +39,18 @@ function formatearScore(scoreSgi: string | null, nivelSgi: number | null): strin
 
 export function DiagnosticosTabla({
   diagnosticos,
+  moduloSeleccionado,
 }: {
   diagnosticos: DiagnosticoResumen[];
+  /** Id de módulo del KB; si se pasa, el enlace del cuestionario lo añade como `?modulo=<id>`. */
+  moduloSeleccionado?: string;
 }) {
+  // Sufijo de query para el enlace del cuestionario (Fase 4). El id del módulo
+  // se codifica por si contiene caracteres reservados.
+  const sufijoModulo = moduloSeleccionado
+    ? `?modulo=${encodeURIComponent(moduloSeleccionado)}`
+    : "";
+
   if (diagnosticos.length === 0) {
     return (
       <p className="rounded-xl border border-dashed border-border bg-card p-6 text-center text-sm text-muted-foreground">
@@ -98,7 +111,7 @@ export function DiagnosticosTabla({
                     size="sm"
                     render={
                       <Link
-                        href={`/siginex/diagnosticos/${d.id}/cuestionario`}
+                        href={`/siginex/diagnosticos/${d.id}/cuestionario${sufijoModulo}`}
                       />
                     }
                   >

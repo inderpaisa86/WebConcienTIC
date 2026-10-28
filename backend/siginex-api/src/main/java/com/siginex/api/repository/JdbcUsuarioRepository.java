@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,6 +35,12 @@ public class JdbcUsuarioRepository implements UsuarioRepository {
             SELECT id, tenant_id, email, nombre, rol, activo, creado_en
             FROM siginex.usuario
             WHERE id = :id
+            """;
+
+    private static final String LISTAR = """
+            SELECT id, tenant_id, email, nombre, rol, activo, creado_en
+            FROM siginex.usuario
+            ORDER BY creado_en DESC
             """;
 
     private static final String CAMBIAR_ACTIVO = """
@@ -60,6 +67,11 @@ public class JdbcUsuarioRepository implements UsuarioRepository {
                 .addValue("rol", usuario.rol())
                 .addValue("activo", usuario.activo());
         return jdbc.queryForObject(INSERT_USUARIO, parameters, usuarioRowMapper());
+    }
+
+    @Override
+    public List<Usuario> listar() {
+        return jdbc.query(LISTAR, usuarioRowMapper());
     }
 
     @Override

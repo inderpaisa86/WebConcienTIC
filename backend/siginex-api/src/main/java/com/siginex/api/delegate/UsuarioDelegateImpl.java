@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -69,6 +70,12 @@ public class UsuarioDelegateImpl implements UsuarioDelegate {
         auditoriaService.registrar(tenantId, actor.email(), "usuario_creado", "usuario",
                 creado.id().toString(), Map.of("email", creado.email(), "rol", creado.rol()));
         return creado;
+    }
+
+    @Override
+    public List<Usuario> listar(SiginexPrincipal actor) {
+        exigirAdmin(actor);
+        return usuarioService.listar(actor.tenantId());
     }
 
     @Override

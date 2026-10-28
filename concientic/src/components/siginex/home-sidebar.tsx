@@ -7,15 +7,15 @@ import { MODULOS_SGI } from "@/lib/siginex/modulos-sgi";
  * de referencia (Siginex). Usa colores HEX literales (NO los tokens de
  * concientic, que resuelven a otra paleta) para preservar el navy + dorado.
  *
- * Los enlaces del original apuntan a rutas (`/plan-mejora`, `/benchmark`, …)
- * que NO existen en concientic. Para no generar 404 se mapean a rutas reales:
- * "Panel" → `/siginex`, "Diagnóstico" → `/siginex/diagnosticos`, y el resto
- * (plan de mejora, benchmark, vigilancia, reportes) y los módulos →
- * `/siginex/diagnosticos`.
+ * Los enlaces del nav principal (Panel, Diagnóstico, …) se mapean a rutas
+ * reales de concientic. Fase 4 (navegación por módulos): cada módulo del SGI
+ * enlaza a `/siginex/diagnosticos?modulo=<id>`, donde se elige el diagnóstico
+ * sobre el que abrir ese módulo y se propaga el id al cuestionario.
  */
 const NAV_PRINCIPAL = [
   { href: "/siginex", label: "Panel" },
   { href: "/siginex/diagnosticos", label: "Diagnóstico" },
+  { href: "/siginex/usuarios", label: "Usuarios" },
   { href: "/siginex/diagnosticos", label: "Plan de mejora" },
   { href: "/siginex/diagnosticos", label: "Benchmark" },
   { href: "/siginex/diagnosticos", label: "Vigilancia" },
@@ -69,7 +69,7 @@ export function HomeSidebar() {
           {MODULOS_SGI.map((m) => (
             <li key={m.id}>
               <Link
-                href="/siginex/diagnosticos"
+                href={`/siginex/diagnosticos?modulo=${encodeURIComponent(m.id)}`}
                 className="flex items-center gap-3 rounded-[9px] px-2.5 py-2 text-[13px] text-[#C6D0DE] transition-colors hover:bg-white/[0.06] hover:text-white"
               >
                 <span className="grid size-[22px] flex-none place-items-center rounded-[7px] border border-white/[0.18] font-mono text-[10px] text-[#93A1B5]">

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -74,6 +75,12 @@ export function LoginForm() {
         {errors.password?.message ? (
           <p className="text-sm text-destructive">{errors.password.message}</p>
         ) : null}
+        <Link
+          href="/siginex/recuperar"
+          className="self-end text-sm text-muted-foreground underline-offset-4 hover:underline"
+        >
+          ¿Olvidaste tu contraseña?
+        </Link>
       </div>
 
       {serverError ? (

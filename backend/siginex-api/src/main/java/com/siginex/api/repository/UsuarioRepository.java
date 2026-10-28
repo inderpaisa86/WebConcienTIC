@@ -3,6 +3,7 @@ package com.siginex.api.repository;
 
 import com.siginex.api.config.TenantTransactionTemplate;
 import com.siginex.api.domain.Usuario;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,6 +17,9 @@ import java.util.UUID;
 public interface UsuarioRepository {
 
     Usuario insertar(Usuario usuario);
+
+    /** Lists the users visible under the fixed tenant (RLS scopes them). */
+    List<Usuario> listar();
 
     Optional<Usuario> buscarPorId(UUID id);
 

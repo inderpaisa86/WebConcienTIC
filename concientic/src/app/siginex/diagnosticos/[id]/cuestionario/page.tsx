@@ -24,17 +24,29 @@ const UUID_RE =
  * `SessionGuard`, monta el `Cuestionario` (client) — que carga módulos,
  * preguntas y respuestas vía `lib/siginex` y guarda con la PUT de respuestas.
  *
- * Next.js 16: `params` es una promesa.
+ * Fase 4 (navegación por módulos): acepta el search param `?modulo=<id>` (id de
+ * módulo del KB, p. ej. `sst`) y lo pasa como `moduloInicial` para que el
+ * cuestionario abra directamente esa sección. Sin el parámetro arranca en el
+ * primer módulo (comportamiento previo).
+ *
+ * Next.js 16: tanto `params` como `searchParams` son promesas.
  */
 export default async function SiginexCuestionarioPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ modulo?: string | string[] }>;
 }) {
   const { id } = await params;
   if (!UUID_RE.test(id)) {
     notFound();
   }
+
+  // `?modulo=<id>`: si llega repetido (string[]), se toma el primero. Un valor
+  // vacío o ausente deja `moduloInicial` como undefined (arranca en el primero).
+  const { modulo } = await searchParams;
+  const moduloInicial = Array.isArray(modulo) ? modulo[0] : modulo;
 
   return (
     <SessionGuard>
@@ -57,7 +69,7 @@ export default async function SiginexCuestionarioPage({
           </Button>
         </header>
 
-        <Cuestionario diagnosticoId={id} />
+        <Cuestionario diagnosticoId={id} moduloInicial={moduloInicial} />
       </div>
     </SessionGuard>
   );

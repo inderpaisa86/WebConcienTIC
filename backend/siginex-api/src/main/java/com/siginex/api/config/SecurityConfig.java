@@ -37,7 +37,11 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers(PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.POST, "/auth/login")))
+                        .ignoringRequestMatchers(
+                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.POST, "/auth/login"),
+                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.POST, "/auth/reset/solicitar"),
+                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.POST, "/auth/reset/confirmar"),
+                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.POST, "/api/v1/plataforma/empresas")))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
@@ -47,6 +51,12 @@ public class SecurityConfig {
                                 "/api/v1/status")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        // Fase 5: recuperación de contraseña (sin sesión).
+                        .requestMatchers(HttpMethod.POST, "/auth/reset/solicitar").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/reset/confirmar").permitAll()
+                        // Fase 5: alta de empresa por clave de plataforma (no sesión;
+                        // el delegate valida X-Siginex-Admin-Key en tiempo constante).
+                        .requestMatchers(HttpMethod.POST, "/api/v1/plataforma/empresas").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(sessionAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(basic -> basic.disable())

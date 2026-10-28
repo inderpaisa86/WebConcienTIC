@@ -2,6 +2,7 @@ package com.siginex.api.config;
 
 import com.siginex.api.exception.AuthException;
 import com.siginex.api.exception.DominioException;
+import com.siginex.api.exception.PlataformaException;
 import com.siginex.api.exception.UsuarioException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,12 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(DominioException.class)
     public ResponseEntity<Map<String, String>> handleDominio(DominioException ex) {
+        return ResponseEntity.status(ex.status())
+                .body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(PlataformaException.class)
+    public ResponseEntity<Map<String, String>> handlePlataforma(PlataformaException ex) {
         return ResponseEntity.status(ex.status())
                 .body(Map.of("error", ex.getMessage()));
     }

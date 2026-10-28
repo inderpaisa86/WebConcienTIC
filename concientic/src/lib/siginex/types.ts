@@ -42,6 +42,35 @@ export interface MeResponsePayload {
 }
 
 /* ------------------------------------------------------------------ *
+ * Fase 5: gestión de usuarios por el admin. Reflejan los DTO del
+ * backend Java:
+ * - `UsuarioResponse`      { UUID id, UUID tenantId, String email,
+ *                            String nombre, String rol, boolean activo,
+ *                            Instant creadoEn }
+ * - `CrearUsuarioRequest`  { @Email email, @NotBlank nombre,
+ *                            @Size(min=12) password, @Pattern(admin|miembro) rol }
+ * ------------------------------------------------------------------ */
+
+/** Usuario tal como lo devuelve `GET/POST /api/v1/usuarios` (sin secretos). */
+export interface UsuarioResumen {
+  id: string;
+  tenantId: string;
+  email: string;
+  nombre: string;
+  rol: Rol;
+  activo: boolean;
+  creadoEn: string;
+}
+
+/** Body de `POST /api/v1/usuarios` (crear usuario en el tenant del admin). */
+export interface CrearUsuarioRequest {
+  email: string;
+  nombre: string;
+  password: string;
+  rol: "admin" | "miembro";
+}
+
+/* ------------------------------------------------------------------ *
  * Sub-fase 3b: tipos del contrato de datos (organizaciones y
  * diagnósticos). Reflejan los DTO del backend Java:
  * - `OrganizacionResponse`         { UUID id, UUID tenantId, String nombre,

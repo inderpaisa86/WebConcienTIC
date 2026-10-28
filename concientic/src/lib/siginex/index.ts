@@ -10,6 +10,12 @@
 export { login, logout, me } from "./client";
 export { listarOrganizaciones, crearOrganizacion } from "./organizaciones";
 export {
+  listarUsuarios,
+  crearUsuario,
+  cambiarActivoUsuario,
+} from "./usuarios";
+export { solicitarReset, confirmarReset } from "./reset";
+export {
   listarDiagnosticos,
   crearDiagnostico,
   obtenerDiagnostico,
@@ -27,6 +33,7 @@ export { SiginexAuthError, isSiginexAuthError } from "./errors";
 export { SiginexDataError, isSiginexDataError } from "./errors";
 export type { SiginexAuthErrorKind, SiginexDataErrorKind } from "./errors";
 export type { LoginRequest, Me, MeResponsePayload, Rol } from "./types";
+export type { UsuarioResumen, CrearUsuarioRequest } from "./types";
 export type {
   Organizacion,
   OrganizacionTamano,

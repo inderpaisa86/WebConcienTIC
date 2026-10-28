@@ -4,6 +4,7 @@ import com.siginex.api.domain.Usuario;
 import com.siginex.api.domain.SiginexPrincipal;
 import com.siginex.api.dto.usuario.CrearUsuarioRequest;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -20,6 +21,8 @@ import java.util.UUID;
 public interface UsuarioDelegate {
 
     Usuario crear(SiginexPrincipal actor, CrearUsuarioRequest request);
+
+    List<Usuario> listar(SiginexPrincipal actor);
 
     Usuario activar(SiginexPrincipal actor, UUID usuarioId);
 

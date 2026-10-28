@@ -2,6 +2,7 @@ package com.siginex.api.service;
 
 import com.siginex.api.domain.Usuario;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,6 +18,9 @@ import java.util.UUID;
 public interface UsuarioService {
 
     Usuario crear(UUID tenantId, Usuario usuario);
+
+    /** Lists the users of the admin's tenant (RLS scopes them). */
+    List<Usuario> listar(UUID tenantId);
 
     Optional<Usuario> buscarPorId(UUID tenantId, UUID usuarioId);
 

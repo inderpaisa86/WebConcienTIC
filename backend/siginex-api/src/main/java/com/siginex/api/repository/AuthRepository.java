@@ -33,4 +33,16 @@ public interface AuthRepository {
     void incrementarFallos(UUID usuarioId, Instant bloqueadoHasta);
 
     void resetearFallosYLogin(UUID usuarioId);
+
+    /**
+     * Revoca TODAS las sesiones activas de un usuario (Fase 5: al completar un
+     * reset de contraseña). Idempotente.
+     */
+    void revocarTodasLasSesiones(UUID usuarioId);
+
+    /**
+     * Actualiza el hash de contraseña de un usuario (Fase 5: confirmar reset).
+     * El hash ya viene calculado con Argon2id; nunca se loguea.
+     */
+    void actualizarPasswordHash(UUID usuarioId, String passwordHash);
 }

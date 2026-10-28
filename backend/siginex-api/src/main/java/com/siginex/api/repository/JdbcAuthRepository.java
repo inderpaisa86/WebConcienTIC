@@ -60,6 +60,14 @@ public class JdbcAuthRepository implements AuthRepository {
             WHERE id = :usuarioId
             """;
 
+    private static final String REVOKE_ALL_SESIONES = """
+            UPDATE siginex.sesion SET revocada = true WHERE usuario_id = :usuarioId AND revocada = false
+            """;
+
+    private static final String UPDATE_PASSWORD_HASH = """
+            UPDATE siginex.usuario SET password_hash = :passwordHash WHERE id = :usuarioId
+            """;
+
     private final NamedParameterJdbcTemplate jdbc;
 
     public JdbcAuthRepository(NamedParameterJdbcTemplate jdbc) {
@@ -116,6 +124,19 @@ public class JdbcAuthRepository implements AuthRepository {
     @Override
     public void resetearFallosYLogin(UUID usuarioId) {
         jdbc.update(RESET_FALLOS_Y_LOGIN, new MapSqlParameterSource("usuarioId", usuarioId));
+    }
+
+    @Override
+    public void revocarTodasLasSesiones(UUID usuarioId) {
+        jdbc.update(REVOKE_ALL_SESIONES, new MapSqlParameterSource("usuarioId", usuarioId));
+    }
+
+    @Override
+    public void actualizarPasswordHash(UUID usuarioId, String passwordHash) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("usuarioId", usuarioId)
+                .addValue("passwordHash", passwordHash);
+        jdbc.update(UPDATE_PASSWORD_HASH, parameters);
     }
 
     private static RowMapper<AuthUser> authUserRowMapper() {

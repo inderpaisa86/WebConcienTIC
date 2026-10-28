@@ -29,6 +29,11 @@ import {
  *   resto de componentes `siginex/` de la 3a/3b.
  * - Valores expuestos: `0 | 1 | 2 | na` (subconjunto del `@Pattern` del backend).
  * - `unauthenticated` redirige a `/siginex/login`, igual que `gestion-diagnosticos`.
+ * - Fase 4 (navegación por módulos): acepta `moduloInicial` (id de módulo del
+ *   KB, p. ej. `sst`). Al terminar de cargar los módulos, si ese id existe, el
+ *   cuestionario abre DIRECTAMENTE esa sección; si no coincide (o no se pasa),
+ *   arranca en el primer módulo. El id viaja por URL como `?modulo=<id>` desde
+ *   el panel/sidebar, de modo que el deep-link es enlazable y compartible.
  *
  * Es un componente CLIENT con estado; se monta dentro de `SessionGuard`.
  */
@@ -53,7 +58,18 @@ function clasesOpcion(seleccionada: boolean): string {
 
 type EstadoCarga = "cargando" | "listo" | "error";
 
-export function Cuestionario({ diagnosticoId }: { diagnosticoId: string }) {
+export function Cuestionario({
+  diagnosticoId,
+  moduloInicial,
+}: {
+  diagnosticoId: string;
+  /**
+   * Id de módulo del KB (p. ej. `sst`) con el que abrir el cuestionario.
+   * Fase 4: llega por `?modulo=<id>`. Si no coincide con ningún módulo
+   * cargado, se ignora y se arranca en el primero.
+   */
+  moduloInicial?: string;
+}) {
   const router = useRouter();
 
   const [modulos, setModulos] = useState<KbModulo[]>([]);
@@ -80,6 +96,19 @@ export function Cuestionario({ diagnosticoId }: { diagnosticoId: string }) {
 
   const moduloActual = modulos[moduloIdx] ?? null;
 
+  // Fase 4: resuelve el índice de arranque a partir de `moduloInicial`. Si el id
+  // existe entre los módulos cargados, abre esa sección; si no (o no se pasó),
+  // arranca en el primero (índice 0). La comparación es sobre el id canónico del
+  // KB (`sst`, `ambiental`, …), el mismo que viaja por `?modulo=<id>`.
+  const indiceInicial = useCallback(
+    (mods: KbModulo[]): number => {
+      if (!moduloInicial) return 0;
+      const idx = mods.findIndex((m) => m.id === moduloInicial);
+      return idx >= 0 ? idx : 0;
+    },
+    [moduloInicial],
+  );
+
   /** Normaliza un error de la capa de datos a un mensaje seguro; redirige en 401. */
   const resolverError = useCallback(
     (err: unknown): string => {
@@ -105,13 +134,13 @@ export function Cuestionario({ diagnosticoId }: { diagnosticoId: string }) {
       ]);
       setModulos(mods);
       setRespuestas(resp);
-      setModuloIdx(0);
+      setModuloIdx(indiceInicial(mods));
       setEstado("listo");
     } catch (err) {
       setMensajeError(resolverError(err));
       setEstado("error");
     }
-  }, [diagnosticoId, resolverError]);
+  }, [diagnosticoId, resolverError, indiceInicial]);
 
   useEffect(() => {
     let activo = true;
@@ -120,6 +149,7 @@ export function Cuestionario({ diagnosticoId }: { diagnosticoId: string }) {
         if (!activo) return;
         setModulos(mods);
         setRespuestas(resp);
+        setModuloIdx(indiceInicial(mods));
         setEstado("listo");
       })
       .catch((err: unknown) => {
@@ -130,7 +160,7 @@ export function Cuestionario({ diagnosticoId }: { diagnosticoId: string }) {
     return () => {
       activo = false;
     };
-  }, [diagnosticoId, resolverError]);
+  }, [diagnosticoId, resolverError, indiceInicial]);
 
   // Carga perezosa de las preguntas del módulo visible (si no están en caché).
   // Para no llamar setState de forma SÍNCRONA en el cuerpo del efecto
