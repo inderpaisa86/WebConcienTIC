@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import styles from "./elartequeconecta.module.css";
+import { Reveal } from "./reveal";
 
 const HOTMART_URL = "https://elartequeconecta.hotmart.host/";
 
@@ -90,7 +91,7 @@ export default function ElArteQueConectaPage() {
               <p>Encuentra inspiración, formación y proyectos para acompañar tu camino creativo.</p>
             </div>
             <div className={styles.tiles}>
-              <article className={styles.tile}>
+              <Reveal as="article" className={styles.tile}>
                 <div className={styles.media}>
                   <Image
                     src="/elartequeconecta/programa.webp"
@@ -107,8 +108,8 @@ export default function ElArteQueConectaPage() {
                     Explora el programa <span aria-hidden="true">→</span>
                   </a>
                 </div>
-              </article>
-              <article className={styles.tile}>
+              </Reveal>
+              <Reveal as="article" className={styles.tile} delay={120}>
                 <div className={styles.media}>
                   <Image
                     src="/elartequeconecta/bolsos.webp"
@@ -130,8 +131,8 @@ export default function ElArteQueConectaPage() {
                     Descubre el curso <span aria-hidden="true">→</span>
                   </a>
                 </div>
-              </article>
-              <article className={styles.tile}>
+              </Reveal>
+              <Reveal as="article" className={styles.tile} delay={240}>
                 <div className={styles.media}>
                   <Image
                     src="/elartequeconecta/navidad.webp"
@@ -153,7 +154,7 @@ export default function ElArteQueConectaPage() {
                     Descubre el curso <span aria-hidden="true">→</span>
                   </a>
                 </div>
-              </article>
+              </Reveal>
             </div>
           </div>
         </section>
@@ -167,7 +168,7 @@ export default function ElArteQueConectaPage() {
               <p>Elige tu próxima creación y disfruta el proceso, nudo a nudo.</p>
             </div>
             <div className={styles.workshopGrid}>
-              <article className={styles.workshop}>
+              <Reveal as="article" className={styles.workshop}>
                 <div className={styles.workshopArt}>
                   <Image
                     src="/elartequeconecta/maxibolso.webp"
@@ -191,8 +192,8 @@ export default function ElArteQueConectaPage() {
                     Ver taller
                   </a>
                 </div>
-              </article>
-              <article className={styles.workshop}>
+              </Reveal>
+              <Reveal as="article" className={styles.workshop} delay={100}>
                 <div className={styles.workshopArt}>
                   <Image
                     src="/elartequeconecta/arbol-navidad.webp"
@@ -216,8 +217,8 @@ export default function ElArteQueConectaPage() {
                     Ver taller
                   </a>
                 </div>
-              </article>
-              <article className={styles.workshop}>
+              </Reveal>
+              <Reveal as="article" className={styles.workshop} delay={200}>
                 <div className={styles.workshopArt}>
                   <Image
                     src="/elartequeconecta/tapiz-prana.webp"
@@ -241,8 +242,8 @@ export default function ElArteQueConectaPage() {
                     Ver taller
                   </a>
                 </div>
-              </article>
-              <article className={styles.workshop}>
+              </Reveal>
+              <Reveal as="article" className={styles.workshop} delay={300}>
                 <div className={styles.workshopArt}>
                   <Image
                     src="/elartequeconecta/arbol-pared.webp"
@@ -269,7 +270,7 @@ export default function ElArteQueConectaPage() {
                     Ver taller
                   </a>
                 </div>
-              </article>
+              </Reveal>
             </div>
           </div>
         </section>
@@ -277,7 +278,7 @@ export default function ElArteQueConectaPage() {
         {/* Comunidad */}
         <section className={styles.communitySection} id="comunidad">
           <div className={`${styles.wrap} ${styles.communityGrid}`}>
-            <div className={styles.communityVisual}>
+            <Reveal className={styles.communityVisual}>
               <Image
                 src="/elartequeconecta/comunidad.webp"
                 width={1066}
@@ -285,8 +286,8 @@ export default function ElArteQueConectaPage() {
                 loading="lazy"
                 alt="Ilustración de la comunidad El Arte que Conecta"
               />
-            </div>
-            <div className={styles.communityCopy}>
+            </Reveal>
+            <Reveal className={styles.communityCopy} delay={120}>
               <p className={styles.eyebrow}>Hilos que nos unen</p>
               <h2>Tu creatividad merece un espacio.</h2>
               <p>Aprende, comparte y crea junto a nuestra comunidad.</p>
@@ -298,7 +299,7 @@ export default function ElArteQueConectaPage() {
               >
                 Únete a El Arte que Conecta
               </a>
-            </div>
+            </Reveal>
           </div>
         </section>
       </main>
