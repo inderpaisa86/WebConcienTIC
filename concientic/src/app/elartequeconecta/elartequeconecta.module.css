@@ -423,6 +423,26 @@
   letter-spacing: 0.1em;
 }
 
+.coupon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  padding: 0.35rem 0.7rem;
+  border: 1.5px dashed var(--terra);
+  border-radius: 999px;
+  background: var(--blush);
+  color: var(--cocoa);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.coupon strong {
+  color: var(--terra);
+  letter-spacing: 0.04em;
+}
+
 .workshop h3 {
   margin-top: 0.4rem;
   font-size: 1.5rem;
