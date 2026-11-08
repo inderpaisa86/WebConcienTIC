@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import styles from "./elartequeconecta.module.css";
 import { Reveal } from "./reveal";
+import { CuponPromo } from "./cupon-promo";
 
 const HOTMART_URL = "https://elartequeconecta.hotmart.host/";
 
@@ -175,9 +176,7 @@ export default function ElArteQueConectaPage() {
                   <span className={`${styles.eyebrow} ${styles.pill}`}>Taller individual</span>
                   <h3>Maxibolso</h3>
                   <p>Un accesorio con personalidad, movimiento y detalles artesanales.</p>
-                  <p className={styles.coupon}>
-                    🎟️ Cupón: <strong>BLACKNOV50</strong> (por todo noviembre)
-                  </p>
+                  <CuponPromo />
                   <a
                     className={`${styles.btn} ${styles.btnSm}`}
                     href={HOTMART_URL}
@@ -203,9 +202,7 @@ export default function ElArteQueConectaPage() {
                   <span className={`${styles.eyebrow} ${styles.pill}`}>Taller individual</span>
                   <h3>Árbol de Navidad 3D</h3>
                   <p>Una pieza protagonista para vestir tus espacios de magia tejida.</p>
-                  <p className={styles.coupon}>
-                    🎟️ Cupón: <strong>BLACKNOV50</strong> (por todo noviembre)
-                  </p>
+                  <CuponPromo />
                   <a
                     className={`${styles.btn} ${styles.btnSm}`}
                     href={ARBOL_NAVIDAD_3D_URL}
@@ -231,9 +228,7 @@ export default function ElArteQueConectaPage() {
                   <span className={`${styles.eyebrow} ${styles.pill}`}>Taller individual</span>
                   <h3>Tapiz Prana</h3>
                   <p>Un tejido decorativo que suma calidez, textura y armonía a tu hogar.</p>
-                  <p className={styles.coupon}>
-                    🎟️ Cupón: <strong>BLACKNOV50</strong> (por todo noviembre)
-                  </p>
+                  <CuponPromo />
                   <a
                     className={`${styles.btn} ${styles.btnSm}`}
                     href={HOTMART_URL}
@@ -262,9 +257,7 @@ export default function ElArteQueConectaPage() {
                     Una pieza artesanal inspirada en la naturaleza, ideal para decorar con textura,
                     calidez y encanto bohemio.
                   </p>
-                  <p className={styles.coupon}>
-                    🎟️ Cupón: <strong>BLACKNOV50</strong> (por todo noviembre)
-                  </p>
+                  <CuponPromo />
                   <a
                     className={`${styles.btn} ${styles.btnSm}`}
                     href={HOTMART_URL}
