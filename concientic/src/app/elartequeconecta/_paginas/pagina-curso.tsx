@@ -17,6 +17,8 @@ function decode(b64: string): string {
 type PaginaCursoProps = {
   /** HTML del <body> del diseño original, codificado en base64. */
   htmlB64: string;
+  /** CSS adicional específico de la página (overrides), opcional. */
+  extraCss?: string;
 };
 
 /**
@@ -25,7 +27,7 @@ type PaginaCursoProps = {
  * (cuenta regresiva, carrusel de niveles, copiar cupón) de forma scopeada
  * al contenedor, sin tocar el documento global.
  */
-export function PaginaCurso({ htmlB64 }: PaginaCursoProps) {
+export function PaginaCurso({ htmlB64, extraCss = "" }: PaginaCursoProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   // El CSS original pide las familias por nombre literal ("Fraunces", "DM Sans").
   // El layout de /elartequeconecta ya carga esas fuentes con next/font y las
@@ -120,7 +122,7 @@ export function PaginaCurso({ htmlB64 }: PaginaCursoProps) {
 
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: css + fontAlias }} />
+      <style dangerouslySetInnerHTML={{ __html: css + fontAlias + extraCss }} />
       <div ref={rootRef} className="eac-curso" dangerouslySetInnerHTML={{ __html: html }} />
     </>
   );
