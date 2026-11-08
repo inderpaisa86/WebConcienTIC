@@ -1,0 +1,14 @@
+El Arte que Conecta - Diseño V4
+================================
+
+Contenido:
+- index.html   -> la página completa (estilos incluidos dentro del archivo)
+- imagenes/    -> las 9 fotos optimizadas (formato WebP)
+
+Cómo usarlo:
+1. Sube index.html y la carpeta "imagenes" juntos a tu hosting, sin cambiar los nombres.
+2. Si tu plataforma solo acepta pegar código (por ejemplo, un bloque "HTML personalizado"),
+   usa el archivo "El_Arte_que_Conecta_V4_un_solo_archivo.html": trae las fotos dentro.
+3. Los colores se cambian al inicio del archivo, en la sección ":root".
+4. Todos los botones apuntan a https://elartequeconecta.hotmart.host/
+   Busca ese enlace en el archivo si quieres poner uno distinto por taller.

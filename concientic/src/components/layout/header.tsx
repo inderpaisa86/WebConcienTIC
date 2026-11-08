@@ -3,11 +3,20 @@
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 import { navLinks, site } from "@/content/site";
 
+/** Rutas que se renderizan de forma autónoma, sin el encabezado del sitio. */
+const STANDALONE_ROUTES = ["/elartequeconecta"];
+
 export function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  if (STANDALONE_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`))) {
+    return null;
+  }
 
   return (
     <header className="site-header">

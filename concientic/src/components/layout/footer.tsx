@@ -1,7 +1,19 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 import { footer, site } from "@/content/site";
+
+/** Rutas que se renderizan de forma autónoma, sin el pie del sitio. */
+const STANDALONE_ROUTES = ["/elartequeconecta"];
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const pathname = usePathname();
+
+  if (STANDALONE_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`))) {
+    return null;
+  }
 
   return (
     <footer className="site-footer">
