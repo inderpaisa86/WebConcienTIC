@@ -104,7 +104,7 @@ export default function ElArteQueConectaPage() {
                 <div className={styles.tileBody}>
                   <h3>Programa principal</h3>
                   <p>Todos los proyectos que quieres aprender, en un solo lugar.</p>
-                  <a className={styles.tileLink} href="#talleres">
+                  <a className={styles.tileLink} href="/elartequeconecta/escuela">
                     Explora el programa <span aria-hidden="true">→</span>
                   </a>
                 </div>
@@ -122,12 +122,7 @@ export default function ElArteQueConectaPage() {
                 <div className={styles.tileBody}>
                   <h3>Curso de Bolsos</h3>
                   <p>Aprende a crear bolsos artesanales con técnicas y detalles únicos.</p>
-                  <a
-                    className={styles.tileLink}
-                    href={HOTMART_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a className={styles.tileLink} href="/elartequeconecta/bolsos">
                     Descubre el curso <span aria-hidden="true">→</span>
                   </a>
                 </div>
@@ -145,12 +140,7 @@ export default function ElArteQueConectaPage() {
                 <div className={styles.tileBody}>
                   <h3>Curso de Navidad</h3>
                   <p>Teje decoraciones cálidas y especiales para la temporada.</p>
-                  <a
-                    className={styles.tileLink}
-                    href={HOTMART_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a className={styles.tileLink} href="/elartequeconecta/navidad">
                     Descubre el curso <span aria-hidden="true">→</span>
                   </a>
                 </div>
