@@ -10,3 +10,12 @@
 export const WHATSAPP_NUMBER = "57XXXXXXXXXX";
 
 export const CATALOGO_LISTO = !/x/i.test(WHATSAPP_NUMBER);
+
+/**
+ * TEMPORAL: muestra el catálogo en producción aunque el número de WhatsApp
+ * siga siendo el placeholder, solo para revisar el comportamiento real.
+ * Con esto activo los botones "Pedir" NO funcionan (el número es falso).
+ * La página sigue sin indexarse (noindex) y fuera del sitemap.
+ * Quitar (poner en false o borrar) al cargar el número real.
+ */
+export const MOSTRAR_SIN_NUMERO = true;
