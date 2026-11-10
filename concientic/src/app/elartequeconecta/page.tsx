@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { preload } from "react-dom";
 
 import styles from "./elartequeconecta.module.css";
 import { Reveal } from "./reveal";
@@ -23,6 +24,12 @@ const jsonLd = {
 };
 
 export default function ElArteQueConectaPage() {
+  // El póster del video de portada suele ser el LCP: se pide cuanto antes y con prioridad alta.
+  preload("/elartequeconecta/assets/catalogo/video/hero.jpg", {
+    as: "image",
+    fetchPriority: "high",
+  });
+
   return (
     <div className={styles.page} id="inicio">
       <script
@@ -105,6 +112,7 @@ export default function ElArteQueConectaPage() {
                 <div className={styles.media}>
                   <Image
                     src="/elartequeconecta/programa.webp"
+                    sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 380px"
                     width={1000}
                     height={723}
                     loading="lazy"
@@ -123,6 +131,7 @@ export default function ElArteQueConectaPage() {
                 <div className={styles.media}>
                   <Image
                     src="/elartequeconecta/bolsos.webp"
+                    sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 380px"
                     width={1000}
                     height={667}
                     loading="lazy"
@@ -141,6 +150,7 @@ export default function ElArteQueConectaPage() {
                 <div className={styles.media}>
                   <Image
                     src="/elartequeconecta/navidad.webp"
+                    sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 380px"
                     width={1000}
                     height={626}
                     loading="lazy"
@@ -172,6 +182,7 @@ export default function ElArteQueConectaPage() {
                 <div className={styles.workshopArt}>
                   <Image
                     src="/elartequeconecta/maxibolso.webp"
+                    sizes="(max-width: 639px) 110px, 160px"
                     width={619}
                     height={1100}
                     loading="lazy"
@@ -198,6 +209,7 @@ export default function ElArteQueConectaPage() {
                 <div className={styles.workshopArt}>
                   <Image
                     src="/elartequeconecta/arbol-navidad.webp"
+                    sizes="(max-width: 639px) 110px, 160px"
                     width={619}
                     height={1100}
                     loading="lazy"
@@ -224,6 +236,7 @@ export default function ElArteQueConectaPage() {
                 <div className={styles.workshopArt}>
                   <Image
                     src="/elartequeconecta/tapiz-prana.webp"
+                    sizes="(max-width: 639px) 110px, 160px"
                     width={974}
                     height={808}
                     loading="lazy"
@@ -250,6 +263,7 @@ export default function ElArteQueConectaPage() {
                 <div className={styles.workshopArt}>
                   <Image
                     src="/elartequeconecta/arbol-pared.webp"
+                    sizes="(max-width: 639px) 110px, 160px"
                     width={656}
                     height={1100}
                     loading="lazy"
@@ -285,6 +299,7 @@ export default function ElArteQueConectaPage() {
             <Reveal className={styles.communityVisual}>
               <Image
                 src="/elartequeconecta/comunidad.webp"
+                sizes="(max-width: 767px) 78vw, 420px"
                 width={1066}
                 height={1018}
                 loading="lazy"
