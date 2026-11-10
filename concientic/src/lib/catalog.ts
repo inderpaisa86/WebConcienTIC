@@ -1,3 +1,11 @@
+/**
+ * Interruptor de la consulta al motor de búsqueda (backend en Render).
+ * Apagado por defecto: la Biblioteca trabaja solo con la información
+ * precargada (`content/static-courses.ts`). Para reactivar la consulta remota,
+ * define NEXT_PUBLIC_CATALOG_REMOTE=true y vuelve a construir.
+ */
+export const CATALOG_REMOTE = process.env.NEXT_PUBLIC_CATALOG_REMOTE === "true";
+
 export const competencyOptions = [
   { id: "", label: "Todos" },
   { id: "informacion", label: "01 · Información" },

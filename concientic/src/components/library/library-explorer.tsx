@@ -7,6 +7,7 @@ import { guardians } from "@/content/guardians";
 import { staticCourses } from "@/content/static-courses";
 import {
   buildCatalogQuery,
+  CATALOG_REMOTE,
   competencyOptions,
   providerOptions,
   type CatalogFilters,
@@ -87,7 +88,8 @@ function mergeCatalogResources(dynamicResources: CatalogResource[]) {
 export function LibraryExplorer() {
   const [filters, setFilters] = useState(initialFilters);
   const [catalog, setCatalog] = useState<CatalogPage | null>(null);
-  const [loading, setLoading] = useState(true);
+  // Sin consulta remota no hay nada que esperar: parte en "cargado".
+  const [loading, setLoading] = useState(CATALOG_REMOTE);
   const [error, setError] = useState<string | null>(null);
 
   const allResources = useMemo(() => {
@@ -99,6 +101,9 @@ export function LibraryExplorer() {
   const visibleResources = allResources.slice(filters.page * pageSize, (filters.page + 1) * pageSize);
 
   useEffect(() => {
+    // Consulta al motor apagada: se muestra solo la información precargada.
+    if (!CATALOG_REMOTE) return;
+
     const controller = new AbortController();
     const timer = window.setTimeout(async () => {
       setLoading(true);

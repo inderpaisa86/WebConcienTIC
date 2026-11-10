@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Fraunces, Dancing_Script } from "next/font/google";
+import { Caveat, DM_Sans, Fraunces, Dancing_Script } from "next/font/google";
 
 const dmSans = DM_Sans({
   variable: "--eac-font-sans",
@@ -11,8 +11,15 @@ const dmSans = DM_Sans({
 const fraunces = Fraunces({
   variable: "--eac-font-serif",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
+  display: "swap",
+});
+
+const caveat = Caveat({
+  variable: "--eac-font-hand",
+  subsets: ["latin"],
+  weight: ["600", "700"],
   display: "swap",
 });
 
@@ -57,7 +64,9 @@ export const metadata: Metadata = {
 
 export default function ElArteQueConectaLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`${dmSans.variable} ${fraunces.variable} ${dancingScript.variable}`}>
+    <div
+      className={`${dmSans.variable} ${fraunces.variable} ${dancingScript.variable} ${caveat.variable}`}
+    >
       {children}
     </div>
   );

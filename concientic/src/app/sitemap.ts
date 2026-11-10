@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { CATALOGO_LISTO } from "@/app/elartequeconecta/catalogo/config";
 import { site } from "@/content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -35,6 +36,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    // El catálogo solo se anuncia a buscadores cuando el WhatsApp real está cargado.
+    ...(CATALOGO_LISTO
+      ? [
+          {
+            url: `${site.domain}/elartequeconecta/catalogo`,
+            lastModified: now,
+            changeFrequency: "monthly" as const,
+            priority: 0.8,
+          },
+        ]
+      : []),
     {
       url: `${site.domain}/privacidad`,
       lastModified: now,

@@ -1,9 +1,16 @@
+import { CATALOG_REMOTE } from "@/lib/catalog";
+
 const BACKEND_URL = process.env.CATALOG_API_URL ?? "https://webconcientic.onrender.com";
 const ALLOWED_PARAMETERS = ["q", "competency", "provider", "language", "level", "format", "page", "size"];
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
+  // Consulta al motor apagada: no se contacta el backend; respuesta vacía válida.
+  if (!CATALOG_REMOTE) {
+    return Response.json({ items: [], page: 0, size: 0, total: 0, totalPages: 0 });
+  }
+
   const requestUrl = new URL(request.url);
   const backendUrl = new URL("/api/v1/resources", BACKEND_URL);
 
