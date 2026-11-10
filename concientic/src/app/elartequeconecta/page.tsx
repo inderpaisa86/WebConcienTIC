@@ -76,13 +76,18 @@ export default function ElArteQueConectaPage() {
                 </a>
               </div>
             </div>
-            <Image
-              className={`${styles.heroImg} ${styles.rise} ${styles.rise2}`}
-              src="/elartequeconecta/logomacrame.jpg"
-              width={800}
-              height={800}
-              priority
-              alt="Logo de El Arte que Conecta — escuela de macramé"
+            <video
+              className={`${styles.heroVideo} ${styles.rise} ${styles.rise2}`}
+              src="/elartequeconecta/assets/catalogo/video/hero.mp4"
+              poster="/elartequeconecta/assets/catalogo/video/hero.jpg"
+              width={720}
+              height={900}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="Piezas de macramé tejidas a mano, vistas de cerca"
             />
           </div>
         </section>

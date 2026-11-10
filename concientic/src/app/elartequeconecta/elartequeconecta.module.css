@@ -261,6 +261,20 @@
   box-shadow: var(--shadow-lift);
 }
 
+.heroVideo {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  justify-self: center;
+  border-radius: 32px;
+  border: 8px solid var(--sand);
+  background: var(--blush);
+  box-shadow: var(--shadow-lift);
+}
+
 @keyframes rise {
   from {
     opacity: 0;
@@ -545,6 +559,9 @@
   }
   .heroImg {
     max-width: 380px;
+  }
+  .heroVideo {
+    max-width: 340px;
   }
   .workshopGrid {
     grid-template-columns: 1fr;
