@@ -41,6 +41,7 @@ export default function ElArteQueConectaPage() {
           <nav aria-label="Principal">
             <a href="#escuela">La escuela</a>
             <a href="#talleres">Talleres</a>
+            <a href="/elartequeconecta/catalogo">Catálogo</a>
             <a href="#comunidad">Comunidad</a>
           </nav>
         </div>
