@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { CATALOGO_LISTO, MOSTRAR_SIN_NUMERO } from "./config";
+import { CATALOGO_LISTO } from "./config";
 import { catalogoLdB64 } from "./_data/jsonld";
 import { PaginaCatalogo } from "./pagina-catalogo";
 
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 export default function CatalogoPage() {
   // Sin WhatsApp real, la página no se muestra en producción (404). En
   // desarrollo sigue visible para poder revisarla.
-  if (!CATALOGO_LISTO && !MOSTRAR_SIN_NUMERO && process.env.NODE_ENV === "production") {
+  if (!CATALOGO_LISTO && process.env.NODE_ENV === "production") {
     notFound();
   }
 
