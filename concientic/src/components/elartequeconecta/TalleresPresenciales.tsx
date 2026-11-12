@@ -228,13 +228,6 @@ export default function TalleresPresenciales() {
           </div>
         ) : (
           <>
-            <p className={s.city} role="note">
-              <span aria-hidden="true">📍</span>
-              <span>
-                <strong>Esta agenda aplica solo para la ciudad de {CIUDAD}.</strong> Las sesiones son presenciales; el
-                lugar exacto se confirma al inscribirte.
-              </span>
-            </p>
             <ul className={s.perks}>
               <li>Kit de materiales incluido</li>
               <li>Merienda para compartir</li>

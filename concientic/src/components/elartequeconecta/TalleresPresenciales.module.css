@@ -89,3 +89,10 @@
   .art { min-height: 190px; }
   .foot .btn { width: 100%; text-align: center; }
 }
+
+/* Colores de enlaces dentro de la landing: ".page a { color: inherit }" de la página
+   tiene más especificidad que las reglas de arriba y pintaba de oscuro el número de los
+   días del calendario y el texto de "Inscribirme". Estas reglas lo corrigen. */
+.section a.ev { color: #fff; }
+.section a.evOff { color: var(--aqc-taupe); }
+.section a.btn { color: #fff; }
