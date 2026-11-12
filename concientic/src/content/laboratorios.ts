@@ -38,9 +38,9 @@ export const laboratorios = {
         cardNumber: "LABORATORIO 01",
         linkLabel: "Explorar SIGINEX",
         dataLab: "SIGINEX",
-        // Ruta nativa de concientic: la home de SIGINEX vive en /siginex
-        // (el proxy/rewrite /siginex se retiró en la Fase 3e).
-        href: "/siginex",
+        // SIGINEX se abre en su propia aplicacion desplegada. Las rutas nativas /siginex/*
+        // de concientic siguen existiendo, pero esta tarjeta ya no las usa.
+        href: "https://siginex-gules.vercel.app/",
         // Abre SIGINEX en una pestaña nueva.
         newTab: true,
       },

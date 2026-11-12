@@ -3,6 +3,7 @@ import { preload } from "react-dom";
 
 import styles from "./elartequeconecta.module.css";
 import { Reveal } from "./reveal";
+import TalleresPresenciales from "@/components/elartequeconecta/TalleresPresenciales";
 
 const HOTMART_URL = "https://elartequeconecta.hotmart.host/";
 
@@ -43,6 +44,7 @@ export default function ElArteQueConectaPage() {
           </a>
           <nav aria-label="Principal">
             <a href="#escuela">La escuela</a>
+            <a href="#talleres">Talleres presenciales</a>
             <a href="/elartequeconecta/catalogo">Catálogo</a>
             <a href="#comunidad">Comunidad</a>
           </nav>
@@ -68,8 +70,8 @@ export default function ElArteQueConectaPage() {
                 <a className={styles.btn} href="/elartequeconecta/escuela">
                   Conoce la escuela
                 </a>
-                <a className={`${styles.btn} ${styles.btnOutline}`} href="#escuela">
-                  Explora los cursos
+                <a className={`${styles.btn} ${styles.btnOutline}`} href="#talleres">
+                  Talleres presenciales
                 </a>
               </div>
             </div>
@@ -158,6 +160,9 @@ export default function ElArteQueConectaPage() {
             </div>
           </div>
         </section>
+
+        {/* Talleres presenciales (Ibagué) */}
+        <TalleresPresenciales />
 
         {/* Comunidad */}
         <section className={styles.communitySection} id="comunidad">

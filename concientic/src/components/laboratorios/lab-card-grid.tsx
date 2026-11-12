@@ -6,7 +6,7 @@ import { laboratorios } from "@/content/laboratorios";
 
 // URLs reales de los artefactos. Igual que el mock: todas vacías. NO inventar.
 const ARTIFACT_URLS: Record<string, string> = {
-  SIGINEX: "",
+  SIGINEX: "https://siginex-gules.vercel.app/",
   EmprendeCreativo: "",
   "DQ-Nexus": "",
   TutorIA: "",

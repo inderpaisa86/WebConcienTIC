@@ -17,22 +17,14 @@ export default function LaboratoriosPage() {
       <section className="hero" id={hero.id}>
         <div className="ct-container">
           <div className="hero-content">
-            <span className="pill">
-              <span className="dot" /> {hero.pill}
-            </span>
-            <h1>
-              {hero.titleLead} <em>{hero.titleEmphasis}</em>
-            </h1>
-            <p className="hero-copy">{hero.copy}</p>
             <div className="hero-actions">
-              <a className="ct-button ct-button--primary" href={hero.primaryCta.href}>
-                {hero.primaryCta.label} <span aria-hidden="true">{hero.primaryCta.arrow}</span>
-              </a>
               <Link className="ct-button ct-button--secondary" href={hero.secondaryCta.href}>
                 {hero.secondaryCta.label}
               </Link>
+              <a className="ct-button ct-button--primary" href={hero.primaryCta.href}>
+                {hero.primaryCta.label} <span aria-hidden="true">{hero.primaryCta.arrow}</span>
+              </a>
             </div>
-            <p className="hero-note">{hero.note}</p>
           </div>
         </div>
       </section>

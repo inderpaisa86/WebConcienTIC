@@ -6,6 +6,7 @@ import { WHATSAPP_NUMBER } from "./config";
 import { catalogoCssB64 } from "./_data/estilos";
 import { catalogoHtmlB64 } from "./_data/cuerpo";
 import { catalogoPiezasB64 } from "./_data/piezas";
+import { PRECIOS, precioModalTexto, precioTarjetaHtml } from "./precios";
 
 const WA_PLACEHOLDER = "57XXXXXXXXXX";
 
@@ -31,6 +32,29 @@ function decode(b64: string): string {
 // El número real se inyecta aquí, una sola vez, para todo el HTML y los datos.
 const withWa = (s: string) => s.split(WA_PLACEHOLDER).join(WHATSAPP_NUMBER);
 
+// Sustituye "Precio a consultar" por el precio de cada pieza (ver ./precios).
+const PLACEHOLDER_PRECIO = '<span class="pc-price ask">Precio a consultar</span>';
+function conPrecios(html: string): string {
+  let out = html;
+  for (const [id, precio] of Object.entries(PRECIOS)) {
+    const inicio = out.indexOf(`data-id="${id}"`);
+    if (inicio === -1) continue;
+    const pos = out.indexOf(PLACEHOLDER_PRECIO, inicio);
+    if (pos === -1) continue;
+    out =
+      out.slice(0, pos) + precioTarjetaHtml(precio) + out.slice(pos + PLACEHOLDER_PRECIO.length);
+  }
+  return out;
+}
+
+// Estilos del precio con oferta (paleta del catálogo). Se añaden al CSS original.
+const preciosCss = `
+  .eac-catalogo .pc-price.pc-feria{display:flex;flex-direction:column;align-items:flex-start;gap:1px;line-height:1.1}
+  .eac-catalogo .pc-price.pc-feria s{font-family:var(--sans);font-size:.78rem;color:var(--taupe)}
+  .eac-catalogo .pc-price.pc-feria b{font-weight:600;font-size:1.15rem;color:var(--title)}
+  .eac-catalogo .pc-price.pc-feria em{font-family:var(--sans);font-style:normal;font-size:.72rem;font-weight:700;color:var(--terra)}
+`;
+
 // El CSS original define --serif/--sans/--hand con nombres literales. Los
 // redefinimos con las fuentes next/font que carga el layout de /elartequeconecta.
 const fontAlias = `
@@ -50,13 +74,16 @@ const fontAlias = `
 export function PaginaCatalogo() {
   const rootRef = useRef<HTMLDivElement>(null);
   const css = decode(catalogoCssB64);
-  const html = withWa(decode(catalogoHtmlB64));
+  const html = conPrecios(withWa(decode(catalogoHtmlB64)));
 
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
 
     const piezas = JSON.parse(withWa(decode(catalogoPiezasB64))) as Record<string, Pieza>;
+    for (const [id, precio] of Object.entries(PRECIOS)) {
+      if (piezas[id]) piezas[id].p = precioModalTexto(precio);
+    }
     const q = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel);
 
     const modal = q<HTMLElement>("#modal");
@@ -145,7 +172,7 @@ export function PaginaCatalogo() {
 
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: css + fontAlias }} />
+      <style dangerouslySetInnerHTML={{ __html: css + fontAlias + preciosCss }} />
       <div ref={rootRef} className="eac-catalogo" dangerouslySetInnerHTML={{ __html: html }} />
     </>
   );
