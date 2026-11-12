@@ -14,21 +14,6 @@ export const metadata: Metadata = {
 export default function LaboratoriosPage() {
   return (
     <div className="labs-page">
-      <section className="hero" id={hero.id}>
-        <div className="ct-container">
-          <div className="hero-content">
-            <div className="hero-actions">
-              <Link className="ct-button ct-button--secondary" href={hero.secondaryCta.href}>
-                {hero.secondaryCta.label}
-              </Link>
-              <a className="ct-button ct-button--primary" href={hero.primaryCta.href}>
-                {hero.primaryCta.label} <span aria-hidden="true">{hero.primaryCta.arrow}</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="section-tint" id={labs.id}>
         <div className="ct-container">
           <div className="section-head">
@@ -86,9 +71,14 @@ export default function LaboratoriosPage() {
             <h2>{finalCta.title}</h2>
             <p>{finalCta.paragraph}</p>
           </div>
-          <a className="ct-button ct-button--primary" href={finalCta.cta.href}>
-            {finalCta.cta.label}
-          </a>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", flex: "none" }}>
+            <a className="ct-button ct-button--primary" href={finalCta.cta.href}>
+              {finalCta.cta.label}
+            </a>
+            <Link className="ct-button ct-button--secondary" href={hero.secondaryCta.href}>
+              {hero.secondaryCta.label}
+            </Link>
+          </div>
         </div>
       </section>
     </div>
