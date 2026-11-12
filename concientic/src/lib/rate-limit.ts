@@ -45,7 +45,7 @@ export async function limitByIp(ip: string): Promise<RateLimitResult> {
  * ------------------------------------------------------------------ */
 
 /** Acciones sensibles a fuerza bruta protegidas en el BFF. */
-export type RateLimitAction = "siginex-login" | "siginex-reset";
+export type RateLimitAction = "siginex-login" | "siginex-reset" | "siginex-lead";
 
 /** Ventana/política por acción. Login y reset: 5 intentos por minuto. */
 const ACTION_LIMITERS: Record<RateLimitAction, Ratelimit | null> = {
@@ -62,6 +62,15 @@ const ACTION_LIMITERS: Record<RateLimitAction, Ratelimit | null> = {
         redis: Redis.fromEnv(),
         limiter: Ratelimit.slidingWindow(5, "60 s"),
         prefix: "ratelimit:siginex-reset",
+        analytics: true,
+      })
+    : null,
+  // Formulario «Hablemos» de la landing: 5 envíos por minuto por IP.
+  "siginex-lead": hasUpstash
+    ? new Ratelimit({
+        redis: Redis.fromEnv(),
+        limiter: Ratelimit.slidingWindow(5, "60 s"),
+        prefix: "ratelimit:siginex-lead",
         analytics: true,
       })
     : null,
