@@ -1,0 +1,1919 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SIGINEX — Autodiagnóstico inteligente de tu Sistema de Gestión Integral · ConcienTIC</title>
+<meta name="description" content="SIGINEX evalúa con IA el cumplimiento y la madurez de tu Sistema de Gestión Integral: 521 preguntas, 9 módulos, benchmark sectorial y plan de mejora."/>
+<link rel="canonical" href="https://www.concientic.com/laboratorios/siginex"/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="es_CO"/>
+<meta property="og:site_name" content="ConcienTIC"/>
+<meta property="og:title" content="SIGINEX — Conoce el nivel real de tu Sistema de Gestión Integral"/>
+<meta property="og:description" content="Diagnóstico, brechas, benchmark sectorial y plan de mejora impulsados por IA. 521 preguntas en 9 módulos."/>
+<meta property="og:url" content="https://www.concientic.com/laboratorios/siginex"/>
+<meta name="twitter:card" content="summary"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+@layer theme, base, components, utilities;
+@layer theme {
+  :root, :host {
+    --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
+    --color-rose-400: oklch(71.2% 0.194 13.428);
+    --color-rose-600: oklch(58.6% 0.253 17.585);
+    --color-slate-50: oklch(98.4% 0.003 247.858);
+    --color-slate-100: oklch(96.8% 0.007 247.896);
+    --color-slate-200: oklch(92.9% 0.013 255.508);
+    --color-slate-300: oklch(86.9% 0.022 252.894);
+    --color-slate-400: oklch(70.4% 0.04 256.788);
+    --color-slate-500: oklch(55.4% 0.046 257.417);
+    --color-slate-600: oklch(44.6% 0.043 257.281);
+    --color-slate-700: oklch(37.2% 0.044 257.287);
+    --color-white: #fff;
+    --spacing: 0.25rem;
+    --container-md: 28rem;
+    --container-xl: 36rem;
+    --container-2xl: 42rem;
+    --container-3xl: 48rem;
+    --container-6xl: 72rem;
+    --text-xs: 0.75rem;
+    --text-xs--line-height: calc(1 / 0.75);
+    --text-sm: 0.875rem;
+    --text-sm--line-height: calc(1.25 / 0.875);
+    --text-base: 1rem;
+    --text-base--line-height: calc(1.5 / 1);
+    --text-lg: 1.125rem;
+    --text-lg--line-height: calc(1.75 / 1.125);
+    --text-xl: 1.25rem;
+    --text-xl--line-height: calc(1.75 / 1.25);
+    --text-2xl: 1.5rem;
+    --text-2xl--line-height: calc(2 / 1.5);
+    --text-3xl: 1.875rem;
+    --text-3xl--line-height: calc(2.25 / 1.875);
+    --text-4xl: 2.25rem;
+    --text-4xl--line-height: calc(2.5 / 2.25);
+    --text-5xl: 3rem;
+    --text-5xl--line-height: 1;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    --tracking-tight: -0.025em;
+    --tracking-wide: 0.025em;
+    --tracking-widest: 0.1em;
+    --leading-relaxed: 1.625;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --default-transition-duration: 150ms;
+    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    --default-font-family: var(--font-sans);
+    --default-mono-font-family: var(--font-mono);
+    --color-ink: #0D1117;
+    --color-azul: #0077FF;
+    --color-azul-50: #EEF6FF;
+    --color-azul-100: #D9EBFF;
+    --color-azul-700: #005FCC;
+    --color-verde: #2ECC71;
+    --color-verde-50: #EAFAF1;
+    --color-verde-700: #1E9E55;
+    --color-purpura: #6C63FF;
+    --color-purpura-50: #F0EFFF;
+  }
+}
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0 solid;
+  }
+  html, :host {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+    font-family: var(--default-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+    font-feature-settings: var(--default-font-feature-settings, normal);
+    font-variation-settings: var(--default-font-variation-settings, normal);
+    -webkit-tap-highlight-color: transparent;
+  }
+  hr {
+    height: 0;
+    color: inherit;
+    border-top-width: 1px;
+  }
+  abbr:where([title]) {
+    -webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+  a {
+    color: inherit;
+    -webkit-text-decoration: inherit;
+    text-decoration: inherit;
+  }
+  b, strong {
+    font-weight: bolder;
+  }
+  code, kbd, samp, pre {
+    font-family: var(--default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+    font-feature-settings: var(--default-mono-font-feature-settings, normal);
+    font-variation-settings: var(--default-mono-font-variation-settings, normal);
+    font-size: 1em;
+  }
+  small {
+    font-size: 80%;
+  }
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  sub {
+    bottom: -0.25em;
+  }
+  sup {
+    top: -0.5em;
+  }
+  table {
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: collapse;
+  }
+  :-moz-focusring:where(:not(iframe)) {
+    outline: auto;
+  }
+  progress {
+    vertical-align: baseline;
+  }
+  summary {
+    display: list-item;
+  }
+  ol, ul, menu {
+    list-style: none;
+  }
+  img, svg, video, canvas, audio, iframe, embed, object {
+    display: block;
+    vertical-align: middle;
+  }
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+  button, input, select, optgroup, textarea, ::file-selector-button {
+    font: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    border-radius: 0;
+    background-color: transparent;
+    opacity: 1;
+  }
+  :where(select:is([multiple], [size])) optgroup {
+    font-weight: bolder;
+  }
+  :where(select:is([multiple], [size])) optgroup option {
+    padding-inline-start: 20px;
+  }
+  ::file-selector-button {
+    margin-inline-end: 4px;
+  }
+  ::placeholder {
+    opacity: 1;
+  }
+  @supports (not (-webkit-appearance: -apple-pay-button))  or (contain-intrinsic-size: 1px) {
+    ::placeholder {
+      color: currentcolor;
+      @supports (color: color-mix(in lab, red, red)) {
+        color: color-mix(in oklab, currentcolor 50%, transparent);
+      }
+    }
+  }
+  textarea {
+    resize: vertical;
+  }
+  ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+  ::-webkit-date-and-time-value {
+    min-height: 1lh;
+    text-align: inherit;
+  }
+  ::-webkit-datetime-edit {
+    display: inline-flex;
+  }
+  ::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+  }
+  ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {
+    padding-block: 0;
+  }
+  ::-webkit-calendar-picker-indicator {
+    line-height: 1;
+  }
+  :-moz-ui-invalid {
+    box-shadow: none;
+  }
+  button, input:where([type="button"], [type="reset"], [type="submit"]), ::file-selector-button {
+    appearance: button;
+  }
+  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+    height: auto;
+  }
+  [hidden]:where(:not([hidden="until-found"])) {
+    display: none !important;
+  }
+}
+@layer utilities {
+  .absolute {
+    position: absolute;
+  }
+  .fixed {
+    position: fixed;
+  }
+  .relative {
+    position: relative;
+  }
+  .sticky {
+    position: sticky;
+  }
+  .inset-0 {
+    inset: 0px;
+  }
+  .-top-6 {
+    top: calc(var(--spacing) * -6);
+  }
+  .top-0 {
+    top: 0px;
+  }
+  .top-3 {
+    top: calc(var(--spacing) * 3);
+  }
+  .top-4 {
+    top: calc(var(--spacing) * 4);
+  }
+  .top-6 {
+    top: calc(var(--spacing) * 6);
+  }
+  .top-\[-3px\] {
+    top: -3px;
+  }
+  .right-0 {
+    right: 0px;
+  }
+  .left-0 {
+    left: 0px;
+  }
+  .left-1\/2 {
+    left: calc(1 / 2 * 100%);
+  }
+  .z-30 {
+    z-index: 30;
+  }
+  .z-\[60\] {
+    z-index: 60;
+  }
+  .mx-auto {
+    margin-inline: auto;
+  }
+  .mt-0\.5 {
+    margin-top: calc(var(--spacing) * 0.5);
+  }
+  .mt-1 {
+    margin-top: var(--spacing);
+  }
+  .mt-2 {
+    margin-top: calc(var(--spacing) * 2);
+  }
+  .mt-3 {
+    margin-top: calc(var(--spacing) * 3);
+  }
+  .mt-4 {
+    margin-top: calc(var(--spacing) * 4);
+  }
+  .mt-5 {
+    margin-top: calc(var(--spacing) * 5);
+  }
+  .mt-6 {
+    margin-top: calc(var(--spacing) * 6);
+  }
+  .mt-8 {
+    margin-top: calc(var(--spacing) * 8);
+  }
+  .mt-10 {
+    margin-top: calc(var(--spacing) * 10);
+  }
+  .mt-14 {
+    margin-top: calc(var(--spacing) * 14);
+  }
+  .mt-auto {
+    margin-top: auto;
+  }
+  .mb-8 {
+    margin-bottom: calc(var(--spacing) * 8);
+  }
+  .block {
+    display: block;
+  }
+  .flex {
+    display: flex;
+  }
+  .grid {
+    display: grid;
+  }
+  .hidden {
+    display: none;
+  }
+  .inline-flex {
+    display: inline-flex;
+  }
+  .h-2 {
+    height: calc(var(--spacing) * 2);
+  }
+  .h-3 {
+    height: calc(var(--spacing) * 3);
+  }
+  .h-3\.5 {
+    height: calc(var(--spacing) * 3.5);
+  }
+  .h-6 {
+    height: calc(var(--spacing) * 6);
+  }
+  .h-8 {
+    height: calc(var(--spacing) * 8);
+  }
+  .h-9 {
+    height: calc(var(--spacing) * 9);
+  }
+  .h-14 {
+    height: calc(var(--spacing) * 14);
+  }
+  .h-\[68px\] {
+    height: 68px;
+  }
+  .w-0\.5 {
+    width: calc(var(--spacing) * 0.5);
+  }
+  .w-5 {
+    width: calc(var(--spacing) * 5);
+  }
+  .w-full {
+    width: 100%;
+  }
+  .w-px {
+    width: 1px;
+  }
+  .max-w-2xl {
+    max-width: var(--container-2xl);
+  }
+  .max-w-3xl {
+    max-width: var(--container-3xl);
+  }
+  .max-w-md {
+    max-width: var(--container-md);
+  }
+  .max-w-xl {
+    max-width: var(--container-xl);
+  }
+  .flex-none {
+    flex: none;
+  }
+  .-translate-x-1\/2 {
+    --tw-translate-x: calc(calc(1 / 2 * 100%) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .flex-col {
+    flex-direction: column;
+  }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+  .items-baseline {
+    align-items: baseline;
+  }
+  .items-center {
+    align-items: center;
+  }
+  .items-start {
+    align-items: flex-start;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+  .justify-center {
+    justify-content: center;
+  }
+  .gap-1\.5 {
+    gap: calc(var(--spacing) * 1.5);
+  }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
+  .gap-3 {
+    gap: calc(var(--spacing) * 3);
+  }
+  .gap-4 {
+    gap: calc(var(--spacing) * 4);
+  }
+  .gap-6 {
+    gap: calc(var(--spacing) * 6);
+  }
+  .gap-7 {
+    gap: calc(var(--spacing) * 7);
+  }
+  .gap-12 {
+    gap: calc(var(--spacing) * 12);
+  }
+  :where(.space-y-2 > :not(:last-child)) {
+    --tw-space-y-reverse: 0;
+    margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
+    margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
+  }
+  :where(.space-y-3 > :not(:last-child)) {
+    --tw-space-y-reverse: 0;
+    margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
+    margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
+  }
+  :where(.space-y-4 > :not(:last-child)) {
+    --tw-space-y-reverse: 0;
+    margin-block-start: calc(calc(var(--spacing) * 4) * var(--tw-space-y-reverse));
+    margin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse)));
+  }
+  .gap-x-5 {
+    column-gap: calc(var(--spacing) * 5);
+  }
+  .gap-y-1 {
+    row-gap: var(--spacing);
+  }
+  .gap-y-2 {
+    row-gap: calc(var(--spacing) * 2);
+  }
+  .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .overflow-hidden {
+    overflow: hidden;
+  }
+  .rounded {
+    border-radius: 0.25rem;
+  }
+  .rounded-3xl {
+    border-radius: var(--radius-3xl);
+  }
+  .rounded-full {
+    border-radius: calc(infinity * 1px);
+  }
+  .rounded-lg {
+    border-radius: var(--radius-lg);
+  }
+  .rounded-md {
+    border-radius: var(--radius-md);
+  }
+  .rounded-xl {
+    border-radius: var(--radius-xl);
+  }
+  .border {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+  }
+  .border-y {
+    border-block-style: var(--tw-border-style);
+    border-block-width: 1px;
+  }
+  .border-t {
+    border-top-style: var(--tw-border-style);
+    border-top-width: 1px;
+  }
+  .border-b {
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
+  }
+  .border-\[\#d8e1d9\] {
+    border-color: #d8e1d9;
+  }
+  .border-\[\#dce3dd\] {
+    border-color: #dce3dd;
+  }
+  .border-\[\#dfe6df\] {
+    border-color: #dfe6df;
+  }
+  .border-slate-100 {
+    border-color: var(--color-slate-100);
+  }
+  .border-slate-200 {
+    border-color: var(--color-slate-200);
+  }
+  .bg-\[\#e7eee8\] {
+    background-color: #e7eee8;
+  }
+  .bg-\[\#f7f9f5\] {
+    background-color: #f7f9f5;
+  }
+  .bg-azul {
+    background-color: var(--color-azul);
+  }
+  .bg-azul-50 {
+    background-color: var(--color-azul-50);
+  }
+  .bg-azul\/15 {
+    background-color: color-mix(in srgb, #0077FF 15%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-azul) 15%, transparent);
+    }
+  }
+  .bg-ink {
+    background-color: var(--color-ink);
+  }
+  .bg-ink\/60 {
+    background-color: color-mix(in srgb, #0D1117 60%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-ink) 60%, transparent);
+    }
+  }
+  .bg-purpura {
+    background-color: var(--color-purpura);
+  }
+  .bg-purpura-50 {
+    background-color: var(--color-purpura-50);
+  }
+  .bg-rose-400 {
+    background-color: var(--color-rose-400);
+  }
+  .bg-slate-50 {
+    background-color: var(--color-slate-50);
+  }
+  .bg-slate-100 {
+    background-color: var(--color-slate-100);
+  }
+  .bg-slate-200 {
+    background-color: var(--color-slate-200);
+  }
+  .bg-slate-300 {
+    background-color: var(--color-slate-300);
+  }
+  .bg-verde {
+    background-color: var(--color-verde);
+  }
+  .bg-verde-50 {
+    background-color: var(--color-verde-50);
+  }
+  .bg-white {
+    background-color: var(--color-white);
+  }
+  .bg-white\/90 {
+    background-color: color-mix(in srgb, #fff 90%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-white) 90%, transparent);
+    }
+  }
+  .bg-gradient-to-b {
+    --tw-gradient-position: to bottom in oklab;
+    background-image: linear-gradient(var(--tw-gradient-stops));
+  }
+  .from-azul-50 {
+    --tw-gradient-from: var(--color-azul-50);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .from-slate-50 {
+    --tw-gradient-from: var(--color-slate-50);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .to-white {
+    --tw-gradient-to: var(--color-white);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .p-1 {
+    padding: var(--spacing);
+  }
+  .p-4 {
+    padding: calc(var(--spacing) * 4);
+  }
+  .p-5 {
+    padding: calc(var(--spacing) * 5);
+  }
+  .px-2 {
+    padding-inline: calc(var(--spacing) * 2);
+  }
+  .px-3 {
+    padding-inline: calc(var(--spacing) * 3);
+  }
+  .px-4 {
+    padding-inline: calc(var(--spacing) * 4);
+  }
+  .px-8 {
+    padding-inline: calc(var(--spacing) * 8);
+  }
+  .py-0\.5 {
+    padding-block: calc(var(--spacing) * 0.5);
+  }
+  .py-1 {
+    padding-block: var(--spacing);
+  }
+  .py-2 {
+    padding-block: calc(var(--spacing) * 2);
+  }
+  .py-3 {
+    padding-block: calc(var(--spacing) * 3);
+  }
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
+  }
+  .py-7 {
+    padding-block: calc(var(--spacing) * 7);
+  }
+  .py-14 {
+    padding-block: calc(var(--spacing) * 14);
+  }
+  .py-16 {
+    padding-block: calc(var(--spacing) * 16);
+  }
+  .py-20 {
+    padding-block: calc(var(--spacing) * 20);
+  }
+  .pb-24 {
+    padding-bottom: calc(var(--spacing) * 24);
+  }
+  .text-center {
+    text-align: center;
+  }
+  .text-right {
+    text-align: right;
+  }
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+  .text-2xl {
+    font-size: var(--text-2xl);
+    line-height: var(--tw-leading, var(--text-2xl--line-height));
+  }
+  .text-3xl {
+    font-size: var(--text-3xl);
+    line-height: var(--tw-leading, var(--text-3xl--line-height));
+  }
+  .text-4xl {
+    font-size: var(--text-4xl);
+    line-height: var(--tw-leading, var(--text-4xl--line-height));
+  }
+  .text-5xl {
+    font-size: var(--text-5xl);
+    line-height: var(--tw-leading, var(--text-5xl--line-height));
+  }
+  .text-base {
+    font-size: var(--text-base);
+    line-height: var(--tw-leading, var(--text-base--line-height));
+  }
+  .text-lg {
+    font-size: var(--text-lg);
+    line-height: var(--tw-leading, var(--text-lg--line-height));
+  }
+  .text-sm {
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+  }
+  .text-xl {
+    font-size: var(--text-xl);
+    line-height: var(--tw-leading, var(--text-xl--line-height));
+  }
+  .text-xs {
+    font-size: var(--text-xs);
+    line-height: var(--tw-leading, var(--text-xs--line-height));
+  }
+  .text-\[0\.55rem\] {
+    font-size: 0.55rem;
+  }
+  .text-\[0\.58rem\] {
+    font-size: 0.58rem;
+  }
+  .text-\[0\.82rem\] {
+    font-size: 0.82rem;
+  }
+  .text-\[1\.18rem\] {
+    font-size: 1.18rem;
+  }
+  .text-\[11px\] {
+    font-size: 11px;
+  }
+  .leading-none {
+    --tw-leading: 1;
+    line-height: 1;
+  }
+  .font-bold {
+    --tw-font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-bold);
+  }
+  .font-extrabold {
+    --tw-font-weight: var(--font-weight-extrabold);
+    font-weight: var(--font-weight-extrabold);
+  }
+  .font-medium {
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+  }
+  .font-normal {
+    --tw-font-weight: var(--font-weight-normal);
+    font-weight: var(--font-weight-normal);
+  }
+  .font-semibold {
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+  }
+  .tracking-\[-0\.04em\] {
+    --tw-tracking: -0.04em;
+    letter-spacing: -0.04em;
+  }
+  .tracking-\[0\.12em\] {
+    --tw-tracking: 0.12em;
+    letter-spacing: 0.12em;
+  }
+  .tracking-tight {
+    --tw-tracking: var(--tracking-tight);
+    letter-spacing: var(--tracking-tight);
+  }
+  .tracking-wide {
+    --tw-tracking: var(--tracking-wide);
+    letter-spacing: var(--tracking-wide);
+  }
+  .text-\[\#4e5d53\] {
+    color: #4e5d53;
+  }
+  .text-\[\#17231e\] {
+    color: #17231e;
+  }
+  .text-\[\#64736a\] {
+    color: #64736a;
+  }
+  .text-azul {
+    color: var(--color-azul);
+  }
+  .text-azul-100 {
+    color: var(--color-azul-100);
+  }
+  .text-azul-700 {
+    color: var(--color-azul-700);
+  }
+  .text-ink {
+    color: var(--color-ink);
+  }
+  .text-purpura {
+    color: var(--color-purpura);
+  }
+  .text-rose-600 {
+    color: var(--color-rose-600);
+  }
+  .text-slate-400 {
+    color: var(--color-slate-400);
+  }
+  .text-slate-500 {
+    color: var(--color-slate-500);
+  }
+  .text-slate-600 {
+    color: var(--color-slate-600);
+  }
+  .text-verde-700 {
+    color: var(--color-verde-700);
+  }
+  .text-white {
+    color: var(--color-white);
+  }
+  .uppercase {
+    text-transform: uppercase;
+  }
+  .underline {
+    text-decoration-line: underline;
+  }
+  .antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .shadow-2xl {
+    --tw-shadow: 0 25px 50px -12px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-xl {
+    --tw-shadow: 0 20px 25px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 8px 10px -6px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .ring-1 {
+    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .ring-2 {
+    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-azul-100 {
+    --tw-shadow-color: #D9EBFF;
+    @supports (color: color-mix(in lab, red, red)) {
+      --tw-shadow-color: color-mix(in oklab, var(--color-azul-100) var(--tw-shadow-alpha), transparent);
+    }
+  }
+  .ring-azul {
+    --tw-ring-color: var(--color-azul);
+  }
+  .ring-azul-100 {
+    --tw-ring-color: var(--color-azul-100);
+  }
+  .ring-azul\/30 {
+    --tw-ring-color: color-mix(in srgb, #0077FF 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      --tw-ring-color: color-mix(in oklab, var(--color-azul) 30%, transparent);
+    }
+  }
+  .ring-slate-200 {
+    --tw-ring-color: var(--color-slate-200);
+  }
+  .backdrop-blur {
+    --tw-backdrop-blur: blur(8px);
+    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+  }
+  @media (hover: hover) {
+    .hover\:bg-azul-50:hover {
+      background-color: var(--color-azul-50);
+    }
+    .hover\:bg-slate-100:hover {
+      background-color: var(--color-slate-100);
+    }
+    .hover\:text-\[\#008f70\]:hover {
+      color: #008f70;
+    }
+    .hover\:text-ink:hover {
+      color: var(--color-ink);
+    }
+  }
+  @media (width >= 40rem) {
+    .sm\:inline {
+      display: inline;
+    }
+    .sm\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .sm\:text-5xl {
+      font-size: var(--text-5xl);
+      line-height: var(--tw-leading, var(--text-5xl--line-height));
+    }
+  }
+  @media (width >= 48rem) {
+    .md\:hidden {
+      display: none;
+    }
+    .md\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .md\:grid-cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .md\:grid-cols-5 {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    .md\:flex-row {
+      flex-direction: row;
+    }
+    .md\:items-center {
+      align-items: center;
+    }
+    .md\:justify-between {
+      justify-content: space-between;
+    }
+  }
+  @media (width >= 64rem) {
+    .lg\:col-span-2 {
+      grid-column: span 2 / span 2;
+    }
+    .lg\:col-span-3 {
+      grid-column: span 3 / span 3;
+    }
+    .lg\:col-span-5 {
+      grid-column: span 5 / span 5;
+    }
+    .lg\:flex {
+      display: flex;
+    }
+    .lg\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .lg\:grid-cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .lg\:grid-cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .lg\:grid-cols-5 {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    .lg\:py-28 {
+      padding-block: calc(var(--spacing) * 28);
+    }
+  }
+}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 72px;
+  }
+  a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible {
+    outline: 3px solid #6C63FF;
+    outline-offset: 3px;
+  }
+  button {
+    cursor: pointer;
+  }
+  input[type=range] {
+    accent-color: #0077FF;
+  }
+}
+@layer components {
+  .wrap {
+    margin-inline: auto;
+    max-width: var(--container-6xl);
+    padding-inline: calc(var(--spacing) * 6);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    padding-inline: calc(var(--spacing) * 5);
+    padding-block: calc(var(--spacing) * 3);
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .btn-primary {
+    background-color: var(--color-azul);
+    color: var(--color-white);
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-azul-700);
+      }
+    }
+  }
+  .btn-ghost {
+    background-color: var(--color-white);
+    color: var(--color-slate-700);
+    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    --tw-ring-color: var(--color-slate-200);
+    &:hover {
+      @media (hover: hover) {
+        --tw-ring-color: var(--color-slate-300);
+      }
+    }
+  }
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 60%;
+  }
+  .eyebrow {
+    font-size: var(--text-xs);
+    line-height: var(--tw-leading, var(--text-xs--line-height));
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+    --tw-tracking: var(--tracking-widest);
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-azul);
+    text-transform: uppercase;
+  }
+  .title {
+    font-size: var(--text-3xl);
+    line-height: var(--tw-leading, var(--text-3xl--line-height));
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+    --tw-tracking: var(--tracking-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    @media (width >= 40rem) {
+      font-size: var(--text-4xl);
+      line-height: var(--tw-leading, var(--text-4xl--line-height));
+    }
+  }
+  .lead {
+    --tw-leading: var(--leading-relaxed);
+    line-height: var(--leading-relaxed);
+    color: var(--color-slate-600);
+  }
+  .card {
+    border-radius: var(--radius-2xl);
+    background-color: var(--color-white);
+    padding: calc(var(--spacing) * 6);
+    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    --tw-ring-color: var(--color-slate-200);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: calc(infinity * 1px);
+    background-color: var(--color-slate-100);
+    padding-inline: calc(var(--spacing) * 3);
+    padding-block: var(--spacing);
+    font-size: var(--text-xs);
+    line-height: var(--tw-leading, var(--text-xs--line-height));
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-slate-600);
+  }
+  .dot {
+    margin-top: calc(var(--spacing) * 1.5);
+    height: calc(var(--spacing) * 2);
+    width: calc(var(--spacing) * 2);
+    flex: none;
+    border-radius: calc(infinity * 1px);
+    background-color: var(--color-verde);
+  }
+  .step {
+    display: grid;
+    height: calc(var(--spacing) * 9);
+    width: calc(var(--spacing) * 9);
+    place-items: center;
+    border-radius: var(--radius-lg);
+    background-color: var(--color-azul);
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+    --tw-font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+  }
+  .tab {
+    border-radius: var(--radius-lg);
+    padding-inline: calc(var(--spacing) * 4);
+    padding-block: calc(var(--spacing) * 2);
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-slate-500);
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .tab[aria-selected="true"] {
+    background-color: var(--color-white);
+    color: var(--color-ink);
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    --tw-ring-color: var(--color-slate-200);
+  }
+  .field {
+    margin-top: var(--spacing);
+    width: 100%;
+    border-radius: var(--radius-lg);
+    border-style: var(--tw-border-style);
+    border-width: 0px;
+    background-color: var(--color-white);
+    padding-inline: calc(var(--spacing) * 3);
+    padding-block: calc(var(--spacing) * 2.5);
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    --tw-ring-color: var(--color-slate-200);
+    --tw-outline-style: none;
+    outline-style: none;
+    &:focus {
+      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    }
+    &:focus {
+      --tw-ring-color: var(--color-azul);
+    }
+  }
+  .bm-row {
+    display: grid;
+    grid-template-columns: 9.5rem 1fr 3.5rem;
+    align-items: center;
+    gap: .75rem;
+  }
+  .bm-you {
+    transition: left .3s ease;
+  }
+  .hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .skip {
+    position: absolute;
+    left: -10000px;
+    top: 8px;
+    z-index: 100;
+    border-radius: var(--radius-lg);
+    background-color: var(--color-ink);
+    padding-inline: calc(var(--spacing) * 4);
+    padding-block: calc(var(--spacing) * 2);
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-white);
+  }
+  .skip:focus {
+    left: 8px;
+  }
+  .ct-nav {
+    display: none;
+  }
+  .ct-nav a {
+    color: #405047;
+    font-size: .86rem;
+  }
+  .ct-nav a:hover {
+    color: #008f70;
+  }
+  .ct-nav .ct-cta {
+    border-radius: calc(infinity * 1px);
+    padding-inline: calc(var(--spacing) * 4);
+    padding-block: calc(var(--spacing) * 2.5);
+    --tw-font-weight: var(--font-weight-extrabold);
+    font-weight: var(--font-weight-extrabold);
+    background: #00B4D8;
+    color: #0D182A;
+  }
+  .ct-nav .ct-cta:hover {
+    color: #0D182A;
+    filter: brightness(1.05);
+  }
+  .ct-nav.open {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 68px;
+    z-index: 40;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.1rem 1.4rem 1.5rem;
+    background: #f7f9f5;
+    border-bottom: 1px solid #dce3dd;
+  }
+  @media (min-width: 768px) {
+    .ct-nav, .ct-nav.open {
+      display: flex;
+      position: static;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.35rem;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+@property --tw-translate-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-space-y-reverse {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-gradient-position {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-gradient-from {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-gradient-via {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-gradient-to {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-gradient-stops {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-gradient-via-stops {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-gradient-from-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+@property --tw-gradient-via-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+@property --tw-gradient-to-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-leading {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-tracking {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-inset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-ring-inset {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-offset-width {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --tw-ring-offset-color {
+  syntax: "*";
+  inherits: false;
+  initial-value: #fff;
+}
+@property --tw-ring-offset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-backdrop-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-translate-x: 0;
+      --tw-translate-y: 0;
+      --tw-translate-z: 0;
+      --tw-space-y-reverse: 0;
+      --tw-border-style: solid;
+      --tw-gradient-position: initial;
+      --tw-gradient-from: #0000;
+      --tw-gradient-via: #0000;
+      --tw-gradient-to: #0000;
+      --tw-gradient-stops: initial;
+      --tw-gradient-via-stops: initial;
+      --tw-gradient-from-position: 0%;
+      --tw-gradient-via-position: 50%;
+      --tw-gradient-to-position: 100%;
+      --tw-leading: initial;
+      --tw-font-weight: initial;
+      --tw-tracking: initial;
+      --tw-shadow: 0 0 #0000;
+      --tw-shadow-color: initial;
+      --tw-shadow-alpha: 100%;
+      --tw-inset-shadow: 0 0 #0000;
+      --tw-inset-shadow-color: initial;
+      --tw-inset-shadow-alpha: 100%;
+      --tw-ring-color: initial;
+      --tw-ring-shadow: 0 0 #0000;
+      --tw-inset-ring-color: initial;
+      --tw-inset-ring-shadow: 0 0 #0000;
+      --tw-ring-inset: initial;
+      --tw-ring-offset-width: 0px;
+      --tw-ring-offset-color: #fff;
+      --tw-ring-offset-shadow: 0 0 #0000;
+      --tw-backdrop-blur: initial;
+      --tw-backdrop-brightness: initial;
+      --tw-backdrop-contrast: initial;
+      --tw-backdrop-grayscale: initial;
+      --tw-backdrop-hue-rotate: initial;
+      --tw-backdrop-invert: initial;
+      --tw-backdrop-opacity: initial;
+      --tw-backdrop-saturate: initial;
+      --tw-backdrop-sepia: initial;
+    }
+  }
+}
+</style>
+</head>
+<body class="bg-white font-sans text-ink antialiased">
+<a href="#contenido" class="skip">Saltar al contenido</a>
+
+<!-- ===== Header global ConcienTIC (regla: mismo menú de la home en todas las subpáginas) ===== -->
+<header class="border-b border-[#dfe6df] bg-[#f7f9f5]">
+  <div class="wrap flex h-[68px] items-center justify-between gap-6">
+    <a href="https://www.concientic.com/" class="leading-none" aria-label="ConcienTIC, inicio">
+      <span class="text-[1.18rem] font-extrabold tracking-[-0.04em] text-[#17231e]">concienTIC</span>
+      <small class="mt-0.5 block text-[0.58rem] font-semibold tracking-[0.12em] text-[#64736a]">INTELIGENCIA DIGITAL CONSCIENTE</small>
+    </a>
+    <button id="ct-toggle" class="rounded-xl border border-[#dce3dd] px-3 py-2 text-sm md:hidden" aria-controls="ct-nav" aria-expanded="false">Menú ☰</button>
+    <nav id="ct-nav" aria-label="Navegación principal" class="ct-nav">
+      <a href="https://www.concientic.com/#ecosistema">Ecosistema</a>
+      <a href="https://www.concientic.com/#guardianes">Guardianes</a>
+      <a href="https://www.concientic.com/#recursos">Aprende</a>
+      <a href="https://www.concientic.com/#metodologia">Metodología</a>
+      <a href="https://www.concientic.com/#dquilibrio">DQUILIBRIO</a>
+      <a class="ct-cta" href="https://www.concientic.com/#experiencia">Encuentra tu ruta ↗</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== Barra de producto SIGINEX (fija al hacer scroll) ===== -->
+<div class="sticky top-0 z-30 border-b border-slate-100 bg-white/90 backdrop-blur">
+  <div class="wrap flex h-14 items-center justify-between gap-4">
+    <a href="#contenido" class="flex items-center gap-2" aria-label="SIGINEX, inicio de la página">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0077FF"/><path d="M16 6.5 24.2 11.2v9.6L16 25.5l-8.2-4.7v-9.6z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><circle cx="16" cy="16" r="3.2" fill="#2ECC71"/></svg>
+      <span class="text-sm font-semibold tracking-tight">SIGINEX <span class="hidden font-normal text-slate-400 sm:inline">· Laboratorio IA</span></span>
+    </a>
+    <nav aria-label="Secciones de SIGINEX" class="hidden items-center gap-7 text-sm text-slate-600 lg:flex">
+      <a href="#como" class="hover:text-ink">Cómo funciona</a>
+      <a href="#features" class="hover:text-ink">Producto</a>
+      <a href="#benchmark" class="hover:text-ink">Benchmark</a>
+      <a href="#precios" class="hover:text-ink">Precios</a>
+    </nav>
+    <a href="https://siginex.vercel.app/diagnostico" target="_blank" rel="noopener noreferrer" class="btn btn-primary py-2">Ver demo</a>
+  </div>
+</div>
+
+<main id="contenido">
+
+<!-- ===== HERO ===== -->
+<section class="relative overflow-hidden bg-gradient-to-b from-azul-50 to-white">
+<div class="wrap grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
+  <div>
+    <p class="eyebrow">Autodiagnóstico SGI · Colombia</p>
+    <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">Conoce el nivel real de tu Sistema de Gestión Integral.</h1>
+    <p class="mt-5 max-w-xl text-lg lead">SIGINEX evalúa con IA tu cumplimiento normativo y tu madurez organizacional sobre <strong class="text-ink">521 preguntas</strong> ancladas a la norma colombiana e ISO. Diagnóstico, brechas, benchmark sectorial y plan de mejora en un mismo lugar.</p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="https://siginex.vercel.app/diagnostico" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Ver demo</a>
+      <a href="#como" class="btn btn-ghost">Ver cómo funciona</a>
+    </div>
+    <p class="mt-6 text-sm text-slate-500">SG-SST · Ambiental · Calidad · Riesgos · Cumplimiento · Datos · Gobierno · <span class="font-medium text-verde-700">ESG</span> · <span class="font-medium text-purpura">Gobernanza de IA</span></p>
+  </div>
+  <div class="relative">
+    <div class="card shadow-xl shadow-azul-100">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-400">Score global SGI</p>
+          <p class="mt-1 text-5xl font-bold text-ink">78<span class="text-2xl text-slate-400">/100</span></p>
+          <p class="mt-1 text-sm font-medium text-verde-700">Nivel 4 · Optimizado</p>
+        </div>
+        <div class="rounded-xl bg-azul-50 px-4 py-3 text-right ring-1 ring-azul-100">
+          <p class="text-[11px] font-medium uppercase tracking-wide text-azul">Frente a tu sector</p>
+          <p class="mt-0.5 text-2xl font-bold text-ink">P72</p>
+          <p class="text-xs font-semibold text-verde-700">+6,4 sobre la media</p>
+        </div>
+      </div>
+      <div class="mt-6 space-y-3">
+        <div><div class="flex justify-between text-xs text-slate-500"><span>SG-SST</span><span>86%</span></div><div class="mt-1 h-2 rounded-full bg-slate-100"><div class="h-2 rounded-full bg-verde" style="width:86%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-slate-500"><span>Cumplimiento</span><span>72%</span></div><div class="mt-1 h-2 rounded-full bg-slate-100"><div class="h-2 rounded-full bg-azul" style="width:72%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-slate-500"><span>Protección de datos</span><span>64%</span></div><div class="mt-1 h-2 rounded-full bg-slate-100"><div class="h-2 rounded-full bg-azul" style="width:64%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-slate-500"><span>Gobernanza de IA</span><span>41%</span></div><div class="mt-1 h-2 rounded-full bg-slate-100"><div class="h-2 rounded-full bg-purpura" style="width:41%"></div></div></div>
+      </div>
+      <p class="mt-5 text-[11px] text-slate-400">Vista ilustrativa del tablero de resultados.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== PROBLEMA ===== -->
+<section class="border-y border-slate-100 bg-slate-50">
+<div class="wrap py-20">
+  <p class="eyebrow">El problema</p>
+  <h2 class="mt-3 title max-w-2xl">Gestionar el cumplimiento hoy es lento, disperso y riesgoso.</h2>
+  <div class="mt-10 grid gap-6 sm:grid-cols-2">
+    <div class="flex gap-3"><span class="dot"></span><p class="lead">La normatividad cambia sin aviso y es difícil de rastrear.</p></div>
+    <div class="flex gap-3"><span class="dot"></span><p class="lead">Las autoevaluaciones viven en Excel, sin trazabilidad ni seguimiento.</p></div>
+    <div class="flex gap-3"><span class="dot"></span><p class="lead">El incumplimiento expone a la empresa a sanciones y multas.</p></div>
+    <div class="flex gap-3"><span class="dot"></span><p class="lead">Los sistemas de gestión operan en silos, sin visión integral.</p></div>
+    <div class="flex gap-3"><span class="dot"></span><p class="lead">Nuevas exigencias —reporte de sostenibilidad y uso responsable de la IA— llegan sin un marco para medirlas.</p></div>
+    <div class="flex gap-3"><span class="dot"></span><p class="lead">No hay forma de saber si tu nivel es bueno o malo frente a empresas como la tuya.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SOLUCIÓN ===== -->
+<section class="wrap py-20">
+<div class="grid items-center gap-12 lg:grid-cols-2">
+  <div>
+    <p class="eyebrow">La solución</p>
+    <h2 class="mt-3 title">Una capa de inteligencia para todo tu SGI.</h2>
+    <p class="mt-5 lead">SIGINEX unifica los nueve sistemas de tu gestión integral, mide tu cumplimiento y madurez con IA, te ubica frente a tu sector y te dice exactamente qué hacer para cerrar cada brecha. Del diagnóstico a la acción, sin hojas de cálculo.</p>
+    <div class="mt-6 flex flex-wrap gap-2">
+      <span class="chip">Diagnóstico inteligente</span><span class="chip">Brechas normativas</span><span class="chip">Plan de mejora</span><span class="chip">Benchmark sectorial</span><span class="chip">Reporte ejecutivo</span>
+    </div>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="card"><p class="text-3xl font-bold text-azul">521</p><p class="mt-1 text-sm text-slate-500">preguntas ancladas a la norma</p></div>
+    <div class="card"><p class="text-3xl font-bold text-verde-700">9</p><p class="mt-1 text-sm text-slate-500">módulos del SGI, incluidos ESG e IA</p></div>
+    <div class="card"><p class="text-3xl font-bold text-azul">34</p><p class="mt-1 text-sm text-slate-500">preguntas que se ajustan al perfil de tu empresa</p></div>
+    <div class="card"><p class="text-3xl font-bold text-verde-700">5</p><p class="mt-1 text-sm text-slate-500">niveles de madurez</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===== CÓMO FUNCIONA ===== -->
+<section id="como" class="border-y border-slate-100 bg-slate-50">
+<div class="wrap py-20">
+  <p class="eyebrow">Cómo funciona</p>
+  <h2 class="mt-3 title">Cuatro pasos, un diagnóstico completo.</h2>
+  <ol class="mt-10 grid gap-6 md:grid-cols-4">
+    <li class="card"><div class="step">1</div><h3 class="mt-4 font-semibold">Perfila</h3><p class="mt-2 text-sm lead">Indica las condiciones de tu empresa (permiso ambiental, SAGRILAFT, PTEE, RNBD) y el banco se ajusta: solo respondes lo que te aplica.</p></li>
+    <li class="card"><div class="step">2</div><h3 class="mt-4 font-semibold">Responde</h3><p class="mt-2 text-sm lead">Contesta por módulos en escala 0-1-2: no cumple, cumple parcialmente, cumple.</p></li>
+    <li class="card"><div class="step">3</div><h3 class="mt-4 font-semibold">Descubre</h3><p class="mt-2 text-sm lead">Obtén tu score, tu nivel de madurez, tus brechas normativas y tu posición frente a tu sector.</p></li>
+    <li class="card"><div class="step bg-verde">4</div><h3 class="mt-4 font-semibold">Actúa</h3><p class="mt-2 text-sm lead">Ejecuta un plan de mejora con responsables, prioridades, plazos y rutas de aprendizaje.</p></li>
+  </ol>
+</div>
+</section>
+
+<!-- ===== PRODUCTO ===== -->
+<section id="features" class="wrap py-20">
+  <p class="eyebrow">Producto</p>
+  <h2 class="mt-3 title">Todo lo que necesitas para gestionar tu cumplimiento.</h2>
+  <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div class="card"><h3 class="font-semibold">521 preguntas ancladas a la norma</h3><p class="mt-2 text-sm lead">SG-SST desde el Decreto 1072 y la Resolución 0312, más ISO y legislación colombiana, con trazabilidad norma → requisito → pregunta.</p></div>
+    <div class="card"><h3 class="font-semibold">Scoring de cumplimiento y madurez</h3><p class="mt-2 text-sm lead">Nivel 1 a 5, por módulo y global, ponderado y sin contar lo que no te aplica. Tablero, radar y bandas de cumplimiento.</p></div>
+    <div class="card"><h3 class="font-semibold">Plan de mejora accionable</h3><p class="mt-2 text-sm lead">Cada brecha se convierte en tareas con responsable, prioridad y plazo, y en una ruta de aprendizaje para el equipo. Exporta a PDF y Excel.</p></div>
+    <div class="card"><p class="text-[11px] font-semibold uppercase tracking-wide text-verde-700">Nuevo módulo</p><h3 class="mt-1 font-semibold">Sostenibilidad / ESG</h3><p class="mt-2 text-sm lead">Prepárate para el reporte de sostenibilidad bajo NIIF S1 y S2 (ISSB) y las expectativas de la Superintendencia Financiera.</p></div>
+    <div class="card"><p class="text-[11px] font-semibold uppercase tracking-wide text-purpura">Nuevo módulo</p><h3 class="mt-1 font-semibold">Gobernanza de IA</h3><p class="mt-2 text-sm lead">Mide cómo tu organización usa y controla la inteligencia artificial, con referencia a ISO/IEC 42001.</p></div>
+    <div class="card"><h3 class="font-semibold">Reporte ejecutivo e histórico</h3><p class="mt-2 text-sm lead">Un resumen narrativo para la alta dirección y la comparación de tus diagnósticos en el tiempo.</p></div>
+  </div>
+</section>
+
+<!-- ===== BENCHMARK ===== -->
+<section id="benchmark" class="border-y border-slate-100 bg-gradient-to-b from-slate-50 to-white">
+<div class="wrap py-20">
+  <div class="max-w-3xl">
+    <p class="eyebrow">Benchmark</p>
+    <h2 class="mt-3 title">No solo cuánto cumples: cuánto cumples frente a tu sector.</h2>
+    <p class="mt-4 lead">Tu score cobra sentido cuando lo comparas. SIGINEX te ubica en un percentil dentro de tu industria, módulo por módulo, y te muestra en qué nivel tecnológico está el mercado de herramientas de gestión.</p>
+  </div>
+
+  <div class="mt-8 inline-flex rounded-xl bg-slate-100 p-1" role="tablist" aria-label="Vistas del benchmark">
+    <button class="tab" role="tab" id="t-sector" aria-selected="true" aria-controls="tab-sector" data-tab="sector">Tu sector</button>
+    <button class="tab" role="tab" id="t-mercado" aria-selected="false" aria-controls="tab-mercado" data-tab="mercado" tabindex="-1">El mercado</button>
+  </div>
+
+  <div id="tab-sector" role="tabpanel" aria-labelledby="t-sector" class="mt-6 grid gap-6 lg:grid-cols-5">
+    <div class="card lg:col-span-2">
+      <label class="text-sm font-semibold" for="bm-sector">Sector</label>
+      <select id="bm-sector" class="field"></select>
+      <label class="mt-5 block text-sm font-semibold" for="bm-score">Tu score SGI: <span id="bm-score-v" class="text-azul">80</span>/100</label>
+      <input id="bm-score" type="range" min="20" max="98" value="80" class="mt-3 w-full"/>
+      <div class="mt-6 rounded-xl bg-azul-50 p-5 ring-1 ring-azul-100" aria-live="polite">
+        <p class="text-xs font-semibold uppercase tracking-wide text-azul">Tu posición</p>
+        <p class="mt-1 text-4xl font-bold" id="bm-pct">P—</p>
+        <p id="bm-pct-txt" class="mt-1 text-sm text-slate-600"></p>
+        <p id="bm-delta" class="mt-2 text-sm font-semibold"></p>
+      </div>
+      <div class="mt-5 flex items-start gap-2 text-xs text-slate-500">
+        <svg class="mt-0.5 flex-none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="2.5" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>
+        <p>Solo mostramos agregados de sectores con 5 o más empresas. Nunca se exponen datos de una empresa individual.</p>
+      </div>
+    </div>
+    <div class="card lg:col-span-3">
+      <div class="flex items-baseline justify-between">
+        <h3 class="font-semibold">Distribución del sector</h3>
+        <p class="text-xs text-slate-400"><span id="bm-n">12</span> empresas</p>
+      </div>
+      <div class="relative mt-10 h-14" aria-hidden="true">
+        <div class="absolute left-0 right-0 top-6 h-2 rounded-full bg-slate-100"></div>
+        <div id="bm-range" class="absolute top-6 h-2 rounded-full bg-slate-200"></div>
+        <div id="bm-iqr" class="absolute top-4 h-6 rounded-md bg-azul/15 ring-1 ring-azul/30"></div>
+        <div id="bm-med" class="absolute top-3 h-8 w-0.5 bg-azul"></div>
+        <div id="bm-you" class="bm-you absolute -top-6 flex -translate-x-1/2 flex-col items-center">
+          <span class="rounded-full bg-ink px-2 py-0.5 text-[11px] font-semibold text-white">Tú</span>
+          <span class="mt-0.5 h-9 w-0.5 bg-ink"></span>
+        </div>
+      </div>
+      <div class="flex justify-between text-[11px] text-slate-400" aria-hidden="true"><span>0</span><span>50</span><span>100</span></div>
+      <div class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-500">
+        <span class="inline-flex items-center gap-1.5"><span class="h-3 w-5 rounded bg-azul/15 ring-1 ring-azul/30"></span>50 % central (P25–P75)</span>
+        <span class="inline-flex items-center gap-1.5"><span class="h-3 w-0.5 bg-azul"></span>Mediana <b id="bm-med-v" class="text-ink"></b></span>
+        <span>Media <b id="bm-mean-v" class="text-ink"></b></span>
+      </div>
+      <h3 class="mt-8 font-semibold">Tu brecha frente a la media, por módulo</h3>
+      <div id="bm-mods" class="mt-4 space-y-2"></div>
+      <p class="mt-4 text-xs text-slate-500">Los módulos donde estás por debajo de tu sector suben de prioridad en tu plan de mejora.</p>
+    </div>
+    <p class="text-xs text-slate-400 lg:col-span-5">Demostración con datos sintéticos (60 empresas en 5 sectores). En producción el benchmark se calcula con diagnósticos reales.</p>
+  </div>
+
+  <div id="tab-mercado" role="tabpanel" aria-labelledby="t-mercado" class="mt-6 hidden">
+    <div class="card">
+      <h3 class="font-semibold">¿En qué nivel está tu herramienta de gestión?</h3>
+      <p class="mt-1 text-sm lead">Modelo de madurez tecnológica de 5 niveles, del papel y Excel a la inteligencia que predice, prioriza y vigila.</p>
+      <div class="mt-6 grid gap-3 md:grid-cols-5" id="bm-levels"></div>
+      <p class="mt-5 text-xs text-slate-400">Fuente: análisis de mercado DQnexus sobre 9 herramientas de Colombia, LATAM y globales (2026).</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== CTA INTERMEDIO ===== -->
+<section class="wrap py-16">
+<div class="rounded-3xl bg-azul px-8 py-14 text-center">
+  <h2 class="text-3xl font-semibold tracking-tight text-white">Descubre tu nivel de cumplimiento hoy.</h2>
+  <p class="mx-auto mt-3 max-w-xl text-azul-100">Explora la demo. Sin instalaciones, sin hojas de cálculo.</p>
+  <a href="https://siginex.vercel.app/diagnostico" target="_blank" rel="noopener noreferrer" class="btn mt-6 bg-white text-azul-700 hover:bg-azul-50">Ver demo</a>
+</div>
+</section>
+
+<!-- ===== ESTÁNDARES Y ROLES ===== -->
+<section class="border-y border-slate-100 bg-slate-50">
+<div class="wrap py-20">
+  <p class="eyebrow">Construido sobre estándares reales</p>
+  <h2 class="mt-3 title">Cada pregunta responde a un requisito normativo.</h2>
+  <ul class="mt-8 flex flex-wrap gap-2" aria-label="Marcos normativos">
+    <li class="chip">Decreto 1072/2015</li><li class="chip">Resolución 0312/2019</li><li class="chip">ISO 9001</li><li class="chip">ISO 14001</li><li class="chip">ISO 45001</li><li class="chip">ISO/IEC 27001</li><li class="chip">ISO 31000</li><li class="chip bg-purpura-50 text-purpura">ISO/IEC 42001</li><li class="chip">Ley 1581/2012</li><li class="chip">SAGRILAFT</li><li class="chip">PTEE</li><li class="chip bg-verde-50 text-verde-700">NIIF S1 y S2 (ISSB)</li>
+  </ul>
+  <h3 class="mt-14 text-lg font-semibold">Pensado para quienes responden por el SGI</h3>
+  <div class="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+    <div class="card"><p class="text-sm font-semibold">Responsable de SG-SST</p><p class="mt-2 text-sm lead">Ve en una tarde dónde está fallando frente a la Resolución 0312, sin consolidar hojas de cálculo.</p></div>
+    <div class="card"><p class="text-sm font-semibold">Líder de Calidad</p><p class="mt-2 text-sm lead">Convierte cada brecha en tareas con responsable y plazo, listas para el seguimiento.</p></div>
+    <div class="card"><p class="text-sm font-semibold">Oficial de Cumplimiento</p><p class="mt-2 text-sm lead">Integra SAGRILAFT, PTEE y protección de datos en una sola visión con trazabilidad normativa.</p></div>
+    <div class="card"><p class="text-sm font-semibold">Gerencia</p><p class="mt-2 text-sm lead">Recibe un reporte ejecutivo y sabe cómo está la empresa frente a su sector.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===== PRECIOS ===== -->
+<section id="precios" class="wrap py-20">
+  <p class="eyebrow">Precios</p>
+  <h2 class="mt-3 title">Empieza con la demo. Escala cuando lo necesites.</h2>
+  <div class="mt-10 grid gap-6 lg:grid-cols-3">
+    <div class="card flex flex-col">
+      <h3 class="font-semibold">Diagnóstico</h3>
+      <p class="mt-2 text-4xl font-bold">Gratis</p>
+      <p class="mt-1 text-sm text-slate-500">Para empezar.</p>
+      <ul class="mb-8 mt-6 space-y-3 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="dot"></span>1 diagnóstico completo en 9 módulos</li>
+        <li class="flex gap-2"><span class="dot"></span>Tablero y radar de madurez</li>
+        <li class="flex gap-2"><span class="dot"></span>Brechas normativas</li>
+      </ul>
+      <a href="https://siginex.vercel.app/diagnostico" target="_blank" rel="noopener noreferrer" class="btn btn-ghost mt-auto">Ver demo</a>
+    </div>
+    <div class="card flex flex-col ring-2 ring-azul">
+      <div class="flex items-center justify-between"><h3 class="font-semibold">Profesional</h3><span class="chip bg-azul-50 text-azul-700">Más popular</span></div>
+      <p class="mt-2 text-4xl font-bold">$350.000<span class="text-base font-medium text-slate-400">/mes</span></p>
+      <p class="mt-1 text-sm font-medium text-slate-600">COP + IVA</p>
+      <p class="mt-1 text-xs text-slate-500">Facturado como prestación de servicios por consultor experto.</p>
+      <ul class="mb-8 mt-6 space-y-3 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="dot"></span>Diagnósticos ilimitados</li>
+        <li class="flex gap-2"><span class="dot"></span>Plan de mejora con responsables y plazos</li>
+        <li class="flex gap-2"><span class="dot"></span>Reporte ejecutivo e histórico</li>
+        <li class="flex gap-2"><span class="dot"></span>Exportación PDF y Excel</li>
+        <li class="flex gap-2"><span class="dot"></span>Vigilancia normativa</li>
+      </ul>
+      <button type="button" data-ventas="Profesional" class="btn btn-primary mt-auto">Hablar con ventas</button>
+    </div>
+    <div class="card flex flex-col">
+      <h3 class="font-semibold">Empresa</h3>
+      <p class="mt-2 text-4xl font-bold">A medida</p>
+      <p class="mt-1 text-sm text-slate-500">Para operaciones complejas.</p>
+      <ul class="mb-8 mt-6 space-y-3 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="dot"></span>Multiempresa y roles</li>
+        <li class="flex gap-2"><span class="dot"></span>API e integraciones</li>
+        <li class="flex gap-2"><span class="dot"></span>Benchmark sectorial</li>
+        <li class="flex gap-2"><span class="dot"></span>Soporte dedicado</li>
+      </ul>
+      <button type="button" data-ventas="Empresa" class="btn btn-ghost mt-auto">Hablar con ventas</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA FINAL ===== -->
+<section class="wrap pb-24">
+<div class="rounded-3xl border border-slate-200 bg-gradient-to-b from-slate-50 to-white px-8 py-16 text-center">
+  <h2 class="title">Lleva tu Sistema de Gestión Integral al siguiente nivel.</h2>
+  <p class="mx-auto mt-3 max-w-xl lead">Diagnóstico, brechas, benchmark y plan de mejora impulsados por IA. Empieza hoy.</p>
+  <a href="https://siginex.vercel.app/diagnostico" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-6">Ver demo</a>
+</div>
+</section>
+</main>
+
+<!-- ===== Footer global ConcienTIC ===== -->
+<footer class="border-t border-[#d8e1d9] bg-[#e7eee8] text-[0.82rem] text-[#4e5d53]">
+  <div class="wrap flex flex-col gap-4 py-7 md:flex-row md:items-center md:justify-between">
+    <a href="https://www.concientic.com/" class="leading-none"><span class="text-base font-extrabold tracking-[-0.04em] text-[#17231e]">concienTIC</span><small class="mt-0.5 block text-[0.55rem] font-semibold tracking-[0.12em]">INTELIGENCIA DIGITAL CONSCIENTE</small></a>
+    <nav aria-label="Navegación del pie" class="flex flex-wrap gap-x-5 gap-y-2">
+      <a class="hover:text-[#008f70]" href="https://www.concientic.com/#ecosistema">Ecosistema</a><a class="hover:text-[#008f70]" href="https://www.concientic.com/#guardianes">Guardianes</a><a class="hover:text-[#008f70]" href="https://www.concientic.com/#recursos">Aprende</a><a class="hover:text-[#008f70]" href="https://www.concientic.com/#metodologia">Metodología</a><a class="hover:text-[#008f70]" href="https://www.concientic.com/#dquilibrio">DQUILIBRIO</a>
+    </nav>
+    <span>© ConcienTIC</span>
+  </div>
+  <p class="wrap border-t border-[#d8e1d9] py-4 text-xs">SIGINEX es un laboratorio de DQnexus · Diagnóstico orientativo; no sustituye auditoría formal. Precios en pesos colombianos.</p>
+</footer>
+
+<!-- ===== Modal Hablar con ventas ===== -->
+<div id="ventas" class="fixed inset-0 z-[60] hidden items-center justify-center bg-ink/60 p-4" role="dialog" aria-modal="true" aria-labelledby="v-title">
+  <form id="lead-form" class="card w-full max-w-md shadow-2xl" novalidate>
+    <div class="flex items-start justify-between">
+      <div><p class="eyebrow">Plan <span id="v-plan">Profesional</span></p><h3 id="v-title" class="mt-1 text-xl font-semibold">Hablemos</h3></div>
+      <button type="button" id="v-close" class="rounded-lg px-2 py-1 text-slate-400 hover:bg-slate-100" aria-label="Cerrar">✕</button>
+    </div>
+    <p class="mt-2 text-sm lead">Déjanos tus datos y un asesor te contacta.</p>
+    <input type="hidden" name="plan" id="f-plan"/>
+    <div class="hp" aria-hidden="true"><label for="f-web">Sitio web</label><input id="f-web" name="sitio_web" tabindex="-1" autocomplete="off"/></div>
+    <div class="mt-5 space-y-4">
+      <div><label class="text-sm font-medium" for="f-empresa">Nombre de la empresa</label><input id="f-empresa" name="empresa" required maxlength="120" autocomplete="organization" class="field"/></div>
+      <div><label class="text-sm font-medium" for="f-email">Correo electrónico</label><input id="f-email" name="email" type="email" required maxlength="160" autocomplete="email" class="field"/></div>
+      <div><label class="text-sm font-medium" for="f-cel">Celular</label><input id="f-cel" name="celular" type="tel" inputmode="numeric" required placeholder="300 123 4567" autocomplete="tel" class="field"/></div>
+      <label class="flex items-start gap-2 text-xs text-slate-500"><input type="checkbox" required class="mt-0.5" id="f-hd"/><span>Autorizo el tratamiento de mis datos personales conforme a la Ley 1581 de 2012 y la <a id="f-politica" class="underline" target="_blank" rel="noopener noreferrer">política de privacidad</a> de ConcienTIC.</span></label>
+    </div>
+    <p id="lead-msg" class="mt-4 hidden text-sm" role="status" aria-live="polite"></p>
+    <button class="btn btn-primary mt-5 w-full" type="submit">Enviar</button>
+  </form>
+</div>
+
+<script>
+/* =====================================================================
+   CONFIGURACIÓN — único bloque que se edita al publicar (ver spec §6)
+   ===================================================================== */
+const CONFIG = {
+  LEADS_ENDPOINT: "/api/leads",
+  PRIVACY_URL: "",                 // PENDIENTE: URL de la política de tratamiento de datos
+  POLICY_VERSION: "2026-11",       // versión de la política aceptada (se guarda con el lead)
+  MOSTRAR_NOMBRES_MERCADO: false,  // PENDIENTE decisión: true muestra nombres de competidores
+  // Benchmark de demostración (datos sintéticos). provisional:true = reemplazar con
+  // la salida real de siginex-sectorial-sample.json antes de publicar.
+  SECTORES: {
+    "Tecnología / Software":   { media: 75.4 },
+    "Servicios financieros":   { media: 73.8, provisional: true },
+    "Salud":                   { media: 64.1, provisional: true },
+    "Manufactura / Industria": { media: 61.0, provisional: true },
+    "Construcción":            { media: 55.2 }
+  }
+};
+
+const $ = id => document.getElementById(id);
+
+/* ---------- Menú global (móvil) ---------- */
+const ctT = $("ct-toggle"), ctN = $("ct-nav");
+ctT.addEventListener("click", () => { const o = ctN.classList.toggle("open"); ctT.setAttribute("aria-expanded", String(o)); });
+
+/* ---------- Benchmark: vista sectorial ---------- */
+const MODULOS = ["SG-SST","Ambiental","Calidad","Riesgos","Cumplimiento","Protección de datos","Gobierno","Sostenibilidad / ESG","Gobernanza de IA"];
+const OFF_EMP = [ 8,-3, 5, 1,-2,-9, 3,-12,-20];
+const OFF_SEC = [ 6,-1, 3, 2, 1,-5, 2, -8,-14];
+function rng(seed){ return () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
+function muestra(nombre, media){
+  let s = 0; for (const c of nombre) s = (s * 31 + c.charCodeAt(0)) % 2147483647;
+  const r = rng(s || 7), v = [];
+  for (let i = 0; i < 12; i++){ const u = r() || 1e-9, w = r(); v.push(Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * w) * 9); }
+  const m = v.reduce((a, b) => a + b, 0) / v.length;
+  return v.map(x => Math.min(97, Math.max(22, +(x - m + media).toFixed(1)))).sort((a, b) => a - b);
+}
+const q = (a, p) => { const i = (a.length - 1) * p, l = Math.floor(i); return a[l] + (a[Math.ceil(i)] - a[l]) * (i - l); };
+const pct = (x, a) => Math.round((a.filter(v => v < x).length + 0.5 * a.filter(v => v === x).length) / a.length * 100);
+const fmt = n => n.toFixed(1).replace(".", ",");
+const clamp = n => Math.min(100, Math.max(0, n));
+const sel = $("bm-sector");
+Object.keys(CONFIG.SECTORES).forEach(k => sel.add(new Option(k, k)));
+
+function render(){
+  const sec = sel.value, you = +$("bm-score").value, S = CONFIG.SECTORES[sec];
+  const a = muestra(sec, S.media), mean = a.reduce((x, y) => x + y, 0) / a.length;
+  const p25 = q(a, .25), p50 = q(a, .5), p75 = q(a, .75), P = pct(you, a), d = you - mean;
+  $("bm-score-v").textContent = you;
+  $("bm-n").textContent = a.length;
+  $("bm-pct").textContent = "P" + P;
+  $("bm-pct-txt").textContent = `Superas a ${P} % de las empresas de ${sec.toLowerCase()}.`;
+  const dEl = $("bm-delta");
+  dEl.textContent = (d >= 0 ? "+" : "") + fmt(d) + " puntos frente a la media del sector";
+  dEl.className = "mt-2 text-sm font-semibold " + (d >= 0 ? "text-verde-700" : "text-rose-600");
+  $("bm-range").style.cssText = `left:${a[0]}%;width:${a[a.length - 1] - a[0]}%`;
+  $("bm-iqr").style.cssText = `left:${p25}%;width:${p75 - p25}%`;
+  $("bm-med").style.left = p50 + "%";
+  $("bm-you").style.left = you + "%";
+  $("bm-med-v").textContent = fmt(p50);
+  $("bm-mean-v").textContent = fmt(mean);
+  $("bm-mods").innerHTML = MODULOS.map((m, i) => {
+    const e = clamp(you + OFF_EMP[i]), s = clamp(mean + OFF_SEC[i]), dd = e - s, w = Math.min(50, Math.abs(dd) * 2);
+    const pos = dd >= 0;
+    return `<div class="bm-row text-xs">
+      <span class="truncate text-slate-600">${m}</span>
+      <div class="relative h-2 rounded-full bg-slate-100"><span class="absolute left-1/2 top-[-3px] h-3.5 w-px bg-slate-300"></span>
+        <span class="absolute top-0 h-2 rounded-full ${pos ? "bg-verde" : "bg-rose-400"}" style="${pos ? "left:50%" : "right:50%"};width:${w}%"></span></div>
+      <span class="text-right font-semibold ${pos ? "text-verde-700" : "text-rose-600"}">${pos ? "+" : ""}${fmt(dd)}</span></div>`;
+  }).join("");
+}
+sel.addEventListener("change", render);
+$("bm-score").addEventListener("input", render);
+render();
+
+/* ---------- Benchmark: vista de mercado ---------- */
+const NIVELES = [
+  { n:1, t:"Manual", d:"Papel y Excel", tools:[] },
+  { n:2, t:"Digital básico", d:"Registro digital sin integración", tools:[["SGI SAS","Colombia"],["SEYCOC","Colombia"]] },
+  { n:3, t:"Integrado", d:"Varios sistemas en una plataforma", tools:[["Heinsohn SST","Colombia"],["Mejoramiso","Colombia"]] },
+  { n:4, t:"Automatizado", d:"Flujos y alertas automáticas", tools:[["ISOTools","España / LATAM"],["SoftExpert","Brasil / LATAM"],["Sphera","Global"]] },
+  { n:5, t:"Inteligente (IA)", d:"Predice, prioriza y vigila", tools:[["Hackmetrix","Chile / LATAM"],["Enablon","Global"]], siginex:true }
+];
+function chips(tools){
+  if (CONFIG.MOSTRAR_NOMBRES_MERCADO) return tools.map(t => `<span class="chip bg-white ring-1 ring-slate-200">${t[0]}</span>`).join("");
+  const c = {}; tools.forEach(t => c[t[1]] = (c[t[1]] || 0) + 1);
+  return Object.entries(c).map(([o, n]) => `<span class="chip bg-white ring-1 ring-slate-200">${n} · ${o}</span>`).join("");
+}
+$("bm-levels").innerHTML = NIVELES.map(l => `
+  <div class="flex flex-col rounded-xl p-4 ${l.siginex ? "bg-azul-50 ring-2 ring-azul" : "bg-slate-50 ring-1 ring-slate-200"}">
+    <p class="text-xs font-semibold ${l.siginex ? "text-azul" : "text-slate-400"}">Nivel ${l.n}</p>
+    <p class="mt-1 font-semibold">${l.t}</p>
+    <p class="mt-1 text-xs text-slate-500">${l.d}</p>
+    <div class="mt-3 flex flex-wrap gap-1.5">
+      ${l.siginex ? '<span class="chip bg-azul text-white">SIGINEX</span>' : ""}
+      ${chips(l.tools)}
+      ${!l.tools.length && !l.siginex ? '<span class="text-xs text-slate-400">Donde empieza la mayoría</span>' : ""}
+    </div>
+  </div>`).join("");
+
+/* ---------- Tabs accesibles ---------- */
+const tabs = [...document.querySelectorAll("[data-tab]")];
+function activar(b){
+  tabs.forEach(x => { const on = x === b; x.setAttribute("aria-selected", on); x.tabIndex = on ? 0 : -1; $("tab-" + x.dataset.tab).classList.toggle("hidden", !on); });
+  b.focus();
+}
+tabs.forEach((b, i) => {
+  b.addEventListener("click", () => activar(b));
+  b.addEventListener("keydown", e => { if (e.key === "ArrowRight" || e.key === "ArrowLeft") activar(tabs[(i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length]); });
+});
+
+/* ---------- Hablar con ventas ---------- */
+const modal = $("ventas"), form = $("lead-form"), lmsg = $("lead-msg"), sendBtn = form.querySelector("[type=submit]");
+const pol = $("f-politica");
+if (CONFIG.PRIVACY_URL) pol.href = CONFIG.PRIVACY_URL; else pol.replaceWith(document.createTextNode("política de privacidad"));
+let lastTrigger = null, openedAt = 0;
+function msg(t, ok){ lmsg.textContent = t; lmsg.className = "mt-4 text-sm " + (ok ? "font-medium text-verde-700" : "text-rose-600"); }
+function abrir(plan, trigger){
+  form.reset(); lmsg.className = "mt-4 hidden text-sm"; sendBtn.disabled = false; sendBtn.textContent = "Enviar";
+  $("v-plan").textContent = plan; $("f-plan").value = plan;
+  lastTrigger = trigger; openedAt = Date.now();
+  modal.classList.remove("hidden"); modal.classList.add("flex"); $("f-empresa").focus();
+}
+function cerrar(){ modal.classList.add("hidden"); modal.classList.remove("flex"); if (lastTrigger) lastTrigger.focus(); }
+document.querySelectorAll("[data-ventas]").forEach(b => b.addEventListener("click", () => abrir(b.dataset.ventas, b)));
+$("v-close").onclick = cerrar;
+modal.addEventListener("click", e => { if (e.target === modal) cerrar(); });
+document.addEventListener("keydown", e => {
+  if (modal.classList.contains("hidden")) return;
+  if (e.key === "Escape") cerrar();
+  if (e.key === "Tab"){ // mantener el foco dentro del modal
+    const f = [...form.querySelectorAll("button,input:not([type=hidden]):not([tabindex='-1']),a[href]")].filter(x => !x.disabled);
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  }
+});
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  const cel = $("f-cel").value.replace(/\D/g, "").replace(/^57(?=3\d{9}$)/, "");
+  if (!$("f-empresa").value.trim()) return msg("Escribe el nombre de la empresa.");
+  if (!$("f-email").checkValidity()) return msg("Revisa el correo electrónico.");
+  if (!/^3\d{9}$/.test(cel)) return msg("El celular debe tener 10 dígitos y empezar por 3.");
+  if (!$("f-hd").checked) return msg("Necesitamos tu autorización de tratamiento de datos.");
+  sendBtn.disabled = true; sendBtn.textContent = "Enviando…";
+  const body = {
+    plan: $("f-plan").value, empresa: $("f-empresa").value.trim(), email: $("f-email").value.trim().toLowerCase(),
+    celular: cel, autoriza_datos: true, politica_version: CONFIG.POLICY_VERSION,
+    origen: "landing-siginex", sitio_web: $("f-web").value, ms_en_formulario: Date.now() - openedAt
+  };
+  try {
+    const r = await fetch(CONFIG.LEADS_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    if (r.status === 201){ msg("¡Gracias! Un asesor te contactará pronto.", true); sendBtn.textContent = "Enviado"; return; }
+    if (r.status === 400){ const j = await r.json().catch(() => ({})); msg(j.mensaje || "Revisa los datos e inténtalo de nuevo."); }
+    else if (r.status === 429) msg("Recibimos varios intentos seguidos. Espera un momento y vuelve a intentarlo.");
+    else msg("No pudimos enviar tu solicitud en este momento. Inténtalo de nuevo más tarde.");
+  } catch (_) {
+    msg("No pudimos conectarnos. Revisa tu conexión e inténtalo de nuevo.");
+  }
+  sendBtn.disabled = false; sendBtn.textContent = "Enviar";
+});
+</script>
+</body>
+</html>

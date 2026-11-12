@@ -75,6 +75,12 @@ const SECURITY_HEADERS = [
   { key: "Content-Security-Policy-Report-Only", value: CSP_REPORT_ONLY },
 ];
 
+// Landing estática de SIGINEX (public/laboratorios/siginex.html) en URL limpia.
+// OJO: NO redirigir /siginex; esa ruta es la aplicación SIGINEX (src/app/siginex).
+const siginexRewrites = [
+  { source: "/laboratorios/siginex", destination: "/laboratorios/siginex.html" },
+];
+
 const nextConfig: NextConfig = {
   async headers() {
     return [
@@ -84,6 +90,9 @@ const nextConfig: NextConfig = {
         headers: SECURITY_HEADERS,
       },
     ];
+  },
+  async rewrites() {
+    return [...siginexRewrites];
   },
 };
 
