@@ -65,12 +65,7 @@ export default function ElArteQueConectaPage() {
                 piezas llenas de significado. A tu ritmo, desde donde estés.
               </p>
               <div className={styles.actions}>
-                <a
-                  className={styles.btn}
-                  href={HOTMART_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a className={styles.btn} href="/elartequeconecta/escuela">
                   Conoce la escuela
                 </a>
                 <a className={`${styles.btn} ${styles.btnOutline}`} href="#escuela">
@@ -181,13 +176,8 @@ export default function ElArteQueConectaPage() {
               <p className={styles.eyebrow}>Hilos que nos unen</p>
               <h2>Tu creatividad merece un espacio.</h2>
               <p>Aprende, comparte y crea junto a nuestra comunidad.</p>
-              <a
-                className={styles.btn}
-                href={HOTMART_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Únete a El Arte que Conecta
+              <a className={styles.btn} href="/elartequeconecta/escuela">
+                Únete a la Escuela de macramé
               </a>
             </Reveal>
           </div>
