@@ -33,7 +33,7 @@ const dancingScript = Dancing_Script({
 export const metadata: Metadata = {
   title: "El Arte que Conecta | Escuela de Macramé online",
   description:
-    "Aprende macramé a tu ritmo: programa principal, cursos de bolsos y Navidad, talleres individuales y una comunidad artesanal que te acompaña.",
+    "Aprende macramé a tu ritmo: programa principal, cursos de bolsos y Navidad, un catálogo de piezas y una comunidad artesanal que te acompaña.",
   alternates: {
     canonical: "/elartequeconecta",
   },

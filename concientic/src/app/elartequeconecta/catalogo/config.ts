@@ -1,5 +1,5 @@
 /**
- * Número de WhatsApp del catálogo, con indicativo y sin signos (ej. "573001234567").
+ * Número de pp del catálogo, con indicativo y sin signos (ej. "573001234567").
  * Es el ÚNICO lugar donde hay que cambiarlo: se sustituye en todos los botones
  * "Pedir", en la vista rápida y en los CTA generales.
  *

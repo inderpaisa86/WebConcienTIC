@@ -3,12 +3,8 @@ import { preload } from "react-dom";
 
 import styles from "./elartequeconecta.module.css";
 import { Reveal } from "./reveal";
-import { CuponPromo } from "./cupon-promo";
 
 const HOTMART_URL = "https://elartequeconecta.hotmart.host/";
-
-const ARBOL_NAVIDAD_3D_URL =
-  "https://hotmart.com/es/marketplace/productos/arbol-de-navidad-3d/D108220799V?ref=T108269822F";
 
 const PAGE_URL = "https://www.concientic.com/elartequeconecta";
 
@@ -17,7 +13,7 @@ const jsonLd = {
   "@type": "EducationalOrganization",
   name: "El Arte que Conecta",
   description:
-    "Escuela de macramé online: programa principal, cursos de bolsos y Navidad, talleres individuales y una comunidad artesanal.",
+    "Escuela de macramé online: programa principal, cursos de bolsos y Navidad, catálogo de piezas y una comunidad artesanal.",
   url: PAGE_URL,
   image: "https://www.concientic.com/elartequeconecta/logomacrame.jpg",
   sameAs: [HOTMART_URL],
@@ -47,7 +43,6 @@ export default function ElArteQueConectaPage() {
           </a>
           <nav aria-label="Principal">
             <a href="#escuela">La escuela</a>
-            <a href="#talleres">Talleres</a>
             <a href="/elartequeconecta/catalogo">Catálogo</a>
             <a href="#comunidad">Comunidad</a>
           </nav>
@@ -78,8 +73,8 @@ export default function ElArteQueConectaPage() {
                 >
                   Conoce la escuela
                 </a>
-                <a className={`${styles.btn} ${styles.btnOutline}`} href="#talleres">
-                  Explora los talleres
+                <a className={`${styles.btn} ${styles.btnOutline}`} href="#escuela">
+                  Explora los cursos
                 </a>
               </div>
             </div>
@@ -162,130 +157,6 @@ export default function ElArteQueConectaPage() {
                   <p>Teje decoraciones cálidas y especiales para la temporada.</p>
                   <a className={styles.tileLink} href="/elartequeconecta/navidad">
                     Descubre el curso <span aria-hidden="true">→</span>
-                  </a>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </section>
-
-        {/* Talleres */}
-        <section className={styles.workshops} id="talleres">
-          <div className={styles.wrap}>
-            <div className={styles.sectionHead}>
-              <p className={styles.eyebrow}>Talleres individuales</p>
-              <h2>Un proyecto. Un nuevo comienzo.</h2>
-              <p>Elige tu próxima creación y disfruta el proceso, nudo a nudo.</p>
-            </div>
-            <div className={styles.workshopGrid}>
-              <Reveal as="article" className={styles.workshop}>
-                <div className={styles.workshopArt}>
-                  <Image
-                    src="/elartequeconecta/maxibolso.webp"
-                    sizes="(max-width: 639px) 110px, 160px"
-                    width={619}
-                    height={1100}
-                    loading="lazy"
-                    alt="Maxibolsos de macramé con flecos sobre una mesa de madera"
-                  />
-                </div>
-                <div>
-                  <span className={`${styles.eyebrow} ${styles.pill}`}>Taller individual</span>
-                  <h3>Maxibolso</h3>
-                  <p>Un accesorio con personalidad, movimiento y detalles artesanales.</p>
-                  <CuponPromo />
-                  <a
-                    className={`${styles.btn} ${styles.btnSm}`}
-                    href={HOTMART_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Ver taller Maxibolso"
-                  >
-                    Ver taller
-                  </a>
-                </div>
-              </Reveal>
-              <Reveal as="article" className={styles.workshop} delay={100}>
-                <div className={styles.workshopArt}>
-                  <Image
-                    src="/elartequeconecta/arbol-navidad.webp"
-                    sizes="(max-width: 639px) 110px, 160px"
-                    width={619}
-                    height={1100}
-                    loading="lazy"
-                    alt="Instructora sosteniendo un árbol de Navidad 3D tejido en verde"
-                  />
-                </div>
-                <div>
-                  <span className={`${styles.eyebrow} ${styles.pill}`}>Taller individual</span>
-                  <h3>Árbol de Navidad 3D</h3>
-                  <p>Una pieza protagonista para vestir tus espacios de magia tejida.</p>
-                  <CuponPromo />
-                  <a
-                    className={`${styles.btn} ${styles.btnSm}`}
-                    href={ARBOL_NAVIDAD_3D_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Ver taller Árbol de Navidad 3D"
-                  >
-                    Ver taller
-                  </a>
-                </div>
-              </Reveal>
-              <Reveal as="article" className={styles.workshop} delay={200}>
-                <div className={styles.workshopArt}>
-                  <Image
-                    src="/elartequeconecta/tapiz-prana.webp"
-                    sizes="(max-width: 639px) 110px, 160px"
-                    width={974}
-                    height={808}
-                    loading="lazy"
-                    alt="Tapiz de macramé colgado sobre un sofá en una sala cálida"
-                  />
-                </div>
-                <div>
-                  <span className={`${styles.eyebrow} ${styles.pill}`}>Taller individual</span>
-                  <h3>Tapiz Prana</h3>
-                  <p>Un tejido decorativo que suma calidez, textura y armonía a tu hogar.</p>
-                  <CuponPromo />
-                  <a
-                    className={`${styles.btn} ${styles.btnSm}`}
-                    href={HOTMART_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Ver taller Tapiz Prana"
-                  >
-                    Ver taller
-                  </a>
-                </div>
-              </Reveal>
-              <Reveal as="article" className={styles.workshop} delay={300}>
-                <div className={styles.workshopArt}>
-                  <Image
-                    src="/elartequeconecta/arbol-pared.webp"
-                    sizes="(max-width: 639px) 110px, 160px"
-                    width={656}
-                    height={1100}
-                    loading="lazy"
-                    alt="Instructora mostrando un árbol de pared tejido en macramé"
-                  />
-                </div>
-                <div>
-                  <span className={`${styles.eyebrow} ${styles.pill}`}>Taller individual</span>
-                  <h3>Árbol de pared</h3>
-                  <p>
-                    Una pieza artesanal inspirada en la naturaleza, ideal para decorar con textura,
-                    calidez y encanto bohemio.
-                  </p>
-                  <CuponPromo />
-                  <a
-                    className={`${styles.btn} ${styles.btnSm}`}
-                    href={HOTMART_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Ver taller Árbol de pared"
-                  >
-                    Ver taller
                   </a>
                 </div>
               </Reveal>
