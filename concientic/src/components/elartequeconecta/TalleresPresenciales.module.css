@@ -83,7 +83,7 @@
 }
 @media (max-width: 600px) {
   .section { padding: 42px 0; }
-  .cal { grid-template-columns: 1fr; }
+  .cal { display: none; }
   .month + .month { margin-top: 6px; padding-top: 14px; border-top: 1px dashed var(--aqc-sand); }
   .card { grid-template-columns: 1fr; padding: 14px; }
   .art { min-height: 190px; }
