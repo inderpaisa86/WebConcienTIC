@@ -38,11 +38,8 @@ export const laboratorios = {
         cardNumber: "LABORATORIO 01",
         linkLabel: "Explorar SIGINEX",
         dataLab: "SIGINEX",
-        // SIGINEX se abre en su propia aplicacion desplegada. Las rutas nativas /siginex/*
-        // de concientic siguen existiendo, pero esta tarjeta ya no las usa.
-        href: "https://siginex-gules.vercel.app/",
-        // Abre SIGINEX en una pestaña nueva.
-        newTab: true,
+        // Landing estática de SIGINEX (public/laboratorios/siginex.html, rewrite en next.config.ts).
+        href: "/laboratorios/siginex",
       },
       {
         key: "EmprendeCreativo",
