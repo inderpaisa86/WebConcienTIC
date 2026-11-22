@@ -13,6 +13,7 @@ type Opcion = {
   n: string; // nombre de la opción
   i: string; // imagen
   w: string; // enlace de WhatsApp
+  p?: string; // precio de la opción (HTML), p. ej. el tamaño del espejo
 };
 
 type Pieza = {
@@ -23,7 +24,7 @@ type Pieza = {
   l: string[]; // detalles
   p: string; // precio (HTML)
   w: string; // enlace de WhatsApp
-  o?: Opcion[]; // opciones de color (solo la caja navideña)
+  o?: Opcion[]; // opciones de color, combinación o tamaño
 };
 
 // Fin de la promoción Noviembre Black: 30/11/2026 23:59 (UTC-5). Ver generator/catalogo_v3.py.
@@ -79,11 +80,16 @@ export function PaginaCatalogo() {
       root.querySelectorAll<HTMLElement>(".pc-price.promo").forEach((e) => {
         e.outerHTML = `<span class="pc-price"><b class="pr-now">${e.dataset.normal ?? ""}</b></span>`;
       });
+      // Mismo criterio para el precio de la pieza y para el de cada opción (p. ej. tamaños del espejo).
+      const sinPromo = (html: string) => {
+        const m = html.match(/data-normal="([^"]+)"/);
+        return html.includes("promo") && m
+          ? `<span class="pc-price"><b class="pr-now">${m[1]}</b></span>`
+          : html;
+      };
       for (const pieza of Object.values(piezas)) {
-        const m = pieza.p.match(/data-normal="([^"]+)"/);
-        if (pieza.p.includes("promo") && m) {
-          pieza.p = `<span class="pc-price"><b class="pr-now">${m[1]}</b></span>`;
-        }
+        pieza.p = sinPromo(pieza.p);
+        for (const opcion of pieza.o ?? []) if (opcion.p) opcion.p = sinPromo(opcion.p);
       }
       root.querySelectorAll<HTMLElement>('.pc[data-promo="1"]').forEach((c) => {
         c.dataset.promo = "0";
@@ -136,7 +142,7 @@ export function PaginaCatalogo() {
         );
       }
 
-      // Opciones de color (caja navideña): cambian la foto y el enlace de WhatsApp.
+      // Opciones (color, combinación o tamaño): cambian la foto, el enlace de WhatsApp y, si la opción trae precio, el precio.
       if (opciones) {
         opciones.replaceChildren();
         (d.o ?? []).forEach((opcion, idx) => {
@@ -152,6 +158,7 @@ export function PaginaCatalogo() {
           boton.onclick = () => {
             if (img) img.src = opcion.i;
             if (wa) wa.href = opcion.w;
+            if (precio && opcion.p) precio.innerHTML = opcion.p;
             opciones.querySelectorAll(".mopt").forEach((x) => x.classList.remove("on"));
             boton.classList.add("on");
           };
@@ -161,6 +168,7 @@ export function PaginaCatalogo() {
         if (primera) {
           if (img) img.src = primera.i;
           if (wa) wa.href = primera.w;
+          if (precio && primera.p) precio.innerHTML = primera.p;
         }
       }
       modal.classList.add("on");

@@ -105,7 +105,7 @@ function Calendario({ talleres, hoy }: { talleres: TallerPresencial[]; hoy: Date
     <aside className={s.cal} aria-label={`Calendario de talleres presenciales en ${CIUDAD}`}>
       <div className={s.calHead}>
         <span className={s.eyebrow}>Calendario</span>
-        <h3>{meses.map((m) => MESES[Number(m.slice(5)) - 1]).join(' y ').replace(/^./, (c) => c.toUpperCase())}</h3>
+        <h3>Agenda de {meses.map((m) => MESES[Number(m.slice(5)) - 1]).join(' y ')}</h3>
       </div>
       {meses.map((ym) => {
         const [y, m] = ym.split('-').map(Number);
@@ -147,7 +147,7 @@ function Calendario({ talleres, hoy }: { talleres: TallerPresencial[]; hoy: Date
         {talleres.map((t) => (
           <li key={t.id}>
             <i style={{ background: t.color }} />
-            {t.nombre}
+            {t.nombre} · {t.nivel}
             {talleres.filter((x) => x.nombre === t.nombre).length > 1
               ? ` (${MESES[aFecha(t.sesiones[0].fecha).getMonth()].slice(0, 3)}${t.cerrado ? ' · cerrado' : ''})`
               : ''}
@@ -166,9 +166,10 @@ function Tarjeta({ t, hoy }: { t: TallerPresencial; hoy: Date }) {
         <span className={`${s.badge} ${t.cerrado ? '' : s.badgeOpen}`}>{t.cerrado ? 'Cupos cerrados' : 'Cupos limitados'}</span>
       </div>
       <div className={s.body}>
-        <span className={s.pill}>{t.sesiones.length} sesiones · {t.horas} horas</span>
+        <span className={s.pill}>Nivel {t.nivel} · {t.sesiones.length} sesiones · {t.horas} horas</span>
         <h3>{t.nombre}</h3>
         <p>{t.descripcion}</p>
+        {t.requisito && (<p className={s.req}><strong>Requisito:</strong> {t.requisito}</p>)}
         <ul className={s.ses}>
           {t.sesiones.map((x) => {
             const d = aFecha(x.fecha);
@@ -219,8 +220,8 @@ export default function TalleresPresenciales() {
         {modo !== 'ibague' ? (
           <div className={s.teaser}>
             <p>
-              <strong>Talleres presenciales en {CIUDAD}.</strong> Si vives en {CIUDAD} o vas a estar allí en noviembre o
-              diciembre, mira la agenda y aparta tu cupo.
+              <strong>Talleres presenciales en {CIUDAD}.</strong> Si vives en {CIUDAD} o vas a estar allí en diciembre,
+              mira la agenda y aparta tu cupo.
             </p>
             <button type="button" className={`${s.btn} ${s.btnSecondary}`} onClick={() => setModo('ibague')}>
               Ver agenda de {CIUDAD}
