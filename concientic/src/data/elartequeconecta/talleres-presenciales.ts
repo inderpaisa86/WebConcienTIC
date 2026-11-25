@@ -1,5 +1,5 @@
 // Agenda de talleres presenciales · El Arte que Conecta
-// Fuente: formulario de inscripción (Google Forms). Agenda de diciembre 2026 (entrega V3.4).
+// Fuente: formulario de inscripción (Google Forms). Agenda de diciembre 2026 (entrega V3.5).
 // Para publicar nuevas fechas, edita solo este archivo.
 
 export const FORMULARIO_INSCRIPCION =
@@ -32,6 +32,8 @@ export type TallerPresencial = {
   horas: number;
   cerrado: boolean;
   sesiones: Sesion[];
+  /** Taller sin fechas todavía (p. ej. "Enero 2027"). Si existe, reemplaza el calendario de sesiones y no caduca. */
+  pendiente?: string;
 };
 
 export const TALLERES: TallerPresencial[] = [
@@ -76,10 +78,7 @@ export const TALLERES: TallerPresencial[] = [
     precio: 290000,
     horas: 9,
     cerrado: false,
-    sesiones: [
-      { fecha: '2026-12-05', horario: '9:00 a. m. – 12:00 m.' },
-      { fecha: '2026-12-12', horario: '9:00 a. m. – 12:00 m.' },
-      { fecha: '2026-12-19', horario: '9:00 a. m. – 12:00 m.' },
-    ],
+    sesiones: [],
+    pendiente: 'Enero 2027',
   },
 ];

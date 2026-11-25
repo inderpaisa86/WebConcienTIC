@@ -148,9 +148,11 @@ function Calendario({ talleres, hoy }: { talleres: TallerPresencial[]; hoy: Date
           <li key={t.id}>
             <i style={{ background: t.color }} />
             {t.nombre} · {t.nivel}
-            {talleres.filter((x) => x.nombre === t.nombre).length > 1
-              ? ` (${MESES[aFecha(t.sesiones[0].fecha).getMonth()].slice(0, 3)}${t.cerrado ? ' · cerrado' : ''})`
-              : ''}
+            {t.pendiente
+              ? ` (${t.pendiente.toLowerCase()}, por confirmar)`
+              : talleres.filter((x) => x.nombre === t.nombre).length > 1
+                ? ` (${MESES[aFecha(t.sesiones[0].fecha).getMonth()].slice(0, 3)}${t.cerrado ? ' · cerrado' : ''})`
+                : ''}
           </li>
         ))}
       </ul>
@@ -163,31 +165,45 @@ function Tarjeta({ t, hoy }: { t: TallerPresencial; hoy: Date }) {
     <article id={`taller-${t.id}`} className={`${s.card} ${t.cerrado ? s.closed : ''}`} style={{ ['--c' as string]: t.color }}>
       <div className={s.art}>
         <Image src={t.imagen} alt={`${t.nombre} tejido en macramé`} fill sizes="(max-width: 600px) 100vw, 190px" />
-        <span className={`${s.badge} ${t.cerrado ? '' : s.badgeOpen}`}>{t.cerrado ? 'Cupos cerrados' : 'Cupos limitados'}</span>
+        <span className={`${s.badge} ${t.cerrado || t.pendiente ? '' : s.badgeOpen}`}>
+          {t.pendiente ? t.pendiente : t.cerrado ? 'Cupos cerrados' : 'Cupos limitados'}
+        </span>
       </div>
       <div className={s.body}>
         <span className={s.pill}>Nivel {t.nivel} · {t.sesiones.length} sesiones · {t.horas} horas</span>
         <h3>{t.nombre}</h3>
         <p>{t.descripcion}</p>
         {t.requisito && (<p className={s.req}><strong>Requisito:</strong> {t.requisito}</p>)}
-        <ul className={s.ses}>
-          {t.sesiones.map((x) => {
-            const d = aFecha(x.fecha);
-            return (
-              <li key={x.fecha} className={d < hoy ? s.sesPast : ''}>
-                <span className={s.date}><b>{d.getDate()}</b>{MESES[d.getMonth()].slice(0, 3)}</span>
-                <span><strong>{DIAS_LARGOS[d.getDay()]} {d.getDate()} de {MESES[d.getMonth()]}</strong><br />{x.horario}</span>
-              </li>
-            );
-          })}
-        </ul>
+        {t.pendiente ? (
+          <p>
+            <strong>{t.pendiente} · fechas por confirmar</strong> — Déjanos tus datos y te avisamos apenas abramos el grupo.
+          </p>
+        ) : (
+          <ul className={s.ses}>
+            {t.sesiones.map((x) => {
+              const d = aFecha(x.fecha);
+              return (
+                <li key={x.fecha} className={d < hoy ? s.sesPast : ''}>
+                  <span className={s.date}><b>{d.getDate()}</b>{MESES[d.getMonth()].slice(0, 3)}</span>
+                  <span><strong>{DIAS_LARGOS[d.getDay()]} {d.getDate()} de {MESES[d.getMonth()]}</strong><br />{x.horario}</span>
+                </li>
+              );
+            })}
+          </ul>
+        )}
         <div className={s.foot}>
           <div className={s.price}><b>{cop(t.precio)}</b><small>por persona · kit de materiales incluido</small></div>
           {t.cerrado ? (
             <span className={`${s.btn} ${s.btnOff}`} aria-disabled="true">Cupos cerrados</span>
           ) : (
-            <a className={s.btn} href={FORMULARIO_INSCRIPCION} target="_blank" rel="noopener noreferrer" onClick={() => track(t.id)}>
-              Inscribirme
+            <a
+              className={`${s.btn} ${t.pendiente ? s.btnSecondary : ''}`}
+              href={FORMULARIO_INSCRIPCION}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track(t.id)}
+            >
+              {t.pendiente ? 'Quiero que me avisen' : 'Inscribirme'}
             </a>
           )}
         </div>
@@ -200,8 +216,10 @@ export default function TalleresPresenciales() {
   const [modo, setModo] = useModo();
   const hoy = useMemo(() => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }, []);
   const vigentes = useMemo(
-    () => TALLERES.filter((t) => aFecha(t.sesiones[t.sesiones.length - 1].fecha) >= hoy)
-      .sort((a, b) => Number(a.cerrado) - Number(b.cerrado) || a.sesiones[0].fecha.localeCompare(b.sesiones[0].fecha)),
+    () => TALLERES.filter((t) => t.pendiente || aFecha(t.sesiones[t.sesiones.length - 1].fecha) >= hoy)
+      .sort((a, b) => Number(!!a.pendiente) - Number(!!b.pendiente)
+        || Number(a.cerrado) - Number(b.cerrado)
+        || (a.sesiones[0]?.fecha ?? '').localeCompare(b.sesiones[0]?.fecha ?? '')),
     [hoy],
   );
 
