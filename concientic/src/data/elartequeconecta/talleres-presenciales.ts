@@ -1,5 +1,5 @@
 // Agenda de talleres presenciales · El Arte que Conecta
-// Fuente: formulario de inscripción (Google Forms). Agenda de diciembre 2026 (entrega V3.5).
+// Fuente: formulario de inscripción (Google Forms). Agenda de diciembre 2026 (entrega V3.6).
 // Para publicar nuevas fechas, edita solo este archivo.
 
 export const FORMULARIO_INSCRIPCION =
@@ -59,7 +59,7 @@ export const TALLERES: TallerPresencial[] = [
     nivel: 'principiante',
     color: '#63300e',
     imagen: '/elartequeconecta/assets/talleres/bolso-santorini.webp',
-    precio: 220000,
+    precio: 210000,
     horas: 6,
     cerrado: false,
     sesiones: [

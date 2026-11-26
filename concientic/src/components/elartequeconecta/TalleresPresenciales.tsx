@@ -229,7 +229,7 @@ export default function TalleresPresenciales() {
   return (
     <section id="talleres" className={s.section} data-mode={modo}>
       <div className={s.wrap}>
-        <div className={s.head}>
+        <div className={s.head} data-seccion="cabecera">
           <div className={s.eyebrow}>Talleres presenciales · {CIUDAD}</div>
           <h2>Aprende en persona, nudo a nudo.</h2>
           <p>Grupos pequeños, guía paso a paso y tu proyecto terminado al final. Elige la fecha que mejor te quede y aparta tu cupo.</p>
